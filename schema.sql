@@ -1,0 +1,112 @@
+DROP DATABASE IF EXISTS normalizedSalesData;
+CREATE DATABASE IF NOT EXISTS normalizedSalesData;
+
+ALTER DATABASE normalizedSalesData
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
+
+USE normalizedSalesData;
+
+
+CREATE TABLE GlobalTerritory
+(
+	territoryID					TINYINT				PRIMARY KEY				AUTO_INCREMENT,
+	territoryName				VARCHAR(8)			UNIQUE NOT NULL
+);
+
+
+CREATE TABLE Country
+(
+	countryID					SMALLINT			PRIMARY KEY				AUTO_INCREMENT,
+	countryName					VARCHAR(32)			UNIQUE NOT NULL,
+	territoryID					TINYINT				NOT NULL,
+	FOREIGN KEY (territoryID) REFERENCES GlobalTerritory(territoryID) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE StateRegion
+(
+	stateID						SMALLINT			PRIMARY KEY				AUTO_INCREMENT,
+	countryID					SMALLINT			NOT NULL,
+	stateName					VARCHAR(32),
+	UNIQUE (countryID, stateName),
+	FOREIGN KEY (countryID) REFERENCES Country(countryID) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE City
+(
+	cityID						SMALLINT			PRIMARY KEY				AUTO_INCREMENT,
+	stateID						SMALLINT			NOT NULL,
+	cityName					VARCHAR(32)			NOT NULL,
+	UNIQUE (stateID, cityName),
+	FOREIGN KEY (stateID) REFERENCES StateRegion(stateID) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE DealSize
+(
+	dealSizeID					TINYINT				PRIMARY KEY				AUTO_INCREMENT,
+	dealSizeName				VARCHAR(16)			UNIQUE NOT NULL
+);
+
+
+CREATE TABLE ProductLine
+(
+	productLineID				TINYINT				PRIMARY KEY				AUTO_INCREMENT,
+	productLineName				VARCHAR(16)			UNIQUE NOT NULL
+);
+
+
+CREATE TABLE OrderStatus
+(
+	statusID					TINYINT				PRIMARY KEY				AUTO_INCREMENT,
+	statusName					VARCHAR(16)			UNIQUE NOT NULL
+);
+
+CREATE TABLE Product
+(
+	productID					SMALLINT			PRIMARY KEY				AUTO_INCREMENT,
+	productCode					VARCHAR(32)			UNIQUE NOT NULL,
+	productLineID				TINYINT				NOT NULL,
+	msrp						DECIMAL(5,2)		NOT NULL				DEFAULT 0,
+	FOREIGN KEY (productLineID) REFERENCES ProductLine(productLineID) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+
+CREATE TABLE Customer
+(
+	customerID					SMALLINT			PRIMARY KEY				AUTO_INCREMENT,
+	customerName				VARCHAR(128)		UNIQUE NOT NULL,
+	phoneNumber					VARCHAR(20)			NOT NULL,
+	contactFirstName			VARCHAR(32)			NOT NULL,
+	contactLastName				VARCHAR(32),
+	addressLine1				VARCHAR(128)		NOT NULL,
+	addressLine2				VARCHAR(128),
+	cityID						SMALLINT			NOT NULL,
+	postalCode					VARCHAR(16),
+	FOREIGN KEY (cityID) REFERENCES City(cityID) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+
+CREATE TABLE OrderEntry
+(
+	orderID						SMALLINT			PRIMARY KEY,
+	customerID					SMALLINT			NOT NULL,
+	orderDate					DATE				NOT NULL,
+	statusID					TINYINT				NOT NULL,
+	FOREIGN KEY (customerID) REFERENCES Customer(customerID) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (statusID) REFERENCES OrderStatus(statusID) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+
+CREATE TABLE OrderItem
+(
+	orderID						SMALLINT			NOT NULL,
+	itemNumber					TINYINT				NOT NULL,
+	productID					SMALLINT			NOT NULL,
+	quantityOrdered				TINYINT				NOT NULL				DEFAULT 1,
+	priceEach					DECIMAL(5,2)		NOT NULL				DEFAULT 0,
+	dealSizeID					TINYINT				NOT NULL,
+	PRIMARY KEY (orderID, itemNumber),
+	FOREIGN KEY (orderID) REFERENCES OrderEntry(orderID) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (productID) REFERENCES Product(productID) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (dealSizeID) REFERENCES DealSize(dealSizeID) ON UPDATE CASCADE ON DELETE RESTRICT
+);

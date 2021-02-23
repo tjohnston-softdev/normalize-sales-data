@@ -1,0 +1,11 @@
+{
+  "name": "normalize-sales-data",
+  "version": "1.0.0",
+  "description": "Used to normalize a particular set of sales test data.",
+  "main": "convert.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tjohnston-softdev",
+  "license": "CC-BY-4.0"
+}
