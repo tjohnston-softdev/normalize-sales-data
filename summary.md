@@ -1,9 +1,11 @@
 # Summary
 
-**Commit Number:** 1
+**Commit Number:** 2
 
-**Date:** 2021-02-23
+**Date:** 2021-02-24
 
-**Title:** Initial Commit
+**Title:** Node Packages Install
 
 **Description:**
+
+Installed Node packages that are going to be used by this program.
