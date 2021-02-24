@@ -1,33 +1,33 @@
 # Changelog
 
-**./output-files**
-* Deleted folder for now.
-
----
-
-**.gitignore**
-* New file - Currently ignores the following:
-	* 'relational-diagram' subfolder.
-	* 'sales_data_sample.csv' file.
-* This is because they are already committed to the repo.
-	* I don't intend to change them.
-	* Git client won't flag false changes.
-
----
-
 **./convert.js**
-* This is the main script file.
-* Handled by the 'runDataNormalization' function.
-* So far, this file only reads and validates the given argument.
+* Required the following:
+	* clear
+	* ./src/common/exit-program
+	* ./src/input/file-check
+* runDataNormalization
+	* Renamed the 'fileTypeValid' variable to 'fileTypeFlag'
+	* After the file type argument has been validated:
+		* Clear console.
+		* Check whether the input file is valid (callInputFileCheck)
+* New function 'callInputFileCheck'
+	* Checks whether input file is valid.
 
 ---
 
-**./src/input/file-arg.js**
-* New file - Used to read, prepare, and validate file type argument.
-* Valid file types are 'sql' and 'csv'
+**./src/input/file-check.js**
+* New file.
+* This is used to:
+	* Check whether the source data file exists.
+	* Validate it's size. (5MB or less)
 
 ---
 
-**./src/common/exit-program.js**
-* New file - Used to terminate program with message.
-* Has functions for both error and success.
+**./src/common/fs-errors.js**
+* New file.
+* Writes error text for functions related to working with files and folders. (fs)
+
+---
+
+**./src/common/source-file.js**
+* New file - Contains file name and text description of source data.
