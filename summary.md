@@ -1,11 +1,13 @@
 # Summary
 
-**Commit Number:** 2
+**Commit Number:** 3
 
 **Date:** 2021-02-24
 
-**Title:** Node Packages Install
+**Title:** File Type Argument
 
 **Description:**
 
-Installed Node packages that are going to be used by this program.
+* Script now reads and parses a single argument corresponding to the file type.
+* Valid types are 'sql' and 'csv'. The script will output files of the respective type.
+* If an invalid value is entered, an error will be displayed.
