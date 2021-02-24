@@ -5,27 +5,27 @@ const sourceFile = require("../common/source-file");
 const maxSizeBytes = 5000000;
 
 
-function checkInputDataFile(inputReadCallback)
+function checkInputDataFile(inputCheckCallback)
 {
-	var readSpinner = ora("Reading Input File").start();
+	var checkSpinner = ora("Checking Input File").start();
 	
-	coordinateInputRead(function (dataFileErr, dataFileRes)
+	coordinateInputCheck(function (dataFileErr, dataFileRes)
 	{
 		if (dataFileErr !== null)
 		{
-			readSpinner.fail("Input Read Error");
-			return inputReadCallback(dataFileErr, null);
+			checkSpinner.fail("Input File Check Error");
+			return inputCheckCallback(dataFileErr, null);
 		}
 		else
 		{
-			readSpinner.succeed("Input File Read");
-			return inputReadCallback(null, dataFileRes);
+			checkSpinner.succeed("Input File Exists");
+			return inputCheckCallback(null, dataFileRes);
 		}
 	});
 }
 
 
-function coordinateInputRead(inpReadCallback)
+function coordinateInputCheck(inpChkCallback)
 {
 	var statErrorText = "";
 	
@@ -34,40 +34,40 @@ function coordinateInputRead(inpReadCallback)
 		if (statErr !== null)
 		{
 			statErrorText = fsErrors.writeActionText("checking", sourceFile.desc, statErr.code);
-			return inpReadCallback(new Error(statErrorText), null);
+			return inpChkCallback(new Error(statErrorText), null);
 		}
 		else
 		{
-			verifyTargetEntry(statRes, inpReadCallback);
+			verifyTargetEntry(statRes, inpChkCallback);
 		}
 	});
 }
 
 
 
-function verifyTargetEntry(entryObj, verificationCallback)
+function verifyTargetEntry(entryObj, verifyCallback)
 {
 	var validFile = entryObj.isFile();
 	var verifyErrorText = "";
 	
 	if (validFile === true && entryObj.size > 0 && entryObj.size <= maxSizeBytes)
 	{
-		return verificationCallback(null, true);
+		return verifyCallback(null, true);
 	}
 	else if (validFile === true && entryObj.size > maxSizeBytes)
 	{
 		verifyErrorText = fsErrors.writeSourceVerification(sourceFile.desc, "cannot be larger than 5MB");
-		return verificationCallback(new Error(verifyErrorText), null);
+		return verifyCallback(new Error(verifyErrorText), null);
 	}
 	else if (validFile === true)
 	{
 		verifyErrorText = fsErrors.writeSourceVerification(sourceFile.desc, "cannot be empty.");
-		return verificationCallback(new Error(verifyErrorText), null);
+		return verifyCallback(new Error(verifyErrorText), null);
 	}
 	else
 	{
 		verifyErrorText = fsErrors.writeSourceVerification(sourceFile.desc, "does not exist.");
-		return verificationCallback(new Error(verifyErrorText), null);
+		return verifyCallback(new Error(verifyErrorText), null);
 	}
 }
 

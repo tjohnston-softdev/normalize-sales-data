@@ -2,6 +2,7 @@ const clear = require("clear");
 const exitProgram = require("./src/common/exit-program");
 const fileArg = require("./src/input/file-arg");
 const fileCheck = require("./src/input/file-check");
+const fileRead = require("./src/input/file-read");
 
 runDataNormalization();
 
@@ -21,7 +22,23 @@ function runDataNormalization()
 
 function callInputFileCheck(conversionTypeFlag)
 {
-	fileCheck.checkInput(function (inpReadTaskErr, inpReadTaskRes)
+	fileCheck.checkInput(function (inpChkTaskErr, inpChkTaskRes)
+	{
+		if (inpChkTaskErr !== null)
+		{
+			exitProgram.callError(inpChkTaskErr.message);
+		}
+		else
+		{
+			callInputFileRead(conversionTypeFlag);
+		}
+	});
+}
+
+
+function callInputFileRead(convTypeFlag)
+{
+	fileRead.readInput(function (inpReadTaskErr, inpReadTaskRes)
 	{
 		if (inpReadTaskErr !== null)
 		{
@@ -29,7 +46,7 @@ function callInputFileCheck(conversionTypeFlag)
 		}
 		else
 		{
-			console.log("File valid");
+			console.log("Parsed");
 		}
 	});
 }

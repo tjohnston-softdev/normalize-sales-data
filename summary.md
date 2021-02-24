@@ -1,12 +1,12 @@
 # Summary
 
-**Commit Number:** 4
+**Commit Number:** 5
 
 **Date:** 2021-02-24
 
-**Title:** Input File Check
+**Title:** Parse CSV Input
 
 **Description:**
 
-Checks whether the input file exists and has a valid size
-(5MB or less)
+CSV input source file is now parsed as a collection of
+JSON objects.
