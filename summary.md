@@ -1,12 +1,13 @@
 # Summary
 
-**Commit Number:** 5
+**Commit Number:** 6
 
-**Date:** 2021-02-24
+**Date:** 2021-02-25
 
-**Title:** Parse CSV Input
+**Title:** Empty CSV Error.
 
 **Description:**
 
-CSV input source file is now parsed as a collection of
-JSON objects.
+* Error message will be displayed if no rows are successfully parsed from CSV.
+* Row number will be displayed for CSV errors.
+* Added line break before exit messages.

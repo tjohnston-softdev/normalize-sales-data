@@ -59,7 +59,7 @@ function parseFileText(inpTxt, parseCallback)
 	}
 	else
 	{
-		genericText = csvErrors.writeGenericParse();
+		genericText = "Could not successfully parse input CSV.";
 		return parseCallback(new Error(genericText), null);
 	}
 }
@@ -76,13 +76,13 @@ function verifyParseResult(parseResObj, verifyCallback)
 		verifyErrorText = csvErrors.writeSpecificParse(parseResObj.errors);
 		return verifyCallback(new Error(verifyErrorText), null);
 	}
-	else if (dataArrayExists === true)
+	else if (dataArrayExists === true && parseResObj.data.length > 0)
 	{
 		return verifyCallback(null, parseResObj.data);
 	}
 	else
 	{
-		verifyErrorText = csvErrors.writeGenericParse();
+		verifyErrorText = "No rows were successfully parsed from input CSV.";
 		return verifyCallback(new Error(verifyErrorText), null);
 	}
 }

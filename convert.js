@@ -46,7 +46,7 @@ function callInputFileRead(convTypeFlag)
 		}
 		else
 		{
-			console.log("Parsed");
+			exitProgram.callSuccessful();
 		}
 	});
 }

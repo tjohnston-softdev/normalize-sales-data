@@ -1,20 +1,14 @@
-function writeGenericParseError()
-{
-	var writeRes = "Could not successfully parse input CSV.";
-	return writeRes;
-}
-
-
 function writeSpecificParseError(errList)
 {
 	var errorObject = errList[0];
+	var rowNum = errorObject.row + 1;
 	var writeRes = "";
 	
 	writeRes += "Error parsing input CSV.\n";
 	writeRes += errorObject.message;
 	writeRes += "\n";
-	writeRes += "Line index: ";
-	writeRes += errorObject.row;
+	writeRes += "Row Number: ";
+	writeRes += rowNum;
 	
 	return writeRes;
 }
@@ -22,6 +16,5 @@ function writeSpecificParseError(errList)
 
 module.exports =
 {
-	writeGenericParse: writeGenericParseError,
 	writeSpecificParse: writeSpecificParseError
 };
