@@ -3,6 +3,7 @@ const exitProgram = require("./src/common/exit-program");
 const fileArg = require("./src/input/file-arg");
 const fileCheck = require("./src/input/file-check");
 const fileRead = require("./src/input/file-read");
+const procData = require("./src/processing/proc-data");
 
 runDataNormalization();
 
@@ -22,11 +23,11 @@ function runDataNormalization()
 
 function callInputFileCheck(conversionTypeFlag)
 {
-	fileCheck.checkInput(function (inpChkTaskErr, inpChkTaskRes)
+	fileCheck.checkInput(function (inpChkErr)
 	{
-		if (inpChkTaskErr !== null)
+		if (inpChkErr !== null)
 		{
-			exitProgram.callError(inpChkTaskErr.message);
+			exitProgram.callError(inpChkErr.message);
 		}
 		else
 		{
@@ -38,15 +39,33 @@ function callInputFileCheck(conversionTypeFlag)
 
 function callInputFileRead(convTypeFlag)
 {
-	fileRead.readInput(function (inpReadTaskErr, inpReadTaskRes)
+	fileRead.readInput(function (inpReadErr, inpReadData)
 	{
-		if (inpReadTaskErr !== null)
+		if (inpReadErr !== null)
 		{
-			exitProgram.callError(inpReadTaskErr.message);
+			exitProgram.callError(inpReadErr.message);
 		}
 		else
 		{
-			exitProgram.callSuccessful();
+			callDataProcessing(inpReadData, convTypeFlag);
+		}
+	});
+}
+
+
+function callDataProcessing(retrievedCsvData, convType)
+{
+	procData.processData(retrievedCsvData, function (dataProcErr, dataProcRes)
+	{
+		if (dataProcErr !== null)
+		{
+			exitProgram.callError(dataProcErr.message);
+		}
+		else
+		{
+			console.log("");
+			console.log("Territories:");
+			console.log(dataProcRes.territories);
 		}
 	});
 }

@@ -1,3 +1,5 @@
+const leadingSpaceRegex = /\s+/g;
+
 function checkObjectType(subjectVal)
 {
 	var vType = typeof subjectVal;
@@ -26,8 +28,20 @@ function checkStringType(subjectVal)
 }
 
 
+function sanitizeInputString(subjectString)
+{
+	var prepRes = subjectString;
+	
+	prepRes = prepRes.trim();
+	prepRes = prepRes.replace(leadingSpaceRegex, " ");
+	
+	return prepRes;
+}
+
+
 module.exports =
 {
 	checkObject: checkObjectType,
-	checkString: checkStringType
+	checkString: checkStringType,
+	sanitizeString: sanitizeInputString
 };

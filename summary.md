@@ -1,13 +1,15 @@
 # Summary
 
-**Commit Number:** 6
+**Commit Number:** 7
 
 **Date:** 2021-02-25
 
-**Title:** Empty CSV Error.
+**Title:** Territory Normalization
 
 **Description:**
 
-* Error message will be displayed if no rows are successfully parsed from CSV.
-* Row number will be displayed for CSV errors.
-* Added line break before exit messages.
+* Laid the basic ground-work for data normalization.
+* Added definitions for input validation errors.
+* Added definitions for maximum string length.
+* Wrote function to sanitize strings.
+* Normalized "TERRITORY" column.
