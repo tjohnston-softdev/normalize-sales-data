@@ -1,15 +1,12 @@
 # Summary
 
-**Commit Number:** 7
+**Commit Number:** 8
 
-**Date:** 2021-02-25
+**Date:** 2021-02-26
 
-**Title:** Territory Normalization
+**Title:** Normalized Country, State, City
 
 **Description:**
 
-* Laid the basic ground-work for data normalization.
-* Added definitions for input validation errors.
-* Added definitions for maximum string length.
-* Wrote function to sanitize strings.
-* Normalized "TERRITORY" column.
+* Normalized columns "COUNTRY', "STATE", "CITY"
+* Disabled script argument.

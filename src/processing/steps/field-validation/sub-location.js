@@ -2,7 +2,7 @@ const valuePrep = require("../../../common/value-prep");
 const inputErrors = require("../../../common/input-errors");
 
 
-function validateListItem(rowInd, rowObj, colName, maxLengthNum, arrayName, fullResObj)
+function validateSubLocation(rowInd, rowObj, colName, maxLengthNum, arrayName, parentLocationID, fullResObj, entryRequired)
 {
 	var givenValue = rowObj[colName];
 	var correctType = valuePrep.checkString(givenValue);
@@ -10,15 +10,19 @@ function validateListItem(rowInd, rowObj, colName, maxLengthNum, arrayName, full
 	
 	if (correctType === true && givenValue.length > 0 && givenValue.length <= maxLengthNum)
 	{
-		validationResult = addItem(givenValue, arrayName, fullResObj);
+		validationResult = addLocation(givenValue, arrayName, parentLocationID, fullResObj);
 	}
 	else if (correctType === true && givenValue.length > maxLengthNum)
 	{
 		inputErrors.setStringTooLong(fullResObj.error, colName, rowInd, maxLengthNum);
 	}
-	else if (correctType === true)
+	else if (correctType === true && entryRequired === true)
 	{
 		inputErrors.setStringEmpty(fullResObj.error, colName, rowInd);
+	}
+	else if (correctType === true)
+	{
+		validationResult = addLocation("", arrayName, parentLocationID, fullResObj);
 	}
 	else
 	{
@@ -29,22 +33,27 @@ function validateListItem(rowInd, rowObj, colName, maxLengthNum, arrayName, full
 }
 
 
-function addItem(itemString, arrName, fullRes)
+function addLocation(locationString, arrName, targetParentID, fullRes)
 {
 	var arrObj = fullRes.data[arrName];
-	var preparedItem = valuePrep.sanitizeString(itemString);
+	var preparedItem = valuePrep.sanitizeString(locationString);
 	
 	var existingIndex = 0;
-	var currentExistingItem = "";
+	var currentLocationObject = {};
+	var currentLocationName = "";
+	var currentParentID = -1;
 	var existFlag = -1;
 	
 	var addRes = -1;
+	var newLocationObject = {};
 	
 	while (existingIndex >= 0 && existingIndex < arrObj.length && existFlag === -1)
 	{
-		currentExistingItem = arrObj[existingIndex];
+		currentLocationObject = arrObj[existingIndex];
+		currentLocationName = currentLocationObject.name;
+		currentParentID = currentLocationObject.parentLocation;
 		
-		if (currentExistingItem.toLowerCase() === preparedItem.toLowerCase())
+		if (currentLocationName.toLowerCase() === preparedItem.toLowerCase() && currentParentID === targetParentID)
 		{
 			existFlag = existingIndex;
 		}
@@ -58,7 +67,8 @@ function addItem(itemString, arrName, fullRes)
 	}
 	else
 	{
-		arrObj.push(preparedItem);
+		newLocationObject = {"name": preparedItem, "parentLocation": targetParentID};
+		arrObj.push(newLocationObject);
 		addRes = arrObj.length;
 	}
 	
@@ -69,5 +79,5 @@ function addItem(itemString, arrName, fullRes)
 
 module.exports =
 {
-	validateItem: validateListItem
+	validateLocation: validateSubLocation
 };

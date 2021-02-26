@@ -63,9 +63,7 @@ function callDataProcessing(retrievedCsvData, convType)
 		}
 		else
 		{
-			console.log("");
-			console.log("Territories:");
-			console.log(dataProcRes.territories);
+			console.log(dataProcRes.cities.length);
 		}
 	});
 }
