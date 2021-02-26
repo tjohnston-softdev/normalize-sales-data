@@ -22,6 +22,22 @@ function setInvalidTypeError(errorObj, vColName, vRowIndex, vCorrectType)
 }
 
 
+function setNumberTooLargeError(errorObj, vColName, vRowIndex, vMaxValue)
+{
+	errorObj.rowNumber = vRowIndex;
+	errorObj.column = vColName;
+	errorObj.message = "cannot be larger than " + vMaxValue;
+}
+
+
+function setNumberNegativeError(errorObj, vColName, vRowIndex)
+{
+	errorObj.rowNumber = vRowIndex;
+	errorObj.column = vColName;
+	errorObj.message + "cannot be negative.";
+}
+
+
 function writeFullMessageText(errorObj)
 {
 	var writeRes = "";
@@ -47,5 +63,7 @@ module.exports =
 	setStringTooLong: setStringTooLongError,
 	setStringEmpty: setStringEmptyError,
 	setInvalidType: setInvalidTypeError,
+	setNumberTooLarge: setNumberTooLargeError,
+	setNumberNegative: setNumberNegativeError,
 	writeFullMessage: writeFullMessageText
 };

@@ -13,11 +13,8 @@ function runDataNormalization()
 	var givenFileType = fileArg.readFileType();
 	var fileTypeFlag = fileArg.prepareFileType(givenFileType);
 	
-	if (fileTypeFlag >= 0)
-	{
-		clear();
-		callInputFileCheck(fileTypeFlag);
-	}
+	clear();
+	callInputFileCheck(fileTypeFlag);
 }
 
 
@@ -63,7 +60,7 @@ function callDataProcessing(retrievedCsvData, convType)
 		}
 		else
 		{
-			console.log(dataProcRes.cities.length);
+			console.log(dataProcRes);
 		}
 	});
 }

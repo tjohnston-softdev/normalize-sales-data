@@ -1,12 +1,13 @@
 # Summary
 
-**Commit Number:** 8
+**Commit Number:** 9
 
 **Date:** 2021-02-26
 
-**Title:** Normalized Country, State, City
+**Title:** Normalized DEALSIZE, PRODUCTLINE, STATUS
 
 **Description:**
 
-* Normalized columns "COUNTRY', "STATE", "CITY"
-* Disabled script argument.
+* Normalized columns "DEALSIZE', "PRODUCTLINE", "STATUS"
+* Wrote stand-alone string validation.
+* Wrote error definitions for large, and negative numbers.
