@@ -1,29 +1,43 @@
 # Changelog
 
 **./convert.js**
-* On success, the number of product items will be displayed.
+* On success, the number of customer entries will be displayed.
 
 ---
 
-**./src/processing/steps/general-pass.js**
-* New requirements:
-	* ./field-validation/number-value
-	* ../../common/value-defaults
-	* ./field-validation/product-item
-* handleProductItemNormalization
-	* New function.
-	* Used to normalize 'Product Line' and 'MSRP' columns.
-	* Populates the 'Product' table in the database.
-* loopDataRows
-	* Declared new variable 'currentProduct'
-		* Current Product ID.
-	* Expanded to normalize the following columns:
-		* PRODUCTCODE
-		* MSRP
+**./src/processing/steps/general-pass.js - Requirements**
+* Added './field-validation/customer-item'
 
 ---
 
-**./src/processing/steps/field-validation/product-item.js**
+**./src/processing/steps/general-pass.js - New Functions**
+* 'handleCustomerNameValidation' - Validates and prepares customer name.
+* 'handleCustomerDetailsValidation' - Validates and prepares customer details.
+	* Phone number.
+	* Contact name
+	* Address
+	* Postal Code
+* 'handleCustomerNormalization' - Populates 'Customer' table.
+
+---
+
+**./src/processing/steps/general-pass.js - loopDataRows**
+* New variables:
+	* currentCustomerName
+	* currentCustomerDetails
+	* currentCustomerNumber
+* Expanded to normalize the following columns:
+	* CUSTOMERNAME
+	* PHONE
+	* CONTACTFIRSTNAME
+	* CONTACTLASTNAME
+	* ADDRESSLINE1
+	* ADDRESSLINE2
+	* POSTALCODE
+
+---
+
+**./src/processing/steps/field-validation/customer-item.js**
 * New file - Used to:
-	* Add new product items to the normalized database.
-	* Retrieve the ID of an existing product item.
+	* Add new customer entries to the normalized database.
+	* Retrieve the ID of an existing customer entry.

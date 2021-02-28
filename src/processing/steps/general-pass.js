@@ -4,6 +4,7 @@ const listItem = require("./field-validation/list-item");
 const countryItem = require("./field-validation/country-item");
 const subLocation = require("./field-validation/sub-location");
 const productItem = require("./field-validation/product-item");
+const customerItem = require("./field-validation/customer-item");
 const stringValue = require("./field-validation/string-value");
 const numberValue = require("./field-validation/number-value");
 
@@ -19,6 +20,9 @@ function loopDataRows(origData, fullResultObj)
 	var currentProductLine = -1;
 	var currentOrderStatus = -1;
 	var currentProduct = -1;
+	var currentCustomerName = {};
+	var currentCustomerDetails = {};
+	var currentCustomerNumber = -1;
 	var currentRowComplete = false;
 	
 	while (rowLoopIndex >= 0 && rowLoopIndex < origData.length && fullResultObj.canContinue === true)
@@ -31,6 +35,10 @@ function loopDataRows(origData, fullResultObj)
 		currentDealSize = -1;
 		currentProductLine = -1;
 		currentOrderStatus = -1;
+		currentProduct = -1;
+		currentCustomerName = {};
+		currentCustomerDetails = {};
+		currentCustomerNumber = -1;
 		currentRowComplete = false;
 		
 		currentTerritory = handleTerritoryNormalization(rowLoopIndex, currentRowObject, fullResultObj);
@@ -41,8 +49,11 @@ function loopDataRows(origData, fullResultObj)
 		currentProductLine = handleProductLineNormalization(rowLoopIndex, currentRowObject, currentDealSize, fullResultObj);
 		currentOrderStatus = handleOrderStatusNormalization(rowLoopIndex, currentRowObject, currentProductLine, fullResultObj);
 		currentProduct = handleProductItemNormalization(rowLoopIndex, currentRowObject, currentOrderStatus, currentProductLine, fullResultObj);
+		currentCustomerName = handleCustomerNameValidation(rowLoopIndex, currentRowObject, currentProduct, fullResultObj);
+		currentCustomerDetails = handleCustomerDetailsValidation(rowLoopIndex, currentRowObject, currentCustomerName.valid, fullResultObj);
+		currentCustomerNumber = handleCustomerNormalization(currentCustomerName, currentCustomerDetails, currentCity, fullResultObj);
 		
-		if (currentProduct > 0 && currentProduct <= fullResultObj.data.products.length)
+		if (currentCustomerNumber > 0 && currentCustomerNumber <= fullResultObj.data.customers.length)
 		{
 			currentRowComplete = true;
 		}
@@ -209,6 +220,88 @@ function handleProductItemNormalization(rowIndex, rowObject, orderStatusValue, p
 	if (msrpValid === true)
 	{
 		handleRes = productItem.addItem(productCodeObject.preparedText, msrpNumber, productLineValue, fullResult.data.products);
+	}
+	
+	return handleRes;
+}
+
+
+function handleCustomerNameValidation(rowIndex, rowObject, productItemValue, fullResult)
+{
+	var handleRes = {};
+	
+	if (productItemValue > 0 && productItemValue <= fullResult.data.products.length)
+	{
+		handleRes = stringValue.validateString(rowIndex, rowObject, "CUSTOMERNAME", valueLimits.customer, true, fullResult);
+	}
+	
+	return handleRes;
+}
+
+
+function handleCustomerDetailsValidation(rowIndex, rowObject, custNameValid, fullResult)
+{
+	var phoneNumberObject = {};
+	var firstNameObject = {};
+	var lastNameObject = {};
+	var addressObject1 = {};
+	var addressObject2 = {};
+	var postalCodeObject = {};
+	
+	var handleRes = {};
+	
+	if (custNameValid === true)
+	{
+		phoneNumberObject = stringValue.validateString(rowIndex, rowObject, "PHONE", valueLimits.phoneNumber, true, fullResult);
+	}
+	
+	if (phoneNumberObject.valid === true)
+	{
+		firstNameObject = stringValue.validateString(rowIndex, rowObject, "CONTACTFIRSTNAME", valueLimits.contact, true, fullResult);
+	}
+	
+	if (firstNameObject.valid === true)
+	{
+		lastNameObject = stringValue.validateString(rowIndex, rowObject, "CONTACTLASTNAME", valueLimits.contact, false, fullResult);
+	}
+	
+	if (lastNameObject.valid === true)
+	{
+		addressObject1 = stringValue.validateString(rowIndex, rowObject, "ADDRESSLINE1", valueLimits.address, true, fullResult);
+	}
+	
+	if (addressObject1.valid === true)
+	{
+		addressObject2 = stringValue.validateString(rowIndex, rowObject, "ADDRESSLINE2", valueLimits.address, false, fullResult);
+	}
+	
+	if (addressObject2.valid === true)
+	{
+		postalCodeObject = stringValue.validateString(rowIndex, rowObject, "POSTALCODE", valueLimits.postalCode, false, fullResult);
+	}
+	
+	if (postalCodeObject.valid === true)
+	{
+		handleRes["prepPhone"] = phoneNumberObject.preparedText;
+		handleRes["prepFirstName"] = firstNameObject.preparedText;
+		handleRes["prepLastName"] = lastNameObject.preparedText;
+		handleRes["prepAddressLine1"] = addressObject1.preparedText;
+		handleRes["prepAddressLine2"] = addressObject2.preparedText;
+		handleRes["prepPostalCode"] = postalCodeObject.preparedText;
+		handleRes["successful"] = true;
+	}
+	
+	return handleRes;
+}
+
+
+function handleCustomerNormalization(custNameObj, custDetailsObj, cityValue, fullResult)
+{
+	var handleRes = -1;
+	
+	if (custDetailsObj.successful === true)
+	{
+		handleRes = customerItem.addCustomer(custNameObj, custDetailsObj, cityValue, fullResult.data.customers);
 	}
 	
 	return handleRes;

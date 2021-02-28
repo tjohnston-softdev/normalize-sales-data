@@ -1,11 +1,18 @@
 # Summary
 
-**Commit Number:** 12
+**Commit Number:** 13
 
 **Date:** 2021-02-28
 
-**Title:** Normalized PRODUCTCODE, MSRP
+**Title:** Normalized Customers
 
 **Description:**
 
-Normalized the 'PRODUCTCODE' and 'MSRP' columns.
+* Normalized the following columns:
+	* CUSTOMERNAME
+	* PHONE
+	* CONTACTFIRSTNAME
+	* CONTACTLASTNAME
+	* ADDRESSLINE1
+	* ADDRESSLINE2
+	* POSTALCODE
