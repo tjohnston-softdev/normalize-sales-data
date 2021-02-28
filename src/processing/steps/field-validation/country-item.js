@@ -1,37 +1,6 @@
-const valueLimits = require("../../../common/value-limits");
 const valuePrep = require("../../../common/value-prep");
-const inputErrors = require("../../../common/input-errors");
-const colName = "COUNTRY";
 
-function validateCountryItem(rowInd, rowObj, territoryID, fullResObj)
-{
-	var givenValue = rowObj[colName];
-	var correctType = valuePrep.checkString(givenValue);
-	var validationResult = -1;
-	
-	if (correctType === true && givenValue.length > 0 && givenValue.length <= valueLimits.country)
-	{
-		validationResult = addCounry(givenValue, fullResObj.data.countries, territoryID);
-	}
-	else if (correctType === true && givenValue.length > valueLimits.country)
-	{
-		inputErrors.setStringTooLong(fullResObj.error, colName, rowInd, valueLimits.country);
-	}
-	else if (correctType === true)
-	{
-		inputErrors.setStringEmpty(fullResObj.error, colName, rowInd);
-	}
-	else
-	{
-		inputErrors.setInvalidType(fullResObj.error, colName, rowInd, "string");
-	}
-	
-	return validationResult;
-}
-
-
-
-function addCounry(countryString, countryArr, terrID)
+function addCountryItem(countryString, countryArr, terrID)
 {
 	var preparedItem = valuePrep.sanitizeString(countryString);
 	
@@ -75,5 +44,5 @@ function addCounry(countryString, countryArr, terrID)
 
 module.exports =
 {
-	validateCountry: validateCountryItem
+	addCountry: addCountryItem
 };

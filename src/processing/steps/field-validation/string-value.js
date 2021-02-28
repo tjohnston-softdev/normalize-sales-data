@@ -2,11 +2,11 @@ const valuePrep = require("../../../common/value-prep");
 const inputErrors = require("../../../common/input-errors");
 
 
-function validateStringText(rowInd, rowObj, colName, maxLengthNum, fullResObj)
+function validateStringText(rowInd, rowObj, colName, maxLengthNum, entryRequired, fullResObj)
 {
 	var givenValue = rowObj[colName];
 	var validationResult = defineStringValidationResult();
-	var correctType = checkStringType(givenValue, rowInd, colName, fullResObj);
+	var correctType = checkType(givenValue, rowInd, colName, fullResObj);
 	
 	if (correctType === true)
 	{
@@ -31,7 +31,7 @@ function checkType(sValue, sRowIndex, sColName, fullRes)
 }
 
 
-function checkLength(sLength, sRowIndex, sColName, maxLength, fullRes)
+function checkLength(sLength, sRowIndex, sColName, maxLength, entryReq, fullRes)
 {
 	var checkRes = false;
 	
@@ -43,9 +43,13 @@ function checkLength(sLength, sRowIndex, sColName, maxLength, fullRes)
 	{
 		inputErrors.setStringTooLong(fullRes.error, sColName, sRowIndex, maxLengthNum);
 	}
-	else
+	else if (entryReq === true)
 	{
 		inputErrors.setStringEmpty(fullRes.error, sColName, sRowIndex);
+	}
+	else
+	{
+		checkRes = true;
 	}
 	
 	return checkRes;
