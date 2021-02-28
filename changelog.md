@@ -1,43 +1,27 @@
 # Changelog
 
 **./convert.js**
-* On success, the number of customer entries will be displayed.
+* On success, all normalized data will be displayed.
 
 ---
 
-**./src/processing/steps/general-pass.js - Requirements**
-* Added './field-validation/customer-item'
+**./src/processing/steps/general-pass.js**
+* Added requirement for './field-validation/remain-cols'
+* Wrote new function 'checkRowComplete'
+	* Used to check whether the current row has been successfully normalized.
+	* Based on Customer ID number.
+* loopDataRows
+	* Declared new variable 'currentRemainingData'
+		* Object that contains remaining order-related data and Foreign Key numbers.
+		* Unlike other loop variables, this will not be assigned until all normalization is complete.
+	* Removed the 'currentCustomerNumber' IF condition.
+	* Rewrote the 'currentRowComplete' IF condition:
+		* If the row is complete, remove unnecessary data from row object.
+		* Otherwise, stop looping rows.
 
 ---
 
-**./src/processing/steps/general-pass.js - New Functions**
-* 'handleCustomerNameValidation' - Validates and prepares customer name.
-* 'handleCustomerDetailsValidation' - Validates and prepares customer details.
-	* Phone number.
-	* Contact name
-	* Address
-	* Postal Code
-* 'handleCustomerNormalization' - Populates 'Customer' table.
-
----
-
-**./src/processing/steps/general-pass.js - loopDataRows**
-* New variables:
-	* currentCustomerName
-	* currentCustomerDetails
-	* currentCustomerNumber
-* Expanded to normalize the following columns:
-	* CUSTOMERNAME
-	* PHONE
-	* CONTACTFIRSTNAME
-	* CONTACTLASTNAME
-	* ADDRESSLINE1
-	* ADDRESSLINE2
-	* POSTALCODE
-
----
-
-**./src/processing/steps/field-validation/customer-item.js**
-* New file - Used to:
-	* Add new customer entries to the normalized database.
-	* Retrieve the ID of an existing customer entry.
+**./src/processing/steps/field-validation/remain-cols.js**
+* New file. - Used to:
+	* Remove unnecessary data from row objects.
+	* Save Foreign Key numbers necessary for further normalization.

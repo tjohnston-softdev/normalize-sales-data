@@ -7,6 +7,7 @@ const productItem = require("./field-validation/product-item");
 const customerItem = require("./field-validation/customer-item");
 const stringValue = require("./field-validation/string-value");
 const numberValue = require("./field-validation/number-value");
+const remainCols = require("./field-validation/remain-cols");
 
 function loopDataRows(origData, fullResultObj)
 {
@@ -24,6 +25,7 @@ function loopDataRows(origData, fullResultObj)
 	var currentCustomerDetails = {};
 	var currentCustomerNumber = -1;
 	var currentRowComplete = false;
+	var currentRemainingData = {};
 	
 	while (rowLoopIndex >= 0 && rowLoopIndex < origData.length && fullResultObj.canContinue === true)
 	{
@@ -40,6 +42,7 @@ function loopDataRows(origData, fullResultObj)
 		currentCustomerDetails = {};
 		currentCustomerNumber = -1;
 		currentRowComplete = false;
+		currentRemainingData = {};
 		
 		currentTerritory = handleTerritoryNormalization(rowLoopIndex, currentRowObject, fullResultObj);
 		currentCountry = handleCountryNormalization(rowLoopIndex, currentRowObject, currentTerritory, fullResultObj);
@@ -52,14 +55,16 @@ function loopDataRows(origData, fullResultObj)
 		currentCustomerName = handleCustomerNameValidation(rowLoopIndex, currentRowObject, currentProduct, fullResultObj);
 		currentCustomerDetails = handleCustomerDetailsValidation(rowLoopIndex, currentRowObject, currentCustomerName.valid, fullResultObj);
 		currentCustomerNumber = handleCustomerNormalization(currentCustomerName, currentCustomerDetails, currentCity, fullResultObj);
+		currentRowComplete = checkRowComplete(currentCustomerNumber, fullResultObj.data.customers.length);
+		currentRemainingData = {};
 		
-		if (currentCustomerNumber > 0 && currentCustomerNumber <= fullResultObj.data.customers.length)
+		
+		if (currentRowComplete === true)
 		{
-			currentRowComplete = true;
+			currentRemainingData = remainCols.compileRemainingColumns(currentRowObject, currentOrderStatus, currentProduct, currentCustomerNumber, currentDealSize);
+			origData[rowLoopIndex] = currentRemainingData;
 		}
-		
-		
-		if (currentRowComplete !== true)
+		else
 		{
 			fullResultObj.canContinue = false;
 		}
@@ -305,6 +310,19 @@ function handleCustomerNormalization(custNameObj, custDetailsObj, cityValue, ful
 	}
 	
 	return handleRes;
+}
+
+
+function checkRowComplete(custNum, custCount)
+{
+	var checkRes = false;
+	
+	if (custNum > 0 && custNum <= custCount)
+	{
+		checkRes = true;
+	}
+	
+	return checkRes;
 }
 
 

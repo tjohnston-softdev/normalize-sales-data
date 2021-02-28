@@ -1,18 +1,11 @@
 # Summary
 
-**Commit Number:** 13
+**Commit Number:** 14
 
 **Date:** 2021-02-28
 
-**Title:** Normalized Customers
+**Title:** General Pass Complete
 
 **Description:**
 
-* Normalized the following columns:
-	* CUSTOMERNAME
-	* PHONE
-	* CONTACTFIRSTNAME
-	* CONTACTLASTNAME
-	* ADDRESSLINE1
-	* ADDRESSLINE2
-	* POSTALCODE
+General Pass normalization is now complete.
