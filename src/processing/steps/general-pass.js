@@ -1,8 +1,11 @@
 const valueLimits = require("../../common/value-limits");
+const valueDefaults = require("../../common/value-defaults");
 const listItem = require("./field-validation/list-item");
 const countryItem = require("./field-validation/country-item");
 const subLocation = require("./field-validation/sub-location");
+const productItem = require("./field-validation/product-item");
 const stringValue = require("./field-validation/string-value");
+const numberValue = require("./field-validation/number-value");
 
 function loopDataRows(origData, fullResultObj)
 {
@@ -15,6 +18,7 @@ function loopDataRows(origData, fullResultObj)
 	var currentDealSize = -1;
 	var currentProductLine = -1;
 	var currentOrderStatus = -1;
+	var currentProduct = -1;
 	var currentRowComplete = false;
 	
 	while (rowLoopIndex >= 0 && rowLoopIndex < origData.length && fullResultObj.canContinue === true)
@@ -36,8 +40,9 @@ function loopDataRows(origData, fullResultObj)
 		currentDealSize = handleDealSizeNormalization(rowLoopIndex, currentRowObject, currentCity, fullResultObj);
 		currentProductLine = handleProductLineNormalization(rowLoopIndex, currentRowObject, currentDealSize, fullResultObj);
 		currentOrderStatus = handleOrderStatusNormalization(rowLoopIndex, currentRowObject, currentProductLine, fullResultObj);
+		currentProduct = handleProductItemNormalization(rowLoopIndex, currentRowObject, currentOrderStatus, currentProductLine, fullResultObj);
 		
-		if (currentOrderStatus > 0 && currentOrderStatus <= fullResultObj.data.orderStatusModes.length)
+		if (currentProduct > 0 && currentProduct <= fullResultObj.data.products.length)
 		{
 			currentRowComplete = true;
 		}
@@ -176,6 +181,34 @@ function handleOrderStatusNormalization(rowIndex, rowObject, productLineValue, f
 	if (stringObject.valid === true)
 	{
 		handleRes = listItem.addItem(stringObject.preparedText, "orderStatusModes", fullResult);
+	}
+	
+	return handleRes;
+}
+
+
+function handleProductItemNormalization(rowIndex, rowObject, orderStatusValue, productLineValue, fullResult)
+{
+	var productCodeObject = {};
+	var msrpNumber = NaN;
+	var msrpValid = false;
+	
+	var handleRes = -1;
+	
+	if (orderStatusValue > 0 && orderStatusValue <= fullResult.data.orderStatusModes.length)
+	{
+		productCodeObject = stringValue.validateString(rowIndex, rowObject, "PRODUCTCODE", valueLimits.productCode, true, fullResult);
+	}
+	
+	if (productCodeObject.valid === true)
+	{
+		msrpNumber = numberValue.validateDecimal(rowIndex, rowObject, "MSRP", valueLimits.currency, valueDefaults.msrp, true, fullResult);
+		msrpValid = Number.isFinite(msrpNumber);
+	}
+	
+	if (msrpValid === true)
+	{
+		handleRes = productItem.addItem(productCodeObject.preparedText, msrpNumber, productLineValue, fullResult.data.products);
 	}
 	
 	return handleRes;

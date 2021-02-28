@@ -1,11 +1,11 @@
 # Summary
 
-**Commit Number:** 11
+**Commit Number:** 12
 
 **Date:** 2021-02-28
 
-**Title:** Removed Redundant String Validation
+**Title:** Normalized PRODUCTCODE, MSRP
 
 **Description:**
 
-Removed and merged redundant string validation code.
+Normalized the 'PRODUCTCODE' and 'MSRP' columns.
