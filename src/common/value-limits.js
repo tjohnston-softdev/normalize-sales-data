@@ -12,6 +12,7 @@ const phoneNumberLimit = 20;
 const contactLimit = 32;
 const addressLimit = 128;
 const postalCodeLimit = 16;
+const orderNumberLimit = 32767;
 const orderItemLimit = 255;
 const orderQuantityLimit = 255;
 
@@ -32,6 +33,7 @@ module.exports =
 	contact: contactLimit,
 	address: addressLimit,
 	postalCode: postalCodeLimit,
+	orderNumber: orderNumberLimit,
 	orderItem: orderItemLimit,
 	orderQuantity: orderQuantityLimit
 };

@@ -1,38 +1,92 @@
-const valueLimits = require("../../../common/value-limits");
 const valuePrep = require("../../../common/value-prep");
 const inputErrors = require("../../../common/input-errors");
 
 
-function validateCurrencyValue(rowInd, rowObj, colName, fullResObj)
+function validateDecimalNumber(rowInd, rowObj, colName, maxDecimal, defaultDecimal, zeroNumAllowed, fullResObj)
 {
-	var givenValue = rowObj[colName];
-	var castNumber = castNumberString(givenValue);
-	var validNumber = Number.isFinite(castNumber);
-	var validationResult = NaN;
+	var writtenString = rowObj[colName];
+	var preparedValue = castNumberString(writtenString);
+	var numType = Number.isFinite(preparedValue);
 	
-	
-	if (validNumber === true && castNumber >= 0 && castNumber <= valueLimits.currency)
-	{
-		validationResult = castNumber;
-	}
-	else if (validNumber === true && castNumber > valueLimits.currency)
-	{
-		
-	}
+	var validationResult = checkNumber(preparedValue, rowInd, colName, maxDecimal, defaultDecimal, numType, "number", zeroNumAllowed, fullResObj);
+	return validationResult;
 }
 
 
-function castNumberString(sValue)
+function validateWholeNumber(rowInd, rowObj, colName, maxWhole, defaultWhole, zeroNumAllowed, fullResObj)
 {
-	var stringWritten = valuePrep.checkString(sValue);
+	var writtenString = rowObj[colName];
+	var preparedValue = castNumberString(writtenString);
+	var numType = Number.isInteger(preparedValue);
+	
+	var validationResult = checkNumber(preparedValue, rowInd, colName, maxWhole, defaultWhole, numType, "whole number", zeroNumAllowed, fullResObj);
+	return validationResult;
+}
+
+
+function castNumberString(origStr)
+{
+	var stringType = valuePrep.checkString(origStr);
 	var preparedString = "";
 	var castRes = NaN;
 	
-	if (stringWritten === true)
+	if (stringType === true)
 	{
-		preparedString = valuePrep.sanitizeString(sValue);
+		preparedString = valuePrep.sanitizeString(origStr);
+	}
+	
+	if (preparedString.length > 0)
+	{
 		castRes = Number(preparedString);
 	}
 	
 	return castRes;
 }
+
+
+
+function checkNumber(nValue, nRowIndex, nColName, nMaximum, nDefault, typeState, typeString, allowZero, fullRes)
+{
+	var defaultGiven = Number.isFinite(nDefault);
+	var checkRes = NaN;
+	
+	if (typeState === true && nValue > 0 && nValue <= nMaximum)
+	{
+		checkRes = nValue;
+	}
+	else if (typeState === true && nValue > nMaximum)
+	{
+		inputErrors.setNumberTooLarge(fullRes.error, nColName, nRowIndex, nMaximum);
+	}
+	else if (typeState === true && nValue === 0 && allowZero === true)
+	{
+		checkRes = 0;
+	}
+	else if (typeState === true && nValue === 0)
+	{
+		inputErrors.setNumberZero(fullRes.error, nColName, nRowIndex);
+	}
+	else if (typeState === true)
+	{
+		inputErrors.setNumberNegative(fullRes.error, nColName, nRowIndex);
+	}
+	else if (defaultGiven === true)
+	{
+		checkRes = nDefault;
+	}
+	else
+	{
+		inputErrors.setInvalidType(fullRes.error, nColName, nRowIndex, typeString);
+	}
+	
+	return checkRes;
+}
+
+
+
+
+module.exports =
+{
+	validateDecimal: validateDecimalNumber,
+	validateWhole: validateWholeNumber
+};

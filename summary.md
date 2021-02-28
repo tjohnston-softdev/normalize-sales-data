@@ -1,13 +1,14 @@
 # Summary
 
-**Commit Number:** 9
+**Commit Number:** 10
 
-**Date:** 2021-02-26
+**Date:** 2021-02-28
 
-**Title:** Normalized DEALSIZE, PRODUCTLINE, STATUS
+**Title:** Number Validation
 
 **Description:**
 
-* Normalized columns "DEALSIZE', "PRODUCTLINE", "STATUS"
-* Wrote stand-alone string validation.
-* Wrote error definitions for large, and negative numbers.
+* Wrote functions to validate number values.
+* Added support for default numbers.
+* Added 'Zero Number' error.
+* Specified maximum Order ID value (SMALLINT)

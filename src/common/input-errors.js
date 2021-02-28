@@ -38,6 +38,14 @@ function setNumberNegativeError(errorObj, vColName, vRowIndex)
 }
 
 
+function setNumberZeroError(errorObj, vColName, vRowIndex)
+{
+	errorObj.rowNumber = vRowIndex;
+	errorObj.column = vColName;
+	errorObj.message = "cannot be zero.";
+}
+
+
 function writeFullMessageText(errorObj)
 {
 	var writeRes = "";
@@ -65,5 +73,6 @@ module.exports =
 	setInvalidType: setInvalidTypeError,
 	setNumberTooLarge: setNumberTooLargeError,
 	setNumberNegative: setNumberNegativeError,
+	setNumberZero: setNumberZeroError,
 	writeFullMessage: writeFullMessageText
 };
