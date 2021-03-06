@@ -1,5 +1,5 @@
-const valuePrep = require("../../../common/value-prep");
-const inputErrors = require("../../../common/input-errors");
+const valuePrep = require("../../common/value-prep");
+const inputErrors = require("../../common/input-errors");
 
 
 function validateDecimalNumber(rowInd, rowObj, colName, maxDecimal, defaultDecimal, zeroNumAllowed, fullResObj)

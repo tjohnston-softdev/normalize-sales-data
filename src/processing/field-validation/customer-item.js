@@ -1,4 +1,4 @@
-const valuePrep = require("../../../common/value-prep");
+const valuePrep = require("../../common/value-prep");
 
 
 function addCustomerItem(nameObject, detailsObject, cityLocationID, customerArr)

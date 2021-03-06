@@ -1,4 +1,4 @@
-const exitProgram = require("../common/exit-program");
+const exitProgram = require("./common/exit-program");
 
 function readFileTypeArgument()
 {

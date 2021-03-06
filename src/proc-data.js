@@ -1,7 +1,7 @@
 const ora = require("ora");
-const normRes = require("../common/norm-res");
-const inputErrors = require("../common/input-errors");
-const generalPass = require("./steps/general-pass");
+const normRes = require("./common/norm-res");
+const inputErrors = require("./common/input-errors");
+const generalPass = require("./processing/general-pass");
 
 
 function processSalesData(originalDataSet, salesDataCallback)

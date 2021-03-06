@@ -1,7 +1,7 @@
 const fs = require("fs");
 const ora = require("ora");
-const fsErrors = require("../common/fs-errors");
-const sourceFile = require("../common/source-file");
+const fsErrors = require("./common/fs-errors");
+const sourceFile = require("./common/source-file");
 const maxSizeBytes = 5000000;
 
 

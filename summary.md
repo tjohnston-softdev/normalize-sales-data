@@ -1,11 +1,11 @@
 # Summary
 
-**Commit Number:** 14
+**Commit Number:** 15
 
-**Date:** 2021-02-28
+**Date:** 2021-03-06
 
-**Title:** General Pass Complete
+**Title:** Structure Change
 
 **Description:**
 
-General Pass normalization is now complete.
+Consolidated 'src' folder structure to remove unnecessary nesting.

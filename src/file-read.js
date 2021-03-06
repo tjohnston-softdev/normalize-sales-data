@@ -1,10 +1,10 @@
 const fs = require("fs");
 const papaparse = require("papaparse");
 const ora = require("ora");
-const fsErrors = require("../common/fs-errors");
-const sourceFile = require("../common/source-file");
-const valuePrep = require("../common/value-prep");
-const csvErrors = require("../common/csv-errors");
+const fsErrors = require("./common/fs-errors");
+const sourceFile = require("./common/source-file");
+const valuePrep = require("./common/value-prep");
+const csvErrors = require("./common/csv-errors");
 
 
 function readInputDataFile(inputReadCallback)

@@ -1,5 +1,5 @@
-const valuePrep = require("../../../common/value-prep");
-const inputErrors = require("../../../common/input-errors");
+const valuePrep = require("../../common/value-prep");
+const inputErrors = require("../../common/input-errors");
 
 
 function validateStringText(rowInd, rowObj, colName, maxLengthNum, entryRequired, fullResObj)

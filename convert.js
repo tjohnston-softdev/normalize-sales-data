@@ -1,9 +1,9 @@
 const clear = require("clear");
 const exitProgram = require("./src/common/exit-program");
-const fileArg = require("./src/input/file-arg");
-const fileCheck = require("./src/input/file-check");
-const fileRead = require("./src/input/file-read");
-const procData = require("./src/processing/proc-data");
+const fileArg = require("./src/file-arg");
+const fileCheck = require("./src/file-check");
+const fileRead = require("./src/file-read");
+const procData = require("./src/proc-data");
 
 runDataNormalization();
 
@@ -60,7 +60,9 @@ function callDataProcessing(retrievedCsvData, convType)
 		}
 		else
 		{
-			console.log(dataProcRes);
+			console.log("");
+			console.log("Products: " + dataProcRes.products.length);
+			console.log("Customers: " + dataProcRes.customers.length);
 		}
 	});
 }

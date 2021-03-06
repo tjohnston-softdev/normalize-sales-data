@@ -1,5 +1,5 @@
-const valueLimits = require("../../common/value-limits");
-const valueDefaults = require("../../common/value-defaults");
+const valueLimits = require("../common/value-limits");
+const valueDefaults = require("../common/value-defaults");
 const listItem = require("./field-validation/list-item");
 const countryItem = require("./field-validation/country-item");
 const subLocation = require("./field-validation/sub-location");

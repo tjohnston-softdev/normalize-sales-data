@@ -1,27 +1,37 @@
 # Changelog
 
+**./src/input/**
+* Deleted folder - Moved contents to parent.
+
+---
+
+**./src/processing/proc-data.js**
+* Moved to parent folder
+
+---
+
+**./src/processing/steps/**
+* Deleted folder - Moved contents to parent folder.
+
+---
+
+**Requirement Paths**
+* Updated the requirement paths in the following files:
+	* ./convert.js
+	* ./src/file-arg.js
+	* ./src/file-check.js
+	* ./src/file-read.js
+	* ./src/proc-data.js
+	* ./src/processing/general-pass.js
+	* ./src/processing/field-validation/country-item.js
+	* ./src/processing/field-validation/customer-item.js
+	* ./src/processing/field-validation/list-item.js
+	* ./src/processing/field-validation/number-value.js
+	* ./src/processing/field-validation/product-item.js
+	* ./src/processing/field-validation/string-value.js
+	* ./src/processing/field-validation/sub-location.js
+
+---
+
 **./convert.js**
-* On success, all normalized data will be displayed.
-
----
-
-**./src/processing/steps/general-pass.js**
-* Added requirement for './field-validation/remain-cols'
-* Wrote new function 'checkRowComplete'
-	* Used to check whether the current row has been successfully normalized.
-	* Based on Customer ID number.
-* loopDataRows
-	* Declared new variable 'currentRemainingData'
-		* Object that contains remaining order-related data and Foreign Key numbers.
-		* Unlike other loop variables, this will not be assigned until all normalization is complete.
-	* Removed the 'currentCustomerNumber' IF condition.
-	* Rewrote the 'currentRowComplete' IF condition:
-		* If the row is complete, remove unnecessary data from row object.
-		* Otherwise, stop looping rows.
-
----
-
-**./src/processing/steps/field-validation/remain-cols.js**
-* New file. - Used to:
-	* Remove unnecessary data from row objects.
-	* Save Foreign Key numbers necessary for further normalization.
+* On successful result, display the number of products and customers.
