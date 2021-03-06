@@ -1,16 +1,15 @@
 # Summary
 
-**Commit Number:** 17
+**Commit Number:** 18
 
 **Date:** 2021-03-06
 
-**Title:** ORDERDATE
+**Title:** QUANTITYORDERED, PRICEEACH
 
 **Description:**
 
-* Started normalizing order details.
-	* Order entry objects are now written.
-	* Order Date (ORDERDATE) is normalized.
-* Revised order data sorting to ensure that general pass was successful.
-* Wrote date validation.
-* Added date format error.
+* Normalized the following columns:
+	* QUANTITYORDERED
+	* PRICEEACH
+* Column normalization is complete.
+* The first item of each order is currently ignored due to bugs in the object loop structure.

@@ -26,11 +26,16 @@ function loopDataRows(prepData, fullResultObj)
 		currentQuantity = -1;
 		currentPrice = -1;
 		currentDate = {};
+		currentAddNumber = -1;
 		currentRowComplete = false;
+		
+		currentQuantity = handleQuantityValidation(rowLoopIndex, currentRow, fullResultObj);
+		currentPrice = handlePriceValidation(rowLoopIndex, currentRow, currentQuantity, fullResultObj);
 		
 		if (currentRow.orderNumber === loopOrderNumber)
 		{
-			currentRowComplete = true;
+			currentAddNumber = handleItemAdd(rowLoopIndex, currentRow, currentQuantity, currentPrice, fullResultObj);
+			currentRowComplete = checkRowComplete(currentAddNumber, fullResultObj.data.orderItems.length);
 		}
 		else if (currentRow.orderNumber > loopOrderNumber)
 		{
@@ -45,6 +50,7 @@ function loopDataRows(prepData, fullResultObj)
 			currentRowComplete = true;
 		}
 		
+		
 		if (currentRowComplete !== true)
 		{
 			fullResultObj.canContinue = false;
@@ -52,6 +58,28 @@ function loopDataRows(prepData, fullResultObj)
 		
 		rowLoopIndex = rowLoopIndex + 1;
 	}
+}
+
+
+function handleQuantityValidation(rowIndex, rowObject, fullResult)
+{
+	var handleRes = -1;
+	handleRes = numberValue.validateWhole(rowIndex, rowObject, "QUANTITYORDERED", valueLimits.orderQuantity, valueDefaults.quantityOrdered, false, fullResult);
+	return handleRes;
+}
+
+
+function handlePriceValidation(rowIndex, rowObject, quantityValue, fullResult)
+{
+	var quantityValid = Number.isInteger(quantityValue);
+	var handleRes = -1;
+	
+	if (quantityValid === true)
+	{
+		handleRes = numberValue.validateDecimal(rowIndex, rowObject, "PRICEEACH", valueLimits.currency, valueDefaults.priceEach, true, fullResult);
+	}
+	
+	return handleRes;
 }
 
 
@@ -68,7 +96,32 @@ function handleOrderAdd(rowIndex, rowObject, orderDateValidation, fullResult)
 		pDate = orderDateValidation.dateObject;
 		pStatus = rowObject.statusNumber;
 		
-		handleRes = orderDetails.addOrderEntry(rowObject.orderNumber, pCustomer, pDate, pStatus, fullResult.data.orderEntries);
+		handleRes = orderDetails.addEntry(rowObject.orderNumber, pCustomer, pDate, pStatus, fullResult.data.orderEntries);
+	}
+	
+	return handleRes;
+}
+
+
+function handleItemAdd(rowIndex, rowObject, quantityValue, priceValue, fullResult)
+{
+	var priceValid = Number.isFinite(priceValue);
+	
+	var pOrder = -1;
+	var pLine = -1;
+	var pProduct = -1;
+	var pDeal = -1;
+	
+	var handleRes = -1;
+	
+	if (priceValid === true)
+	{
+		pOrder = rowObject.orderNumber;
+		pLine = rowObject.lineNumber;
+		pProduct = rowObject.productNumber;
+		pDeal = rowObject.dealSizeNumber;
+		
+		handleRes = orderDetails.addItem(pOrder, pLine, pProduct, quantityValue, priceValue, pDeal, fullResult.data.orderItems);
 	}
 	
 	return handleRes;
