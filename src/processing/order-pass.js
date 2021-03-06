@@ -14,7 +14,9 @@ function loopDataRows(prepData, fullResultObj)
 	var currentQuantity = -1;
 	var currentPrice = -1;
 	var currentDate = {};
-	var currentAddNumber = -1;
+	var currentOrderAdd = -1;
+	var currentLineAllowed = false;
+	var currentLineAdd = -1;
 	var currentRowComplete = false;
 	
 	var loopOrderNumber = 0;
@@ -26,7 +28,9 @@ function loopDataRows(prepData, fullResultObj)
 		currentQuantity = -1;
 		currentPrice = -1;
 		currentDate = {};
-		currentAddNumber = -1;
+		currentOrderAdd = -1;
+		currentLineAllowed = false;
+		currentLineAdd = -1;
 		currentRowComplete = false;
 		
 		currentQuantity = handleQuantityValidation(rowLoopIndex, currentRow, fullResultObj);
@@ -34,16 +38,19 @@ function loopDataRows(prepData, fullResultObj)
 		
 		if (currentRow.orderNumber === loopOrderNumber)
 		{
-			currentAddNumber = handleItemAdd(rowLoopIndex, currentRow, currentQuantity, currentPrice, fullResultObj);
-			currentRowComplete = checkRowComplete(currentAddNumber, fullResultObj.data.orderItems.length);
+			currentLineAllowed = Number.isFinite(currentPrice);
+			currentLineAdd = handleItemAdd(rowLoopIndex, currentRow, currentQuantity, currentPrice, fullResultObj, currentLineAllowed);
+			currentRowComplete = checkAdd(currentLineAdd, fullResultObj.data.orderItems.length);
 		}
 		else if (currentRow.orderNumber > loopOrderNumber)
 		{
 			loopOrderNumber = currentRow.orderNumber;
 			
 			currentDate = dateValue.validateDate(currentIndex, currentRow, "ORDERDATE", fullResultObj);
-			currentAddNumber = handleOrderAdd(currentIndex, currentRow, currentDate, fullResultObj);
-			currentRowComplete = checkRowComplete(currentAddNumber, fullResultObj.data.orderEntries.length);
+			currentOrderAdd = handleOrderAdd(currentIndex, currentRow, currentDate, fullResultObj);
+			currentLineAllowed = checkAdd(currentOrderAdd, fullResultObj.data.orderEntries.length);
+			currentLineAdd = handleItemAdd(rowLoopIndex, currentRow, currentQuantity, currentPrice, fullResultObj, currentLineAllowed);
+			currentRowComplete = checkAdd(currentLineAdd, fullResultObj.data.orderItems.length);
 		}
 		else
 		{
@@ -103,10 +110,8 @@ function handleOrderAdd(rowIndex, rowObject, orderDateValidation, fullResult)
 }
 
 
-function handleItemAdd(rowIndex, rowObject, quantityValue, priceValue, fullResult)
+function handleItemAdd(rowIndex, rowObject, quantityValue, priceValue, fullResult, allowAdd)
 {
-	var priceValid = Number.isFinite(priceValue);
-	
 	var pOrder = -1;
 	var pLine = -1;
 	var pProduct = -1;
@@ -114,7 +119,7 @@ function handleItemAdd(rowIndex, rowObject, quantityValue, priceValue, fullResul
 	
 	var handleRes = -1;
 	
-	if (priceValid === true)
+	if (allowAdd === true)
 	{
 		pOrder = rowObject.orderNumber;
 		pLine = rowObject.lineNumber;
@@ -128,7 +133,7 @@ function handleItemAdd(rowIndex, rowObject, quantityValue, priceValue, fullResul
 }
 
 
-function checkRowComplete(addNum, arrLength)
+function checkAdd(addNum, arrLength)
 {
 	var checkRes = false;
 	
