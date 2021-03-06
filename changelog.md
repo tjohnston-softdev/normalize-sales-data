@@ -1,37 +1,51 @@
 # Changelog
 
-**./src/input/**
-* Deleted folder - Moved contents to parent.
-
----
-
-**./src/processing/proc-data.js**
-* Moved to parent folder
-
----
-
-**./src/processing/steps/**
-* Deleted folder - Moved contents to parent folder.
-
----
-
-**Requirement Paths**
-* Updated the requirement paths in the following files:
-	* ./convert.js
-	* ./src/file-arg.js
-	* ./src/file-check.js
-	* ./src/file-read.js
-	* ./src/proc-data.js
-	* ./src/processing/general-pass.js
-	* ./src/processing/field-validation/country-item.js
-	* ./src/processing/field-validation/customer-item.js
-	* ./src/processing/field-validation/list-item.js
-	* ./src/processing/field-validation/number-value.js
-	* ./src/processing/field-validation/product-item.js
-	* ./src/processing/field-validation/string-value.js
-	* ./src/processing/field-validation/sub-location.js
-
----
-
 **./convert.js**
-* On successful result, display the number of products and customers.
+* On successful result, display first row data.
+
+---
+
+**./src/processing/general-pass.js**
+* loopDataRows
+	* Declared variables:
+		* currentOrderNumber
+		* currentLine
+	* Renamed variables:
+		* 'currentRemainingData' to 'currentData'
+		* 'currentRowObject' to 'currentRow'
+	* Expanded to validate:
+		* Order number
+		* Order line number
+* New functions:
+	* 'handleOrderNumberValidation' - Validates order number.
+	* 'handleLineNumberValidation' - Validates order line number.
+* Rewrote the 'checkRowComplete' function to check the order line number instead of customer.
+
+---
+
+**./src/processing/order-sort.js**
+* New file - Used to sort parsed rows by order.
+	* ORDERNUMBER
+	* ORDERLINENUMBER
+
+---
+
+**./src/processing/field-validation/remain-cols.js**
+* Added new parameters:
+	* orderID
+	* lineNum
+* Removed variables:
+	* localOrderNumber
+	* localLineNumber
+* Result properties:
+	* Removed 'orderNumCol'
+	* Removed 'lineCol'
+	* Added 'orderNumber' - Uses 'orderID'
+	* Added 'lineNumber' - Uses 'lineNum'
+* Changed public name from 'compileRemainingColumns' to 'compileData'
+
+---
+
+**./src/proc-data.js**
+* Added requirement for './processing/order-sort'
+* Called 'orderSort' in 'coordinateDataProcessing' after the general pass.

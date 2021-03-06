@@ -1,19 +1,17 @@
-function compileRemainingColumnData(origRowObject, statusID, productID, customerID, dealSizeID)
+function compileRemainingColumnData(origRowObject, orderID, lineNum, statusID, productID, customerID, dealSizeID)
 {
-	var localOrderNumber = origRowObject["ORDERNUMBER"];
 	var localQuantity = origRowObject["QUANTITYORDERED"];
 	var localPriceEach = origRowObject["PRICEEACH"];
-	var localLineNumber = origRowObject["ORDERLINENUMBER"];
 	var localDate = origRowObject["ORDERDATE"];
 	
 	var compileRes = {};
 	
-	compileRes["orderNumCol"] = localOrderNumber;
 	compileRes["quantityCol"] = localQuantity;
 	compileRes["priceCol"] = localPriceEach;
-	compileRes["lineCol"] = localLineNumber;
 	compileRes["orderDateCol"] = localDate;
 	
+	compileRes["orderNumber"] = orderID;
+	compileRes["lineNumber"] = lineNum;
 	compileRes["statusNumber"] = statusID;
 	compileRes["productNumber"] = productID;
 	compileRes["customerNumber"] = customerID;
@@ -25,5 +23,5 @@ function compileRemainingColumnData(origRowObject, statusID, productID, customer
 
 module.exports =
 {
-	compileRemainingColumns: compileRemainingColumnData
+	compileData: compileRemainingColumnData
 };

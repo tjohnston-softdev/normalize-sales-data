@@ -2,6 +2,7 @@ const ora = require("ora");
 const normRes = require("./common/norm-res");
 const inputErrors = require("./common/input-errors");
 const generalPass = require("./processing/general-pass");
+const orderSort = require("./processing/order-sort");
 
 
 function processSalesData(originalDataSet, salesDataCallback)
@@ -30,6 +31,7 @@ function coordinateDataProcessing(origDataSet, dataCallback)
 	var dataErrorText = "";
 	
 	generalPass.loopRows(origDataSet, fullResultObject);
+	orderSort.sortRows(origDataSet);
 	
 	if (fullResultObject.canContinue === true)
 	{

@@ -12,7 +12,7 @@ const remainCols = require("./field-validation/remain-cols");
 function loopDataRows(origData, fullResultObj)
 {
 	var rowLoopIndex = 0;
-	var currentRowObject = {};
+	var currentRow = {};
 	var currentTerritory = -1;
 	var currentCountry = -1;
 	var currentState = -1;
@@ -24,12 +24,14 @@ function loopDataRows(origData, fullResultObj)
 	var currentCustomerName = {};
 	var currentCustomerDetails = {};
 	var currentCustomerNumber = -1;
+	var currentOrderNumber = -1;
+	var currentLine = -1;
 	var currentRowComplete = false;
-	var currentRemainingData = {};
+	var currentData = {};
 	
 	while (rowLoopIndex >= 0 && rowLoopIndex < origData.length && fullResultObj.canContinue === true)
 	{
-		currentRowObject = origData[rowLoopIndex];
+		currentRow = origData[rowLoopIndex];
 		currentTerritory = -1;
 		currentCountry = -1;
 		currentState = -1;
@@ -41,28 +43,32 @@ function loopDataRows(origData, fullResultObj)
 		currentCustomerName = {};
 		currentCustomerDetails = {};
 		currentCustomerNumber = -1;
+		currentOrderNumber = -1;
+		currentLine = -1;
 		currentRowComplete = false;
-		currentRemainingData = {};
+		currentData = {};
 		
-		currentTerritory = handleTerritoryNormalization(rowLoopIndex, currentRowObject, fullResultObj);
-		currentCountry = handleCountryNormalization(rowLoopIndex, currentRowObject, currentTerritory, fullResultObj);
-		currentState = handleStateNormalization(rowLoopIndex, currentRowObject, currentCountry, fullResultObj);
-		currentCity = handleCityNormalization(rowLoopIndex, currentRowObject, currentState, fullResultObj);
-		currentDealSize = handleDealSizeNormalization(rowLoopIndex, currentRowObject, currentCity, fullResultObj);
-		currentProductLine = handleProductLineNormalization(rowLoopIndex, currentRowObject, currentDealSize, fullResultObj);
-		currentOrderStatus = handleOrderStatusNormalization(rowLoopIndex, currentRowObject, currentProductLine, fullResultObj);
-		currentProduct = handleProductItemNormalization(rowLoopIndex, currentRowObject, currentOrderStatus, currentProductLine, fullResultObj);
-		currentCustomerName = handleCustomerNameValidation(rowLoopIndex, currentRowObject, currentProduct, fullResultObj);
-		currentCustomerDetails = handleCustomerDetailsValidation(rowLoopIndex, currentRowObject, currentCustomerName.valid, fullResultObj);
+		currentTerritory = handleTerritoryNormalization(rowLoopIndex, currentRow, fullResultObj);
+		currentCountry = handleCountryNormalization(rowLoopIndex, currentRow, currentTerritory, fullResultObj);
+		currentState = handleStateNormalization(rowLoopIndex, currentRow, currentCountry, fullResultObj);
+		currentCity = handleCityNormalization(rowLoopIndex, currentRow, currentState, fullResultObj);
+		currentDealSize = handleDealSizeNormalization(rowLoopIndex, currentRow, currentCity, fullResultObj);
+		currentProductLine = handleProductLineNormalization(rowLoopIndex, currentRow, currentDealSize, fullResultObj);
+		currentOrderStatus = handleOrderStatusNormalization(rowLoopIndex, currentRow, currentProductLine, fullResultObj);
+		currentProduct = handleProductItemNormalization(rowLoopIndex, currentRow, currentOrderStatus, currentProductLine, fullResultObj);
+		currentCustomerName = handleCustomerNameValidation(rowLoopIndex, currentRow, currentProduct, fullResultObj);
+		currentCustomerDetails = handleCustomerDetailsValidation(rowLoopIndex, currentRow, currentCustomerName.valid, fullResultObj);
 		currentCustomerNumber = handleCustomerNormalization(currentCustomerName, currentCustomerDetails, currentCity, fullResultObj);
-		currentRowComplete = checkRowComplete(currentCustomerNumber, fullResultObj.data.customers.length);
-		currentRemainingData = {};
+		currentOrderNumber = handleOrderNumberValidation(rowLoopIndex, currentRow, currentCustomerNumber, fullResultObj);
+		currentLine = handleLineNumberValidation(rowLoopIndex, currentRow, currentOrderNumber, fullResultObj);
+		currentRowComplete = checkRowComplete(currentLine);
+		currentData = {};
 		
 		
 		if (currentRowComplete === true)
 		{
-			currentRemainingData = remainCols.compileRemainingColumns(currentRowObject, currentOrderStatus, currentProduct, currentCustomerNumber, currentDealSize);
-			origData[rowLoopIndex] = currentRemainingData;
+			currentData = remainCols.compileData(currentRow, currentOrderNumber, currentLine, currentOrderStatus, currentProduct, currentCustomerNumber, currentDealSize);
+			origData[rowLoopIndex] = currentData;
 		}
 		else
 		{
@@ -313,11 +319,39 @@ function handleCustomerNormalization(custNameObj, custDetailsObj, cityValue, ful
 }
 
 
-function checkRowComplete(custNum, custCount)
+function handleOrderNumberValidation(rowIndex, rowObject, customerValue, fullResult)
 {
+	var handleRes = NaN;
+	
+	if (customerValue > 0 && customerValue <= fullResult.data.customers.length)
+	{
+		handleRes = numberValue.validateWhole(rowIndex, rowObject, "ORDERNUMBER", valueLimits.orderNumber, NaN, false, fullResult);
+	}
+	
+	return handleRes;
+}
+
+
+function handleLineNumberValidation(rowIndex, rowObject, orderValue, fullResult)
+{
+	var orderNumberValid = Number.isInteger(orderValue);
+	var handleRes = NaN;
+	
+	if (orderNumberValid === true && orderValue > 0 && orderValue <= valueLimits.orderNumber)
+	{
+		handleRes = numberValue.validateWhole(rowIndex, rowObject, "ORDERLINENUMBER", valueLimits.orderItem, NaN, false, fullResult);
+	}
+	
+	return handleRes;
+}
+
+
+function checkRowComplete(lineValue)
+{
+	var lineNumberValid = Number.isInteger(lineValue);
 	var checkRes = false;
 	
-	if (custNum > 0 && custNum <= custCount)
+	if (lineNumberValid === true && lineValue > 0 && lineValue <= valueLimits.orderItem)
 	{
 		checkRes = true;
 	}

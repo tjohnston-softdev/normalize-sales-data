@@ -60,9 +60,7 @@ function callDataProcessing(retrievedCsvData, convType)
 		}
 		else
 		{
-			console.log("");
-			console.log("Products: " + dataProcRes.products.length);
-			console.log("Customers: " + dataProcRes.customers.length);
+			console.log(retrievedCsvData[0]);
 		}
 	});
 }
