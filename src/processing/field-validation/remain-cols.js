@@ -1,4 +1,4 @@
-function compileRemainingColumnData(origRowObject, orderID, lineNum, statusID, productID, customerID, dealSizeID)
+function compileRemainingColumnData(rowInd, origRowObject, orderID, lineNum, statusID, productID, customerID, dealSizeID)
 {
 	var localQuantity = origRowObject["QUANTITYORDERED"];
 	var localPriceEach = origRowObject["PRICEEACH"];
@@ -6,9 +6,11 @@ function compileRemainingColumnData(origRowObject, orderID, lineNum, statusID, p
 	
 	var compileRes = {};
 	
-	compileRes["quantityCol"] = localQuantity;
-	compileRes["priceCol"] = localPriceEach;
-	compileRes["orderDateCol"] = localDate;
+	compileRes["originalIndex"] = rowInd;
+	
+	compileRes["QUANTITYORDERED"] = localQuantity;
+	compileRes["PRICEEACH"] = localPriceEach;
+	compileRes["ORDERDATE"] = localDate;
 	
 	compileRes["orderNumber"] = orderID;
 	compileRes["lineNumber"] = lineNum;

@@ -17,14 +17,14 @@ function loopDataRows(origData, fullResultObj)
 	var currentCountry = -1;
 	var currentState = -1;
 	var currentCity = -1;
-	var currentDealSize = -1;
+	var currentDeal = -1;
 	var currentProductLine = -1;
-	var currentOrderStatus = -1;
+	var currentStatus = -1;
 	var currentProduct = -1;
 	var currentCustomerName = {};
 	var currentCustomerDetails = {};
 	var currentCustomerNumber = -1;
-	var currentOrderNumber = -1;
+	var currentOrder = -1;
 	var currentLine = -1;
 	var currentRowComplete = false;
 	var currentData = {};
@@ -36,14 +36,14 @@ function loopDataRows(origData, fullResultObj)
 		currentCountry = -1;
 		currentState = -1;
 		currentCity = -1;
-		currentDealSize = -1;
+		currentDeal = -1;
 		currentProductLine = -1;
-		currentOrderStatus = -1;
+		currentStatus = -1;
 		currentProduct = -1;
 		currentCustomerName = {};
 		currentCustomerDetails = {};
 		currentCustomerNumber = -1;
-		currentOrderNumber = -1;
+		currentOrder = -1;
 		currentLine = -1;
 		currentRowComplete = false;
 		currentData = {};
@@ -52,22 +52,22 @@ function loopDataRows(origData, fullResultObj)
 		currentCountry = handleCountryNormalization(rowLoopIndex, currentRow, currentTerritory, fullResultObj);
 		currentState = handleStateNormalization(rowLoopIndex, currentRow, currentCountry, fullResultObj);
 		currentCity = handleCityNormalization(rowLoopIndex, currentRow, currentState, fullResultObj);
-		currentDealSize = handleDealSizeNormalization(rowLoopIndex, currentRow, currentCity, fullResultObj);
-		currentProductLine = handleProductLineNormalization(rowLoopIndex, currentRow, currentDealSize, fullResultObj);
-		currentOrderStatus = handleOrderStatusNormalization(rowLoopIndex, currentRow, currentProductLine, fullResultObj);
-		currentProduct = handleProductItemNormalization(rowLoopIndex, currentRow, currentOrderStatus, currentProductLine, fullResultObj);
+		currentDeal = handleDealSizeNormalization(rowLoopIndex, currentRow, currentCity, fullResultObj);
+		currentProductLine = handleProductLineNormalization(rowLoopIndex, currentRow, currentDeal, fullResultObj);
+		currentStatus = handleOrderStatusNormalization(rowLoopIndex, currentRow, currentProductLine, fullResultObj);
+		currentProduct = handleProductItemNormalization(rowLoopIndex, currentRow, currentStatus, currentProductLine, fullResultObj);
 		currentCustomerName = handleCustomerNameValidation(rowLoopIndex, currentRow, currentProduct, fullResultObj);
 		currentCustomerDetails = handleCustomerDetailsValidation(rowLoopIndex, currentRow, currentCustomerName.valid, fullResultObj);
 		currentCustomerNumber = handleCustomerNormalization(currentCustomerName, currentCustomerDetails, currentCity, fullResultObj);
-		currentOrderNumber = handleOrderNumberValidation(rowLoopIndex, currentRow, currentCustomerNumber, fullResultObj);
-		currentLine = handleLineNumberValidation(rowLoopIndex, currentRow, currentOrderNumber, fullResultObj);
+		currentOrder = handleOrderNumberValidation(rowLoopIndex, currentRow, currentCustomerNumber, fullResultObj);
+		currentLine = handleLineNumberValidation(rowLoopIndex, currentRow, currentOrder, fullResultObj);
 		currentRowComplete = checkRowComplete(currentLine);
 		currentData = {};
 		
 		
 		if (currentRowComplete === true)
 		{
-			currentData = remainCols.compileData(currentRow, currentOrderNumber, currentLine, currentOrderStatus, currentProduct, currentCustomerNumber, currentDealSize);
+			currentData = remainCols.compileData(rowLoopIndex, currentRow, currentOrder, currentLine, currentStatus, currentProduct, currentCustomerNumber, currentDeal);
 			origData[rowLoopIndex] = currentData;
 		}
 		else

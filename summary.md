@@ -1,16 +1,16 @@
 # Summary
 
-**Commit Number:** 16
+**Commit Number:** 17
 
 **Date:** 2021-03-06
 
-**Title:** ORDERNUMBER, ORDERLINENUMBER
+**Title:** ORDERDATE
 
 **Description:**
 
-* Validated the 'ORDERNUMBER' and 'ORDERLINENUMBER' columns.
-* Data is now sorted by order.
-
----
-
-I was originally going to include this in a separate pass specifically for order data, but I put it in the general pass instead to parse the strings as numbers and sort them accordingly.
+* Started normalizing order details.
+	* Order entry objects are now written.
+	* Order Date (ORDERDATE) is normalized.
+* Revised order data sorting to ensure that general pass was successful.
+* Wrote date validation.
+* Added date format error.

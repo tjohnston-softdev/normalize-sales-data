@@ -1,6 +1,15 @@
-function sortDataRows(origData)
+function sortPreparedDataRows(origData, sortAllowed)
 {
-	origData.sort(function (a, b)
+	if (sortAllowed === true)
+	{
+		performSorting(origData);
+	}
+}
+
+
+function performSorting(rList)
+{
+	rList.sort(function (a, b)
 	{
 		return a.orderNumber - b.orderNumber || a.lineNumber - b.lineNumber;
 	});
@@ -9,5 +18,5 @@ function sortDataRows(origData)
 
 module.exports =
 {
-	sortRows: sortDataRows
+	sortRows: sortPreparedDataRows
 };

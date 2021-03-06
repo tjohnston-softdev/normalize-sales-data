@@ -3,6 +3,7 @@ const normRes = require("./common/norm-res");
 const inputErrors = require("./common/input-errors");
 const generalPass = require("./processing/general-pass");
 const orderSort = require("./processing/order-sort");
+const orderPass = require("./processing/order-pass");
 
 
 function processSalesData(originalDataSet, salesDataCallback)
@@ -31,7 +32,8 @@ function coordinateDataProcessing(origDataSet, dataCallback)
 	var dataErrorText = "";
 	
 	generalPass.loopRows(origDataSet, fullResultObject);
-	orderSort.sortRows(origDataSet);
+	orderSort.sortRows(origDataSet, fullResultObject.canContinue);
+	orderPass.loopRows(origDataSet, fullResultObject);
 	
 	if (fullResultObject.canContinue === true)
 	{

@@ -46,6 +46,14 @@ function setNumberZeroError(errorObj, vColName, vRowIndex)
 }
 
 
+function setDateFormatError(errorObj, vColName, vRowIndex)
+{
+	errorObj.rowNumber = vRowIndex;
+	errorObj.column = vColName;
+	errorObj.message = "is not a valid date.";
+}
+
+
 function writeFullMessageText(errorObj)
 {
 	var writeRes = "";
@@ -74,5 +82,6 @@ module.exports =
 	setNumberTooLarge: setNumberTooLargeError,
 	setNumberNegative: setNumberNegativeError,
 	setNumberZero: setNumberZeroError,
+	setDateFormat: setDateFormatError,
 	writeFullMessage: writeFullMessageText
 };
