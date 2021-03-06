@@ -1,15 +1,19 @@
 # Changelog
 
-**./src/processing/order-pass.js**
-* Renamed the 'checkRowComplete' function to 'checkAdd'
-* 'loopDataRows' variables:
-	* Removed 'currentAddNumber'
-	* Declared 'currentOrderAdd'
-	* Declared 'currentLineAllowed'
-	* Declared 'currentLineAdd'
-* handleItemAdd
-	* Removed the 'priceValid' variable.
-	* Declared 'allowAdd' parameter.
-	* Replaced 'priceValid' with 'allowAdd' for the IF structure.
-* Rewrote the IF structure in 'loopDataRows' so that the first item of each order isn't skipped.
-* Replaced 'currentAddNumber' with 'currentOrderAdd' when calling 'handleOrderAdd'
+**./src/processing/**
+* Added new subfolder 'object-definition'
+* Updated the requirement paths for the following files:
+	* general-pass.js
+	* order-pass.js
+
+---
+
+**./src/processing/field-validation/**
+* Moved the following files to '../object-definition'
+	* country-item.js
+	* customer-item.js
+	* list-item.js
+	* order-details.js
+	* product-item.js
+	* remain-cols.js
+	* sub-location.js
