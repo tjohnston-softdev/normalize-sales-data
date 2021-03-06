@@ -1,11 +1,13 @@
 # Summary
 
-**Commit Number:** 19
+**Commit Number:** 20
 
 **Date:** 2021-03-06
 
-**Title:** Fixed Order Item ignore bug
+**Title:** field-validation split
 
 **Description:**
 
-Restructured order pass so that the first item of each order is recognized.
+* Split './src/processing/field-validation' into two different folders.
+	* Files used to validate input values stay as-is
+	* Files related to object definitions are moved to '../object-definition'

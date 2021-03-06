@@ -1,13 +1,13 @@
 const valueLimits = require("../common/value-limits");
 const valueDefaults = require("../common/value-defaults");
-const listItem = require("./field-validation/list-item");
-const countryItem = require("./field-validation/country-item");
-const subLocation = require("./field-validation/sub-location");
-const productItem = require("./field-validation/product-item");
-const customerItem = require("./field-validation/customer-item");
+const listItem = require("./object-definition/list-item");
+const countryItem = require("./object-definition/country-item");
+const subLocation = require("./object-definition/sub-location");
+const productItem = require("./object-definition/product-item");
+const customerItem = require("./object-definition/customer-item");
 const stringValue = require("./field-validation/string-value");
 const numberValue = require("./field-validation/number-value");
-const remainCols = require("./field-validation/remain-cols");
+const remainCols = require("./object-definition/remain-cols");
 
 function loopDataRows(origData, fullResultObj)
 {

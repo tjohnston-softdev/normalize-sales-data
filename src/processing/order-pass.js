@@ -3,7 +3,7 @@ const valueDefaults = require("../common/value-defaults");
 const stringValue = require("./field-validation/string-value");
 const numberValue = require("./field-validation/number-value");
 const dateValue = require("./field-validation/date-value");
-const orderDetails = require("./field-validation/order-details");
+const orderDetails = require("./object-definition/order-details");
 
 
 function loopDataRows(prepData, fullResultObj)
