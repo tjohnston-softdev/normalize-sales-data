@@ -1,13 +1,13 @@
 # Summary
 
-**Commit Number:** 20
+**Commit Number:** 22
 
-**Date:** 2021-03-06
+**Date:** 2021-03-07
 
-**Title:** field-validation split
+**Title:** Output Folder
 
 **Description:**
 
-* Split './src/processing/field-validation' into two different folders.
-	* Files used to validate input values stay as-is
-	* Files related to object definitions are moved to '../object-definition'
+* Output folder is created.
+* Restored file type argument.
+* Revised error message line breaks.

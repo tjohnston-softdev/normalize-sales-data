@@ -38,8 +38,8 @@ function prepareFileTypeArgument(argString)
 	}
 	else
 	{
-		prepRes = 1;
-		//exitProgram.callError("Invalid file type. Must enter 'sql' or 'csv'");
+		prepRes = -1;
+		exitProgram.callError("Invalid file type. Must enter 'sql' or 'csv'", false);
 	}
 	
 	return prepRes;

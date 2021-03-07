@@ -1,6 +1,10 @@
-function callErrorExit(eMsg)
+function callErrorExit(eMsg, inclBreak)
 {
-	console.log("");
+	if (inclBreak === true)
+	{
+		console.log("");
+	}
+	
 	console.log(eMsg);
 	process.exitCode = 1;
 }

@@ -20,6 +20,13 @@ function writeSourceVerificationErrorText(vFileDesc, vContext)
 }
 
 
+function writeFolderCreateErrorText(fsErrCode)
+{
+	var writeRes = "Error creating output folder - " + fsErrCode;
+	return writeRes;
+}
+
+
 function parseErrorCode(eCode)
 {
 	var parseRes = "";
@@ -53,5 +60,6 @@ function parseErrorCode(eCode)
 module.exports =
 {
 	writeActionText: writeFileActionErrorText,
-	writeSourceVerification: writeSourceVerificationErrorText
+	writeSourceVerification: writeSourceVerificationErrorText,
+	writeFolderCreateText: writeFolderCreateErrorText
 };
