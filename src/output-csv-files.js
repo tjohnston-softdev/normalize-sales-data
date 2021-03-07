@@ -1,6 +1,7 @@
 const runSeries = require("run-series");
 const ora = require("ora");
 const exportSpec = require("./output/export-spec");
+const saveCsv = require("./output/save-csv");
 
 
 function writeCsvDataFiles(outputDataObject, outputTargetFolder, csvDataCallback)
@@ -26,7 +27,7 @@ function writeCsvDataFiles(outputDataObject, outputTargetFolder, csvDataCallback
 function coordinateCsvWrite(outputDataObj, outputTgtFolder, csvWriteCallback)
 {
 	var specObject = exportSpec.getFileSpecifications(outputTgtFolder, "csv", true);
-	return csvWriteCallback(null, true);
+	saveCsv.saveFile(outputDataObj.territories, specObject.territories, csvWriteCallback);
 }
 
 

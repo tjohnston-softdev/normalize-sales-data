@@ -33,7 +33,7 @@ function coordinateInputCheck(inpChkCallback)
 	{
 		if (statErr !== null)
 		{
-			statErrorText = fsErrors.writeActionText("checking", sourceFile.desc, statErr.code);
+			statErrorText = fsErrors.writeActionText("checking", sourceFile.desc, sourceFile.name, statErr.code);
 			return inpChkCallback(new Error(statErrorText), null);
 		}
 		else

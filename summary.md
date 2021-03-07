@@ -1,13 +1,12 @@
 # Summary
 
-**Commit Number:** 23
+**Commit Number:** 24
 
 **Date:** 2021-03-07
 
-**Title:** Output Specification
+**Title:** Write CSV File
 
 **Description:**
 
-* Installed 'run-series' package.
-* Defined output file specification data.
-* Prepared for CSV output.
+* Wrote CSV file output code.
+* Added target path to file system error text.

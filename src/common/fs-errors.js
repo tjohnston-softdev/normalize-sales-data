@@ -1,4 +1,6 @@
-function writeFileActionErrorText(vContext, vFileDesc, fsErrCode)
+const path = require("path");
+
+function writeFileActionErrorText(vContext, vFileDesc, vFilePath, fsErrCode)
 {
 	var writeRes = "";
 	
@@ -8,6 +10,9 @@ function writeFileActionErrorText(vContext, vFileDesc, fsErrCode)
 	writeRes += vFileDesc;
 	writeRes += " file. - ";
 	writeRes += parseErrorCode(fsErrCode);
+	writeRes += "\n";
+	writeRes += "Path: ";
+	writeRes += path.resolve(vFilePath);
 	
 	return writeRes;
 }

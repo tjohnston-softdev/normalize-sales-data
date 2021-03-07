@@ -1,36 +1,32 @@
 # Changelog
 
-**package.json, package-lock.json**
-* Installed 'run-series' package.
-
----
-
-**./convert.js**
-* Added requirement for './src/output-csv-files'
-* callOutputFolder
-	* Renamed 'normDataObj' parameter to 'normalizedDataObj'
-* callOutputFileWrite
-	* Renamed 'normData' parameter to 'normalizedData'
-	* Now diverts into different functions depending on file type.
-	* Unknown file types flag a generic error.
-* callSqlOutput
-	* New function - Calls SQL output.
-	* Placeholder for now.
-* callCsvOutput
-	* New function - Calls CSV output.
-	* Completed.
-
----
-
 **./src/output-csv-files.js**
-* New file - Coordinates process for writing output CSV files.
-	* So far, this is just a placeholder.
-	* The structure is in place but no files are actually written yet.
+* Added requirement for './output/save-csv'
+* Added call to 'saveCsv' in 'coordinateCsvWrite'
+	* Tests CSV output with territory data.
 
 ---
 
-**./src/output/export-spec.js**
-* New file - Defines specification data for export files.
-	* Writes full file path with both name and extension.
-	* Stores table name.
-	* Stores table attributes. (CSV only)
+**./src/file-check.js**
+* Added input file name argument to 'fsErrors.writeActionText' call in 'coordinateInputCheck'
+
+---
+
+**./src/file-read.js**
+* Added input file name argument to 'fsErrors.writeActionText' call in 'coordinateInputRead'
+
+---
+
+**./src/output/save-csv.js**
+* New file - Used to:
+	* Convert JSON object data to CSV data.
+	* Save as output file.
+* Currently uses hard-coded test data.
+
+---
+
+**./src/common/fs-errors.js**
+* Added 'path' module requirement.
+* writeFileActionErrorText
+	* Added 'vFilePath' parameter - Target file path.
+	* File path is appended to the error message.
