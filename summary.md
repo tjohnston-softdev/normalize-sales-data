@@ -1,13 +1,13 @@
 # Summary
 
-**Commit Number:** 22
+**Commit Number:** 23
 
 **Date:** 2021-03-07
 
-**Title:** Output Folder
+**Title:** Output Specification
 
 **Description:**
 
-* Output folder is created.
-* Restored file type argument.
-* Revised error message line breaks.
+* Installed 'run-series' package.
+* Defined output file specification data.
+* Prepared for CSV output.

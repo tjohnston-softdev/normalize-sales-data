@@ -5,6 +5,7 @@ const fileCheck = require("./src/file-check");
 const fileRead = require("./src/file-read");
 const procData = require("./src/proc-data");
 const outputFolder = require("./src/output-folder");
+const outputCsvFiles = require("./src/output-csv-files");
 
 runDataNormalization();
 
@@ -70,7 +71,7 @@ function callDataProcessing(retrievedCsvData, convType)
 }
 
 
-function callOutputFolder(normDataObj, cTypeFlag)
+function callOutputFolder(normalizedDataObj, cTypeFlag)
 {
 	outputFolder.createFolder(function (outputFolderErr, outputFolderPath)
 	{
@@ -80,24 +81,46 @@ function callOutputFolder(normDataObj, cTypeFlag)
 		}
 		else
 		{
-			callOutputFileWrite(normDataObj, outputFolderPath, cTypeFlag);
+			callOutputFileWrite(normalizedDataObj, outputFolderPath, cTypeFlag);
 		}
 	});
 }
 
 
-function callOutputFileWrite(normData, oFolderPth, cType)
+function callOutputFileWrite(normalizedData, oFolderPth, cType)
 {
 	if (cType > 0)
 	{
-		exitProgram.callError("SQL Definition", true);
+		callSqlOutput(normalizedData, oFolderPth);
 	}
 	else if (cType === 0)
 	{
-		exitProgram.callError("CSV Data", true);
+		callCsvOutput(normalizedData, oFolderPth);
 	}
 	else
 	{
-		exitProgram.callError("Invalid", true);
+		exitProgram.callError("Invalid File Type", true);
 	}
+}
+
+
+function callSqlOutput(normData, oFolder)
+{
+	exitProgram.callSuccessful();
+}
+
+
+function callCsvOutput(normData, oFolder)
+{
+	outputCsvFiles.writeDataFiles(normData, oFolder, function (csvOutputErr, csvOutputRes)
+	{
+		if (csvOutputErr !== null)
+		{
+			exitProgram.callError(csvOutputErr.message, true);
+		}
+		else
+		{
+			exitProgram.callSuccessful();
+		}
+	});
 }
