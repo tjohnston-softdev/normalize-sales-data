@@ -10,34 +10,39 @@ function addLocationItem(locationString, arrName, targetParentID, fullRes)
 	var currentLocationObject = {};
 	var currentLocationName = "";
 	var currentParentID = -1;
-	var existFlag = -1;
+	var existID = null;
 	
 	var addRes = -1;
 	var newLocationObject = {};
 	
-	while (existingIndex >= 0 && existingIndex < arrObj.length && existFlag === -1)
+	while (existingIndex >= 0 && existingIndex < arrObj.length && existID === null)
 	{
 		currentLocationObject = arrObj[existingIndex];
 		currentLocationName = currentLocationObject.name;
-		currentParentID = currentLocationObject.parentLocation;
+		currentParentID = Number(currentLocationObject.parentLocation);
 		
 		if (currentLocationName.toLowerCase() === preparedItem.toLowerCase() && currentParentID === targetParentID)
 		{
-			existFlag = existingIndex;
+			existID = currentLocationObject.locationID;
 		}
 		
 		existingIndex = existingIndex + 1;
 	}
 	
-	if (existFlag >= 0 && existFlag < arrObj.length)
+	if (existID !== null)
 	{
-		addRes = existFlag + 1;
+		addRes = Number(existID);
 	}
 	else
 	{
-		newLocationObject = {"name": preparedItem, "parentLocation": targetParentID};
+		addRes = arrObj.length + 1;
+		newLocationObject = {};
+		
+		newLocationObject["locationID"] = String(addRes);
+		newLocationObject["name"] = preparedItem;
+		newLocationObject["parentLocation"] = String(targetParentID);
+		
 		arrObj.push(newLocationObject);
-		addRes = arrObj.length;
 	}
 	
 	return addRes;

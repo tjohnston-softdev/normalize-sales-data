@@ -8,41 +8,43 @@ function addCustomerItem(nameObject, detailsObject, cityLocationID, customerArr)
 	var existingIndex = 0;
 	var currentCustomerObject = {};
 	var currentCustomerName = "";
-	var existFlag = -1;
+	var existID = null;
 	
 	var addRes = -1;
 	var newCustomerObject = {};
 	
-	while (existingIndex >= 0 && existingIndex < customerArr.length && existFlag === -1)
+	while (existingIndex >= 0 && existingIndex < customerArr.length && existID === null)
 	{
 		currentCustomerObject = customerArr[existingIndex];
 		currentCustomerName = currentCustomerObject.custName;
 		
 		if (currentCustomerName.toLowerCase() === preparedName.toLowerCase())
 		{
-			existFlag = existingIndex;
+			existID = currentCustomerObject.custNumber;
 		}
 		
 		existingIndex = existingIndex + 1;
 	}
 	
-	if (existFlag >= 0 && existFlag < customerArr.length)
+	if (existID !== null)
 	{
-		addRes = existFlag + 1;
+		addRes = Number(existID);
 	}
 	else
 	{
+		addRes = customerArr.length + 1;
+		
+		newCustomerObject["custNumber"] = String(addRes);
 		newCustomerObject["custName"] = preparedName;
 		newCustomerObject["phone"] = detailsObject.prepPhone;
 		newCustomerObject["firstName"] = detailsObject.prepFirstName;
 		newCustomerObject["lastName"] = detailsObject.prepLastName;
 		newCustomerObject["address1"] = detailsObject.prepAddressLine1;
 		newCustomerObject["address2"] = detailsObject.prepAddressLine2;
-		newCustomerObject["city"] = cityLocationID;
+		newCustomerObject["city"] = String(cityLocationID);
 		newCustomerObject["postal"] = detailsObject.prepPostalCode;
 		
 		customerArr.push(newCustomerObject);
-		addRes = customerArr.length;
 	}
 	
 	return addRes;

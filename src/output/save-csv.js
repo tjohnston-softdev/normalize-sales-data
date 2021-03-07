@@ -5,10 +5,8 @@ const fsErrors = require("../common/fs-errors");
 
 const testData =
 [
-	{territoryID: "1", territoryName: "NA"},
-	{territoryID: "2", territoryName: "EMEA"},
-	{territoryID: "3", territoryName: "APAC"},
-	{territoryID: "4", territoryName: "Japan"},
+	["1", "NA"], ["2", "EMEA"],
+	["3", "APAC"], ["4", "Japan"]
 ];
 
 

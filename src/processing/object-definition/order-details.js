@@ -1,7 +1,10 @@
+const dateString = require("../../common/date-string");
+
 function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 {
 	var existingIndex = 0;
 	var currentExistingObject = {};
+	var currentIdentificationNumber = -1;
 	var existFlag = -1;
 	
 	var addRes = -1;
@@ -10,8 +13,9 @@ function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 	while (existingIndex >= 0 && existingIndex < orderArray.length && existFlag === -1)
 	{
 		currentExistingObject = orderArray[existingIndex];
+		currentIdentificationNumber = Number(currentExistingObject.identificationNumber);
 		
-		if (currentExistingObject.identificationNumber === idNumber)
+		if (currentIdentificationNumber === idNumber)
 		{
 			existFlag = existingIndex;
 		}
@@ -27,10 +31,10 @@ function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 	{
 		newOrderObject = {};
 		
-		newOrderObject["identificationNumber"] = idNumber;
-		newOrderObject["customer"] = ordCust;
-		newOrderObject["date"] = ordDate;
-		newOrderObject["statusCode"] = ordStatus;
+		newOrderObject["identificationNumber"] = String(idNumber);
+		newOrderObject["customer"] = String(ordCust);
+		newOrderObject["date"] = dateString.writeString(ordDate);
+		newOrderObject["statusCode"] = String(ordStatus);
 		
 		orderArray.push(newOrderObject);
 		addRes = orderArray.length;
@@ -54,8 +58,8 @@ function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPric
 	while (existingIndex >= 0 && existingIndex < orderItemArray.length && existFlag === -1)
 	{
 		currentExistingObject = orderItemArray[existingIndex];
-		currentParent = currentExistingObject.orderEntryNumber;
-		currentChild = currentExistingObject.orderLineNumber;
+		currentParent = Number(currentExistingObject.orderEntryNumber);
+		currentChild = Number(currentExistingObject.orderLineNumber);
 		
 		if (currentParent === parentID && currentChild === childNumber)
 		{
@@ -73,12 +77,12 @@ function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPric
 	{
 		newOrderItemObject = {};
 		
-		newOrderItemObject["orderEntryNumber"] = parentID;
-		newOrderItemObject["orderLineNumber"] = childNumber;
-		newOrderItemObject["product"] = itemProd;
-		newOrderItemObject["quantity"] = itemQuantity;
-		newOrderItemObject["individualPrice"] = itemPrice;
-		newOrderItemObject["deal"] = itemDeal;
+		newOrderItemObject["orderEntryNumber"] = String(parentID);
+		newOrderItemObject["orderLineNumber"] = String(childNumber);
+		newOrderItemObject["product"] = String(itemProd);
+		newOrderItemObject["quantity"] = String(itemQuantity);
+		newOrderItemObject["individualPrice"] = String(itemPrice);
+		newOrderItemObject["deal"] = String(itemDeal);
 		
 		orderItemArray.push(newOrderItemObject);
 		addRes = orderItemArray.length;

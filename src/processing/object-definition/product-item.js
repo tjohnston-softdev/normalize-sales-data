@@ -8,33 +8,39 @@ function addProductItem(productCodeString, msrpNum, lineID, productArr)
 	var existingIndex = 0;
 	var currentProductObject = {};
 	var currentProductCode = "";
-	var existFlag = -1;
+	var existID = null;
 	
 	var addRes = -1;
 	var newProductObject = {};
 	
-	while (existingIndex >= 0 && existingIndex < productArr.length && existFlag === -1)
+	while (existingIndex >= 0 && existingIndex < productArr.length && existID === null)
 	{
 		currentProductObject = productArr[existingIndex];
 		currentProductCode = currentProductObject.code;
 		
 		if (currentProductCode.toLowerCase() === preparedCode.toLowerCase())
 		{
-			existFlag = existingIndex;
+			existID = currentProductObject.number;
 		}
 		
 		existingIndex = existingIndex + 1;
 	}
 	
-	if (existFlag >= 0 && existFlag < productArr.length)
+	if (existID !== null)
 	{
-		addRes = existFlag + 1;
+		addRes = Number(existID);
 	}
 	else
 	{
-		newProductObject = {"code": preparedCode, "line": lineID, "msrp": msrpNum};
+		addRes = productArr.length + 1;
+		newProductObject = {};
+		
+		newProductObject["number"] = String(addRes);
+		newProductObject["code"] = preparedCode;
+		newProductObject["line"] = String(lineID);
+		newProductObject["msrp"] = String(msrpNum);
+		
 		productArr.push(newProductObject);
-		addRes = productArr.length;
 	}
 	
 	return addRes;

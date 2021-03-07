@@ -7,34 +7,39 @@ function addCountryItem(countryString, countryArr, terrID)
 	var existingIndex = 0;
 	var currentCountryObject = {};
 	var currentCountryString = "";
-	var existFlag = -1;
+	var existID = null;
 	
 	var addRes = -1;
 	var newCountryObject = {};
 	
-	while (existingIndex >= 0 && existingIndex < countryArr.length && existFlag === -1)
+	while (existingIndex >= 0 && existingIndex < countryArr.length && existID === null)
 	{
 		currentCountryObject = countryArr[existingIndex];
 		currentCountryString = currentCountryObject.name;
 		
 		if (currentCountryString.toLowerCase() === preparedItem.toLowerCase())
 		{
-			existFlag = existingIndex;
+			existID = currentCountryObject.countryNumber;
 		}
 		
 		existingIndex = existingIndex + 1;
 	}
 	
 	
-	if (existFlag >= 0 && existFlag < countryArr.length)
+	if (existID !== null)
 	{
-		addRes = existFlag + 1;
+		addRes = Number(existID);
 	}
 	else
 	{
-		newCountryObject = {"name": preparedItem, "territory": terrID};
+		addRes = countryArr.length + 1;
+		newCountryObject = {};
+		
+		newCountryObject["countryNumber"] = String(addRes);
+		newCountryObject["name"] = preparedItem;
+		newCountryObject["territory"] = String(terrID);
+		
 		countryArr.push(newCountryObject);
-		addRes = countryArr.length;
 	}
 	
 	return addRes;
