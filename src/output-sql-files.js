@@ -32,7 +32,16 @@ function coordinateSqlWrite(outputDataObj, outputTgtFolder, sqlWriteCallback)
 	series(
 	[
 		saveSql.saveFile.bind(null, outputDataObj.territories, specObject.territories),
-		saveSql.saveFile.bind(null, [], specObject.countries)
+		saveSql.saveFile.bind(null, outputDataObj.countries, specObject.countries),
+		saveSql.saveFile.bind(null, outputDataObj.statesRegions, specObject.statesRegions),
+		saveSql.saveFile.bind(null, outputDataObj.cities, specObject.cities),
+		saveSql.saveFile.bind(null, outputDataObj.dealSizes, specObject.dealSizes),
+		saveSql.saveFile.bind(null, outputDataObj.productLines, specObject.productLines),
+		saveSql.saveFile.bind(null, outputDataObj.orderStatusModes, specObject.orderStatusModes),
+		saveSql.saveFile.bind(null, outputDataObj.products, specObject.products),
+		saveSql.saveFile.bind(null, outputDataObj.customers, specObject.customers),
+		saveSql.saveFile.bind(null, outputDataObj.orderEntries, specObject.orderEntries),
+		saveSql.saveFile.bind(null, outputDataObj.orderItems, specObject.orderItems)
 	],
 	function (writeBatchErr, writeBatchRes)
 	{

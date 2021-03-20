@@ -1,11 +1,11 @@
 # Summary
 
-**Commit Number:** 29
+**Commit Number:** 30
 
 **Date:** 2021-03-20
 
-**Title:** Summary Update
+**Title:** SQL Output Complete
 
 **Description:**
 
-I may have forgotten to update the summary for today's commits. This is what happens when you leave a project for two weeks.
+All normalized tables are output as SQL files.
