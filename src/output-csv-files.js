@@ -1,4 +1,4 @@
-const runSeries = require("run-series");
+const series = require("run-series");
 const ora = require("ora");
 const exportSpec = require("./output/export-spec");
 const saveCsv = require("./output/save-csv");
@@ -27,7 +27,25 @@ function writeCsvDataFiles(outputDataObject, outputTargetFolder, csvDataCallback
 function coordinateCsvWrite(outputDataObj, outputTgtFolder, csvWriteCallback)
 {
 	var specObject = exportSpec.getFileSpecifications(outputTgtFolder, "csv", true);
-	saveCsv.saveFile(outputDataObj.territories, specObject.territories, csvWriteCallback);
+	
+	series(
+	[
+		saveCsv.saveFile.bind(null, outputDataObj.territories, specObject.territories),
+		saveCsv.saveFile.bind(null, outputDataObj.countries, specObject.countries),
+		saveCsv.saveFile.bind(null, outputDataObj.statesRegions, specObject.statesRegions),
+		saveCsv.saveFile.bind(null, outputDataObj.cities, specObject.cities),
+		saveCsv.saveFile.bind(null, outputDataObj.dealSizes, specObject.dealSizes),
+		saveCsv.saveFile.bind(null, outputDataObj.productLines, specObject.productLines),
+		saveCsv.saveFile.bind(null, outputDataObj.orderStatusModes, specObject.orderStatusModes),
+		saveCsv.saveFile.bind(null, outputDataObj.products, specObject.products),
+		saveCsv.saveFile.bind(null, outputDataObj.customers, specObject.customers),
+		saveCsv.saveFile.bind(null, outputDataObj.orderEntries, specObject.orderEntries),
+		saveCsv.saveFile.bind(null, outputDataObj.orderItems, specObject.orderItems)
+	],
+	function (writeBatchErr, writeBatchRes)
+	{
+		return csvWriteCallback(writeBatchErr, writeBatchRes);
+	});
 }
 
 
