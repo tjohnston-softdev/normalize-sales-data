@@ -1,11 +1,11 @@
 # Summary
 
-**Commit Number:** 25
+**Commit Number:** 29
 
-**Date:** 2021-03-07
+**Date:** 2021-03-20
 
-**Title:** Data String Casting
+**Title:** Summary Update
 
 **Description:**
 
-All normalized data attributes are cast as strings.
+I may have forgotten to update the summary for today's commits. This is what happens when you leave a project for two weeks.
