@@ -6,6 +6,7 @@ const fileRead = require("./src/file-read");
 const procData = require("./src/proc-data");
 const outputFolder = require("./src/output-folder");
 const outputCsvFiles = require("./src/output-csv-files");
+const outputSqlFiles = require("./src/output-sql-files");
 
 runDataNormalization();
 
@@ -106,7 +107,17 @@ function callOutputFileWrite(normalizedData, oFolderPth, cType)
 
 function callSqlOutput(normData, oFolder)
 {
-	exitProgram.callSuccessful();
+	outputSqlFiles.writeDataFiles(normData, oFolder, function (sqlOutputErr, sqlOutputRes)
+	{
+		if (sqlOutputErr !== null)
+		{
+			exitProgram.callError(sqlOutputErr.message, true);
+		}
+		else
+		{
+			exitProgram.callSuccessful();
+		}
+	});
 }
 
 
