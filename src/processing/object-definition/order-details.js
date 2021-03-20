@@ -46,7 +46,7 @@ function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 }
 
 
-function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPrice, itemDeal, orderItemArray)
+function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPrice, itemDeal, itemDisplay, orderItemArray)
 {
 	var existingIndex = 0;
 	var currentExistingObject = [];
@@ -89,6 +89,7 @@ function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPric
 		newOrderItemObject[3] = String(itemQuantity);
 		newOrderItemObject[4] = String(itemPrice);
 		newOrderItemObject[5] = String(itemDeal);
+		newOrderItemObject[6] = String(itemDisplay);
 		
 		orderItemArray.push(newOrderItemObject);
 		addRes = orderItemArray.length;

@@ -1,17 +1,19 @@
 # Changelog
 
-**./src/processing/object-definition/sub-location.js**
-* Rearranged property order.
-	* This corresponds to the 'StateRegion' and 'City' tables.
-	* The parent ID and item name are swapped.
-	* Index numbers of 'currentLocationName' and 'currentParentString' are swapped.
+**./schema.sql**
+* Added 'displayNumber' column to 'OrderItem'
+	* Indicates the display order of rows when querying sales data.
 
 ---
 
-**./src/output-csv-files.js coordinateCsvWrite**
-* The 'specObject' variable is renamed to 'specObj'
+**./src/processing/order-pass.js**
+* handleItemAdd
+	* 'rowIndex' parameter already exists, corresponding to display order.
+	* Added 'rowIndex' to 'orderDetails.addItem' call.
 
 ---
 
-**./src/output-sql-files.js coordinateSqlWrite**
-* The 'specObject' variable is renamed to 'specObj'
+**./src/processing/object-definition/order-details.js**
+* addOrderItemRow
+	* Added 'itemDisplay' parameter.
+	* Added 'displayNumber' property to the end of 'newOrderItemObject'

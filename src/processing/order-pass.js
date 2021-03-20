@@ -126,7 +126,7 @@ function handleItemAdd(rowIndex, rowObject, quantityValue, priceValue, fullResul
 		pProduct = rowObject.productNumber;
 		pDeal = rowObject.dealSizeNumber;
 		
-		handleRes = orderDetails.addItem(pOrder, pLine, pProduct, quantityValue, priceValue, pDeal, fullResult.data.orderItems);
+		handleRes = orderDetails.addItem(pOrder, pLine, pProduct, quantityValue, priceValue, pDeal, rowIndex, fullResult.data.orderItems);
 	}
 	
 	return handleRes;
