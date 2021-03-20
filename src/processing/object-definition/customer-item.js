@@ -6,21 +6,21 @@ function addCustomerItem(nameObject, detailsObject, cityLocationID, customerArr)
 	var preparedName = valuePrep.sanitizeString(nameObject.preparedText);
 	
 	var existingIndex = 0;
-	var currentCustomerObject = {};
+	var currentCustomerObject = [];
 	var currentCustomerName = "";
 	var existID = null;
 	
 	var addRes = -1;
-	var newCustomerObject = {};
+	var newCustomerObject = [];
 	
 	while (existingIndex >= 0 && existingIndex < customerArr.length && existID === null)
 	{
 		currentCustomerObject = customerArr[existingIndex];
-		currentCustomerName = currentCustomerObject.custName;
+		currentCustomerName = currentCustomerObject[1];
 		
 		if (currentCustomerName.toLowerCase() === preparedName.toLowerCase())
 		{
-			existID = currentCustomerObject.custNumber;
+			existID = currentCustomerObject[0];
 		}
 		
 		existingIndex = existingIndex + 1;
@@ -34,15 +34,15 @@ function addCustomerItem(nameObject, detailsObject, cityLocationID, customerArr)
 	{
 		addRes = customerArr.length + 1;
 		
-		newCustomerObject["custNumber"] = String(addRes);
-		newCustomerObject["custName"] = preparedName;
-		newCustomerObject["phone"] = detailsObject.prepPhone;
-		newCustomerObject["firstName"] = detailsObject.prepFirstName;
-		newCustomerObject["lastName"] = detailsObject.prepLastName;
-		newCustomerObject["address1"] = detailsObject.prepAddressLine1;
-		newCustomerObject["address2"] = detailsObject.prepAddressLine2;
-		newCustomerObject["city"] = String(cityLocationID);
-		newCustomerObject["postal"] = detailsObject.prepPostalCode;
+		newCustomerObject[0] = String(addRes);
+		newCustomerObject[1] = preparedName;
+		newCustomerObject[2] = detailsObject.prepPhone;
+		newCustomerObject[3] = detailsObject.prepFirstName;
+		newCustomerObject[4] = detailsObject.prepLastName;
+		newCustomerObject[5] = detailsObject.prepAddressLine1;
+		newCustomerObject[6] = detailsObject.prepAddressLine2;
+		newCustomerObject[7] = String(cityLocationID);
+		newCustomerObject[8] = detailsObject.prepPostalCode;
 		
 		customerArr.push(newCustomerObject);
 	}

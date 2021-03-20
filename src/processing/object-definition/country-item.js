@@ -5,21 +5,21 @@ function addCountryItem(countryString, countryArr, terrID)
 	var preparedItem = valuePrep.sanitizeString(countryString);
 	
 	var existingIndex = 0;
-	var currentCountryObject = {};
+	var currentCountryObject = [];
 	var currentCountryString = "";
 	var existID = null;
 	
 	var addRes = -1;
-	var newCountryObject = {};
+	var newCountryObject = [];
 	
 	while (existingIndex >= 0 && existingIndex < countryArr.length && existID === null)
 	{
 		currentCountryObject = countryArr[existingIndex];
-		currentCountryString = currentCountryObject.name;
+		currentCountryString = currentCountryObject[1];
 		
 		if (currentCountryString.toLowerCase() === preparedItem.toLowerCase())
 		{
-			existID = currentCountryObject.countryNumber;
+			existID = currentCountryObject[0];
 		}
 		
 		existingIndex = existingIndex + 1;
@@ -33,11 +33,11 @@ function addCountryItem(countryString, countryArr, terrID)
 	else
 	{
 		addRes = countryArr.length + 1;
-		newCountryObject = {};
+		newCountryObject = [];
 		
-		newCountryObject["countryNumber"] = String(addRes);
-		newCountryObject["name"] = preparedItem;
-		newCountryObject["territory"] = String(terrID);
+		newCountryObject[0] = String(addRes);
+		newCountryObject[1] = preparedItem;
+		newCountryObject[2] = String(terrID);
 		
 		countryArr.push(newCountryObject);
 	}

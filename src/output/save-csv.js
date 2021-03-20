@@ -3,16 +3,10 @@ const papaparse = require("papaparse");
 const valuePrep = require("../common/value-prep");
 const fsErrors = require("../common/fs-errors");
 
-const testData =
-[
-	["1", "NA"], ["2", "EMEA"],
-	["3", "APAC"], ["4", "Japan"]
-];
-
 
 function saveCsvFile(objectArray, fileSpecs, saveCallback)
 {
-	var csvTextString = convertJsonToCsv(testData, fileSpecs.tableAttributes);
+	var csvTextString = convertJsonToCsv(objectArray, fileSpecs.tableAttributes);
 	var conversionSuccessful = valuePrep.checkString(csvTextString);
 	
 	if (conversionSuccessful === true)

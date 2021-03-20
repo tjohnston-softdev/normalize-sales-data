@@ -6,21 +6,21 @@ function addListItem(itemString, arrName, fullRes)
 	var preparedItem = valuePrep.sanitizeString(itemString);
 	
 	var existingIndex = 0;
-	var currentExistingItem = {};
+	var currentExistingItem = [];
 	var currentName = "";
 	var existID = null;
 	
 	var addRes = -1;
-	var newItemObject = {};
+	var newItemObject = [];
 	
 	while (existingIndex >= 0 && existingIndex < arrObj.length && existID === null)
 	{
 		currentExistingItem = arrObj[existingIndex];
-		currentName = currentExistingItem.itemName;
+		currentName = currentExistingItem[1];
 		
 		if (currentName.toLowerCase() === preparedItem.toLowerCase())
 		{
-			existID = currentExistingItem.itemID;
+			existID = currentExistingItem[0];
 		}
 		
 		existingIndex = existingIndex + 1;
@@ -33,10 +33,10 @@ function addListItem(itemString, arrName, fullRes)
 	else
 	{
 		addRes = arrObj.length + 1;
-		newItemObject = {};
+		newItemObject = [];
 		
-		newItemObject["itemID"] = String(addRes);
-		newItemObject["itemName"] = preparedItem;
+		newItemObject[0] = String(addRes);
+		newItemObject[1] = preparedItem;
 		
 		arrObj.push(newItemObject);
 	}
