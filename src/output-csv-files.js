@@ -26,21 +26,21 @@ function writeCsvDataFiles(outputDataObject, outputTargetFolder, csvDataCallback
 
 function coordinateCsvWrite(outputDataObj, outputTgtFolder, csvWriteCallback)
 {
-	var specObject = exportSpec.getFileSpecifications(outputTgtFolder, "csv", true);
+	var specObj = exportSpec.getFileSpecifications(outputTgtFolder, "csv", true);
 	
 	series(
 	[
-		saveCsv.saveFile.bind(null, outputDataObj.territories, specObject.territories),
-		saveCsv.saveFile.bind(null, outputDataObj.countries, specObject.countries),
-		saveCsv.saveFile.bind(null, outputDataObj.statesRegions, specObject.statesRegions),
-		saveCsv.saveFile.bind(null, outputDataObj.cities, specObject.cities),
-		saveCsv.saveFile.bind(null, outputDataObj.dealSizes, specObject.dealSizes),
-		saveCsv.saveFile.bind(null, outputDataObj.productLines, specObject.productLines),
-		saveCsv.saveFile.bind(null, outputDataObj.orderStatusModes, specObject.orderStatusModes),
-		saveCsv.saveFile.bind(null, outputDataObj.products, specObject.products),
-		saveCsv.saveFile.bind(null, outputDataObj.customers, specObject.customers),
-		saveCsv.saveFile.bind(null, outputDataObj.orderEntries, specObject.orderEntries),
-		saveCsv.saveFile.bind(null, outputDataObj.orderItems, specObject.orderItems)
+		saveCsv.saveFile.bind(null, outputDataObj.territories, specObj.territories),
+		saveCsv.saveFile.bind(null, outputDataObj.countries, specObj.countries),
+		saveCsv.saveFile.bind(null, outputDataObj.statesRegions, specObj.statesRegions),
+		saveCsv.saveFile.bind(null, outputDataObj.cities, specObj.cities),
+		saveCsv.saveFile.bind(null, outputDataObj.dealSizes, specObj.dealSizes),
+		saveCsv.saveFile.bind(null, outputDataObj.productLines, specObj.productLines),
+		saveCsv.saveFile.bind(null, outputDataObj.orderStatusModes, specObj.orderStatusModes),
+		saveCsv.saveFile.bind(null, outputDataObj.products, specObj.products),
+		saveCsv.saveFile.bind(null, outputDataObj.customers, specObj.customers),
+		saveCsv.saveFile.bind(null, outputDataObj.orderEntries, specObj.orderEntries),
+		saveCsv.saveFile.bind(null, outputDataObj.orderItems, specObj.orderItems)
 	],
 	function (writeBatchErr, writeBatchRes)
 	{

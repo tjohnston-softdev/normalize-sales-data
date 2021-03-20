@@ -27,21 +27,21 @@ function writeSqlDataFiles(outputDataObject, outputTargetFolder, sqlDataCallback
 
 function coordinateSqlWrite(outputDataObj, outputTgtFolder, sqlWriteCallback)
 {
-	var specObject = exportSpec.getFileSpecifications(outputTgtFolder, "sql", false);
+	var specObj = exportSpec.getFileSpecifications(outputTgtFolder, "sql", false);
 	
 	series(
 	[
-		saveSql.saveFile.bind(null, outputDataObj.territories, specObject.territories),
-		saveSql.saveFile.bind(null, outputDataObj.countries, specObject.countries),
-		saveSql.saveFile.bind(null, outputDataObj.statesRegions, specObject.statesRegions),
-		saveSql.saveFile.bind(null, outputDataObj.cities, specObject.cities),
-		saveSql.saveFile.bind(null, outputDataObj.dealSizes, specObject.dealSizes),
-		saveSql.saveFile.bind(null, outputDataObj.productLines, specObject.productLines),
-		saveSql.saveFile.bind(null, outputDataObj.orderStatusModes, specObject.orderStatusModes),
-		saveSql.saveFile.bind(null, outputDataObj.products, specObject.products),
-		saveSql.saveFile.bind(null, outputDataObj.customers, specObject.customers),
-		saveSql.saveFile.bind(null, outputDataObj.orderEntries, specObject.orderEntries),
-		saveSql.saveFile.bind(null, outputDataObj.orderItems, specObject.orderItems)
+		saveSql.saveFile.bind(null, outputDataObj.territories, specObj.territories),
+		saveSql.saveFile.bind(null, outputDataObj.countries, specObj.countries),
+		saveSql.saveFile.bind(null, outputDataObj.statesRegions, specObj.statesRegions),
+		saveSql.saveFile.bind(null, outputDataObj.cities, specObj.cities),
+		saveSql.saveFile.bind(null, outputDataObj.dealSizes, specObj.dealSizes),
+		saveSql.saveFile.bind(null, outputDataObj.productLines, specObj.productLines),
+		saveSql.saveFile.bind(null, outputDataObj.orderStatusModes, specObj.orderStatusModes),
+		saveSql.saveFile.bind(null, outputDataObj.products, specObj.products),
+		saveSql.saveFile.bind(null, outputDataObj.customers, specObj.customers),
+		saveSql.saveFile.bind(null, outputDataObj.orderEntries, specObj.orderEntries),
+		saveSql.saveFile.bind(null, outputDataObj.orderItems, specObj.orderItems)
 	],
 	function (writeBatchErr, writeBatchRes)
 	{

@@ -19,8 +19,8 @@ function addLocationItem(locationString, arrName, targetParentID, fullRes)
 	while (existingIndex >= 0 && existingIndex < arrObj.length && existID === null)
 	{
 		currentLocationObject = arrObj[existingIndex];
-		currentLocationName = currentLocationObject[1];
-		currentParentString = currentLocationObject[2];
+		currentLocationName = currentLocationObject[2];
+		currentParentString = currentLocationObject[1];
 		currentParentID = Number(currentParentString);
 		
 		if (currentLocationName.toLowerCase() === preparedItem.toLowerCase() && currentParentID === targetParentID)
@@ -41,8 +41,8 @@ function addLocationItem(locationString, arrName, targetParentID, fullRes)
 		newLocationObject = [];
 		
 		newLocationObject[0] = String(addRes);
-		newLocationObject[1] = preparedItem;
-		newLocationObject[2] = String(targetParentID);
+		newLocationObject[1] = String(targetParentID);
+		newLocationObject[2] = preparedItem;
 		
 		arrObj.push(newLocationObject);
 	}
