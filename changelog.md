@@ -1,5 +1,14 @@
 # Changelog
 
-**./sales_data_query.sql**
-* New file.
-* Retrieves and displays the data as it is in the original CSV.
+**./src/processing/order-pass.js loopDataRows**
+* Replaced 'rowLoopIndex' with 'currentIndex' when calling:
+	* handleQuantityValidation
+	* handlePriceValidation
+	* handleItemAdd
+	* handleOrderAdd
+	* dateValue.validateDate
+
+---
+
+**./src/output/export-spec.js**
+* Added 'displayNumber' to 'getOrderItemAttributes'

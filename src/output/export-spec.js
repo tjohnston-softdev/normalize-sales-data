@@ -64,7 +64,7 @@ function getOrderItemAttributes()
 	var attrList = [];
 	
 	attrList.push("orderID", "itemNumber", "productID");
-	attrList.push("quantityOrdered", "priceEach", "dealSizeID");
+	attrList.push("quantityOrdered", "priceEach", "dealSizeID", "displayNumber");
 	
 	return attrList;
 }

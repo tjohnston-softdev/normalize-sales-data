@@ -33,13 +33,13 @@ function loopDataRows(prepData, fullResultObj)
 		currentLineAdd = -1;
 		currentRowComplete = false;
 		
-		currentQuantity = handleQuantityValidation(rowLoopIndex, currentRow, fullResultObj);
-		currentPrice = handlePriceValidation(rowLoopIndex, currentRow, currentQuantity, fullResultObj);
+		currentQuantity = handleQuantityValidation(currentIndex, currentRow, fullResultObj);
+		currentPrice = handlePriceValidation(currentIndex, currentRow, currentQuantity, fullResultObj);
 		
 		if (currentRow.orderNumber === loopOrderNumber)
 		{
 			currentLineAllowed = Number.isFinite(currentPrice);
-			currentLineAdd = handleItemAdd(rowLoopIndex, currentRow, currentQuantity, currentPrice, fullResultObj, currentLineAllowed);
+			currentLineAdd = handleItemAdd(currentIndex, currentRow, currentQuantity, currentPrice, fullResultObj, currentLineAllowed);
 			currentRowComplete = checkAdd(currentLineAdd, fullResultObj.data.orderItems.length);
 		}
 		else if (currentRow.orderNumber > loopOrderNumber)
@@ -49,7 +49,7 @@ function loopDataRows(prepData, fullResultObj)
 			currentDate = dateValue.validateDate(currentIndex, currentRow, "ORDERDATE", fullResultObj);
 			currentOrderAdd = handleOrderAdd(currentIndex, currentRow, currentDate, fullResultObj);
 			currentLineAllowed = checkAdd(currentOrderAdd, fullResultObj.data.orderEntries.length);
-			currentLineAdd = handleItemAdd(rowLoopIndex, currentRow, currentQuantity, currentPrice, fullResultObj, currentLineAllowed);
+			currentLineAdd = handleItemAdd(currentIndex, currentRow, currentQuantity, currentPrice, fullResultObj, currentLineAllowed);
 			currentRowComplete = checkAdd(currentLineAdd, fullResultObj.data.orderItems.length);
 		}
 		else
