@@ -1,3 +1,5 @@
+// Coordinates data normalization.
+
 const ora = require("ora");
 const normRes = require("./common/norm-res");
 const inputErrors = require("./common/input-errors");
@@ -6,6 +8,7 @@ const orderSort = require("./processing/order-sort");
 const orderPass = require("./processing/order-pass");
 
 
+// Main function.
 function processSalesData(originalDataSet, salesDataCallback)
 {
 	var processSpinner = ora("Normalizing Data").start();
@@ -26,21 +29,25 @@ function processSalesData(originalDataSet, salesDataCallback)
 }
 
 
+// Process data
 function coordinateDataProcessing(origDataSet, dataCallback)
 {
 	var fullResultObject = normRes.initializeResult();
 	var dataErrorText = "";
 	
-	generalPass.loopRows(origDataSet, fullResultObject);
-	orderSort.sortRows(origDataSet, fullResultObject.canContinue);
-	orderPass.loopRows(origDataSet, fullResultObject);
+	generalPass.loopRows(origDataSet, fullResultObject);				// General data.
+	orderSort.sortRows(origDataSet, fullResultObject.canContinue);		// Sort by order.
+	orderPass.loopRows(origDataSet, fullResultObject);					// Order data
+	
 	
 	if (fullResultObject.canContinue === true)
 	{
+		// Successful.
 		return dataCallback(null, fullResultObject.data);
 	}
 	else
 	{
+		// Error.
 		dataErrorText = inputErrors.writeFullMessage(fullResultObject.error);
 		return dataCallback(new Error(dataErrorText), null);
 	}

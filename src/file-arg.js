@@ -1,21 +1,32 @@
+// This file is used to read, parse, and validate the file type argument.
+
 const exitProgram = require("./common/exit-program");
 
+
+// Read argument.
 function readFileTypeArgument()
 {
-	var argArrayExists = Array.isArray(process.argv);
+	var argArrayExists = false;
 	var passedArg = null;
 	var argType = "";
 	
 	var readRes = "";
 	
+	
+	// Checks whether argument array exists.
+	argArrayExists = Array.isArray(process.argv);
+	
 	if (argArrayExists === true && process.argv.length >= 3)
 	{
+		// Read file type argument.
 		passedArg = process.argv[2];
 		argType = typeof passedArg;
 	}
 	
+	
 	if (argType === "string")
 	{
+		// Use string.
 		readRes = passedArg.toLowerCase();
 	}
 	
@@ -24,6 +35,7 @@ function readFileTypeArgument()
 
 
 
+// Prepare argument
 function prepareFileTypeArgument(argString)
 {
 	var prepRes = -1;

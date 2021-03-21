@@ -1,9 +1,12 @@
+// Saves normalized data as SQL files.
+
 const series = require("run-series");
 const ora = require("ora");
 const exportSpec = require("./output/export-spec");
 const saveSql = require("./output/save-sql");
 
 
+// Main function.
 function writeSqlDataFiles(outputDataObject, outputTargetFolder, sqlDataCallback)
 {
 	var sqlSpinner = ora("Writing SQL Data Files").start();
@@ -24,11 +27,14 @@ function writeSqlDataFiles(outputDataObject, outputTargetFolder, sqlDataCallback
 }
 
 
-
+// Write output files.
 function coordinateSqlWrite(outputDataObj, outputTgtFolder, sqlWriteCallback)
 {
+	// Create specification object.
 	var specObj = exportSpec.getFileSpecifications(outputTgtFolder, "sql", false);
 	
+	
+	// Save files sequentially.
 	series(
 	[
 		saveSql.saveFile.bind(null, outputDataObj.territories, specObj.territories),
@@ -45,6 +51,7 @@ function coordinateSqlWrite(outputDataObj, outputTgtFolder, sqlWriteCallback)
 	],
 	function (writeBatchErr, writeBatchRes)
 	{
+		// Complete.
 		return sqlWriteCallback(writeBatchErr, writeBatchRes);
 	});
 }

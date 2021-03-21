@@ -1,9 +1,12 @@
+// Saves normalized data as CSV files.
+
 const series = require("run-series");
 const ora = require("ora");
 const exportSpec = require("./output/export-spec");
 const saveCsv = require("./output/save-csv");
 
 
+// Main function.
 function writeCsvDataFiles(outputDataObject, outputTargetFolder, csvDataCallback)
 {
 	var csvSpinner = ora("Writing CSV Data Files").start();
@@ -24,10 +27,14 @@ function writeCsvDataFiles(outputDataObject, outputTargetFolder, csvDataCallback
 }
 
 
+// Write output files.
 function coordinateCsvWrite(outputDataObj, outputTgtFolder, csvWriteCallback)
 {
+	// Create specification object.
 	var specObj = exportSpec.getFileSpecifications(outputTgtFolder, "csv", true);
 	
+	
+	// Save files sequentially.
 	series(
 	[
 		saveCsv.saveFile.bind(null, outputDataObj.territories, specObj.territories),
@@ -44,6 +51,7 @@ function coordinateCsvWrite(outputDataObj, outputTgtFolder, csvWriteCallback)
 	],
 	function (writeBatchErr, writeBatchRes)
 	{
+		// Complete.
 		return csvWriteCallback(writeBatchErr, writeBatchRes);
 	});
 }

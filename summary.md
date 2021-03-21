@@ -1,11 +1,11 @@
 # Summary
 
-**Commit Number:** 37
+**Commit Number:** 38
 
 **Date:** 2021-03-21
 
-**Title:** Output script commenting
+**Title:** Coordination script commenting
 
 **Description:**
 
-Wrote comments for 'output' script files.
+Wrote comments for './src' script files.

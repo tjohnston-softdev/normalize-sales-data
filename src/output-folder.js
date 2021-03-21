@@ -1,9 +1,12 @@
+// Creates output folder.
+
 const path = require("path");
 const fs = require("fs");
 const ora = require("ora");
 const fsErrors = require("./common/fs-errors");
 
 
+// Main function.
 function createOutputDataFolder(outputFolderCallback)
 {
 	var folderSpinner = ora("Preparing Output Folder").start();
@@ -26,6 +29,7 @@ function createOutputDataFolder(outputFolderCallback)
 }
 
 
+// Create directory.
 function coordinateFolderCreation(folderCallback)
 {
 	var targetPath = path.join(".", "output-files");
@@ -36,11 +40,13 @@ function coordinateFolderCreation(folderCallback)
 	{
 		if (folderErr !== null)
 		{
+			// Error
 			folderErrorText = fsErrors.writeFolderCreateText(folderErr.code);
 			return folderCallback(new Error(folderErrorText), null);
 		}
 		else
 		{
+			// Successful - return folder path.
 			return folderCallback(null, targetPath);
 		}
 	});
