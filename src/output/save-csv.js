@@ -1,9 +1,12 @@
+// Used to save CSV files.
+
 const fs = require("fs");
 const papaparse = require("papaparse");
 const valuePrep = require("../common/value-prep");
 const fsErrors = require("../common/fs-errors");
 
 
+// Main function.
 function saveCsvFile(objectArray, fileSpecs, saveCallback)
 {
 	var csvTextString = convertJsonToCsv(objectArray, fileSpecs.tableAttributes);
@@ -16,6 +19,7 @@ function saveCsvFile(objectArray, fileSpecs, saveCallback)
 }
 
 
+// Save CSV file.
 function handleFileWrite(wPath, wContents, wDesc, handleCallback)
 {
 	var writeErrorText = "";
@@ -24,17 +28,20 @@ function handleFileWrite(wPath, wContents, wDesc, handleCallback)
 	{
 		if (writeErr !== null)
 		{
+			// Error
 			writeErrorText = fsErrors.writeActionText("writing", wDesc, wPath, writeErr.code);
 			return handleCallback(new Error(writeErrorText), null);
 		}
 		else
 		{
+			// Successful
 			return handleCallback(null, true);
 		}
 	});
 }
 
 
+// Converts JSON array to CSV string.
 function convertJsonToCsv(objArr, attrList)
 {
 	var csvOptions = {"header": true};

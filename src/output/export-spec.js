@@ -1,9 +1,14 @@
+// Used to define file names, table names, and attribute lists for output data.
+
 const path = require("path");
 
+
+// Main function.
 function getFileExportSpecification(targetFolder, chosenExt, inclAttrs)
 {
 	var specRes = {};
 	
+	// Creates specification object for each database table.
 	specRes["territories"] = defineFileSpecification(targetFolder, "global-territory", chosenExt, "GlobalTerritory");
 	specRes["countries"] = defineFileSpecification(targetFolder, "country", chosenExt, "Country");
 	specRes["statesRegions"] = defineFileSpecification(targetFolder, "state-region", chosenExt, "StateRegion");
@@ -16,6 +21,8 @@ function getFileExportSpecification(targetFolder, chosenExt, inclAttrs)
 	specRes["orderEntries"] = defineFileSpecification(targetFolder, "order-entry", chosenExt, "OrderEntry");
 	specRes["orderItems"] = defineFileSpecification(targetFolder, "order-item", chosenExt, "OrderItem");
 	
+	
+	// Includes table attributes for CSV files.
 	if (inclAttrs === true)
 	{
 		specRes.territories.tableAttributes = ["territoryID", "territoryName"];
@@ -31,10 +38,13 @@ function getFileExportSpecification(targetFolder, chosenExt, inclAttrs)
 		specRes.orderItems.tableAttributes = getOrderItemAttributes();
 	}
 	
+	
 	return specRes;
 }
 
 
+
+// Creates specification object.
 function defineFileSpecification(tgtFolder, fileName, fileExt, tblName)
 {
 	var fullName = fileName + "." + fileExt;
@@ -48,6 +58,7 @@ function defineFileSpecification(tgtFolder, fileName, fileExt, tblName)
 }
 
 
+// 'Customer' table attributes.
 function getCustomerAttributes()
 {
 	var attrList = [];
@@ -59,6 +70,7 @@ function getCustomerAttributes()
 }
 
 
+// 'OrderItem' table attributes.
 function getOrderItemAttributes()
 {
 	var attrList = [];
