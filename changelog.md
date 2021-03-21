@@ -1,14 +1,15 @@
 # Changelog
 
-**./src/processing/order-pass.js loopDataRows**
-* Replaced 'rowLoopIndex' with 'currentIndex' when calling:
-	* handleQuantityValidation
-	* handlePriceValidation
-	* handleItemAdd
-	* handleOrderAdd
-	* dateValue.validateDate
+**Commented Files**
+* ./src/common/*.js
 
 ---
 
-**./src/output/export-spec.js**
-* Added 'displayNumber' to 'getOrderItemAttributes'
+**./src/common/date-string.js**
+* Variable declarations and assignments are now on separate lines. (writeDateStringFromObject)
+
+---
+
+**./src/common/value-prep.js**
+* Removed the 'leadingSpaceRegex' global.
+	* Used inline for 'sanitizeInputString'

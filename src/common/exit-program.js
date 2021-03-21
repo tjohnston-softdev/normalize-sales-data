@@ -1,3 +1,7 @@
+// This file ends the command line execution after completion or error.
+
+
+// Error
 function callErrorExit(eMsg, inclBreak)
 {
 	if (inclBreak === true)
@@ -10,6 +14,7 @@ function callErrorExit(eMsg, inclBreak)
 }
 
 
+// Successful
 function callSuccessfulExit()
 {
 	console.log("");

@@ -1,5 +1,8 @@
+// Writes file system related errors.
+
 const path = require("path");
 
+// File action: reading, writing, etc.
 function writeFileActionErrorText(vContext, vFileDesc, vFilePath, fsErrCode)
 {
 	var writeRes = "";
@@ -18,6 +21,7 @@ function writeFileActionErrorText(vContext, vFileDesc, vFilePath, fsErrCode)
 }
 
 
+// Invalid source CSV file.
 function writeSourceVerificationErrorText(vFileDesc, vContext)
 {
 	var writeRes = vFileDesc + " file " + vContext;
@@ -25,6 +29,7 @@ function writeSourceVerificationErrorText(vFileDesc, vContext)
 }
 
 
+// Create output folder.
 function writeFolderCreateErrorText(fsErrCode)
 {
 	var writeRes = "Error creating output folder - " + fsErrCode;
@@ -32,6 +37,7 @@ function writeFolderCreateErrorText(fsErrCode)
 }
 
 
+// Parses relevant error codes into readable description.
 function parseErrorCode(eCode)
 {
 	var parseRes = "";

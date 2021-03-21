@@ -1,3 +1,7 @@
+// Used to prepare and write input validation errors.
+
+
+// String too long.
 function setStringTooLongError(errorObj, vColName, vRowIndex, vMaxLength)
 {
 	errorObj.rowNumber = vRowIndex;
@@ -6,6 +10,7 @@ function setStringTooLongError(errorObj, vColName, vRowIndex, vMaxLength)
 }
 
 
+// String empty.
 function setStringEmptyError(errorObj, vColName, vRowIndex)
 {
 	errorObj.rowNumber = vRowIndex;
@@ -14,6 +19,7 @@ function setStringEmptyError(errorObj, vColName, vRowIndex)
 }
 
 
+// Invalid value type.
 function setInvalidTypeError(errorObj, vColName, vRowIndex, vCorrectType)
 {
 	errorObj.rowNumber = vRowIndex;
@@ -22,6 +28,7 @@ function setInvalidTypeError(errorObj, vColName, vRowIndex, vCorrectType)
 }
 
 
+// Number too large.
 function setNumberTooLargeError(errorObj, vColName, vRowIndex, vMaxValue)
 {
 	errorObj.rowNumber = vRowIndex;
@@ -30,6 +37,7 @@ function setNumberTooLargeError(errorObj, vColName, vRowIndex, vMaxValue)
 }
 
 
+// Negative number.
 function setNumberNegativeError(errorObj, vColName, vRowIndex)
 {
 	errorObj.rowNumber = vRowIndex;
@@ -38,6 +46,7 @@ function setNumberNegativeError(errorObj, vColName, vRowIndex)
 }
 
 
+// Zero.
 function setNumberZeroError(errorObj, vColName, vRowIndex)
 {
 	errorObj.rowNumber = vRowIndex;
@@ -46,6 +55,7 @@ function setNumberZeroError(errorObj, vColName, vRowIndex)
 }
 
 
+// Invalid date.
 function setDateFormatError(errorObj, vColName, vRowIndex)
 {
 	errorObj.rowNumber = vRowIndex;
@@ -54,6 +64,7 @@ function setDateFormatError(errorObj, vColName, vRowIndex)
 }
 
 
+// Writes full error text after it has been prepared.
 function writeFullMessageText(errorObj)
 {
 	var writeRes = "";
@@ -66,6 +77,7 @@ function writeFullMessageText(errorObj)
 }
 
 
+// Adds field to error text, line-separated.
 function addErrorField(fieldName, fieldVal)
 {
 	var addedText = fieldName + ": " + fieldVal + "\n";

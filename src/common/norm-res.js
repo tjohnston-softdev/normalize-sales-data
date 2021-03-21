@@ -1,3 +1,4 @@
+// Defines normalization result object.
 function initializeNormalizationResult()
 {
 	var intlRes = {};

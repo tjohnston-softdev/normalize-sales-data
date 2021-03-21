@@ -1,3 +1,9 @@
+/*
+	Writes CSV parsing error.
+	Used by the 'papaparse' library.
+	Highest priority error will be used.
+*/
+
 function writeSpecificParseError(errList)
 {
 	var errorObject = errList[0];

@@ -1,5 +1,7 @@
-const leadingSpaceRegex = /\s+/g;
+// Functions for value preperation.
 
+
+// Object type.
 function checkObjectType(subjectVal)
 {
 	var vType = typeof subjectVal;
@@ -14,6 +16,7 @@ function checkObjectType(subjectVal)
 }
 
 
+// String type.
 function checkStringType(subjectVal)
 {
 	var vType = typeof subjectVal;
@@ -28,12 +31,13 @@ function checkStringType(subjectVal)
 }
 
 
+// Sanitize string.
 function sanitizeInputString(subjectString)
 {
 	var prepRes = subjectString;
 	
 	prepRes = prepRes.trim();
-	prepRes = prepRes.replace(leadingSpaceRegex, " ");
+	prepRes = prepRes.replace(/\s+/g, " ");
 	
 	return prepRes;
 }

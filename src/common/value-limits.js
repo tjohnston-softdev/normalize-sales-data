@@ -1,20 +1,22 @@
-const territoryLimit = 8;
-const countryLimit = 32;
-const stateLimit = 32;
-const cityLimit = 32;
-const dealSizeLimit = 16;
-const productLineLimit = 16;
-const statusLimit = 16;
-const productCodeLimit = 32;
-const currencyLimit = 99999;
-const customerLimit = 128;
-const phoneNumberLimit = 20;
-const contactLimit = 32;
-const addressLimit = 128;
-const postalCodeLimit = 16;
-const orderNumberLimit = 32767;
-const orderItemLimit = 255;
-const orderQuantityLimit = 255;
+// Upper limits for string length and number values.
+
+const territoryLimit = 8;								// Territory name.
+const countryLimit = 32;								// Country name.
+const stateLimit = 32;									// State name.
+const cityLimit = 32;									// City name.
+const dealSizeLimit = 16;								// Deal Size name.
+const productLineLimit = 16;							// Product Line name.
+const statusLimit = 16;									// Order Status name.
+const productCodeLimit = 32;							// Product Code.
+const currencyLimit = 99999;							// Maximum currency.
+const customerLimit = 128;								// Customer name.
+const phoneNumberLimit = 20;							// Phone number.
+const contactLimit = 32;								// Individual contact name.
+const addressLimit = 128;								// Address line.
+const postalCodeLimit = 16;								// Postal Code.
+const orderNumberLimit = 32767;							// Maximum order number.
+const orderItemLimit = 255;								// Maximum items per order.
+const orderQuantityLimit = 255;							// Maximum quantity.
 
 
 module.exports =
