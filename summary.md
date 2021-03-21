@@ -1,12 +1,12 @@
 # Summary
 
-**Commit Number:** 33
+**Commit Number:** 34
 
 **Date:** 2021-03-21
 
-**Title:** SQL Semicolon
+**Title:** Sales Data Query
 
 **Description:**
 
-* Added semicolon to output SQL files.
-* SQL definition files work correctly.
+* Wrote sales data query.
+	* This will retrieve and display the data as it is in the original CSV.

@@ -1,4 +1,5 @@
 # Changelog
 
-* Added semicolon to output SQL files. (./src/output/save-sql.js)
-* Added 'node_modules' to .gitignore
+**./sales_data_query.sql**
+* New file.
+* Retrieves and displays the data as it is in the original CSV.
