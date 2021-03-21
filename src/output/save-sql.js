@@ -32,7 +32,7 @@ function convertJsonToSql(objArr, tblName)
 	if (objArr.length > 0)
 	{
 		sqlParams = [tblName, objArr];
-		convRes = sqlString.format("INSERT INTO ?? VALUES ?", sqlParams);
+		convRes = sqlString.format("INSERT INTO ?? VALUES ?;", sqlParams);
 	}
 	else
 	{

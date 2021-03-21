@@ -1,12 +1,12 @@
 # Summary
 
-**Commit Number:** 32
+**Commit Number:** 33
 
-**Date:** 2021-03-20
+**Date:** 2021-03-21
 
-**Title:** Row Display Order
+**Title:** SQL Semicolon
 
 **Description:**
 
-* Added 'displayNumber' column to 'OrderItem'
-* Indicates the display order of rows when querying sales data.
+* Added semicolon to output SQL files.
+* SQL definition files work correctly.
