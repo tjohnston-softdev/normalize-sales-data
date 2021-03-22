@@ -1,9 +1,15 @@
+/*
+	Adds or retrieves product item objects.
+	[id, code, line, msrp]
+*/
+
+
 const valuePrep = require("../../common/value-prep");
 
 
 function addProductItem(productCodeString, msrpNum, lineID, productArr)
 {
-	var preparedCode = valuePrep.sanitizeString(productCodeString);
+	var preparedCode = "";
 	
 	var existingIndex = 0;
 	var currentProductObject = [];
@@ -13,13 +19,21 @@ function addProductItem(productCodeString, msrpNum, lineID, productArr)
 	var addRes = -1;
 	var newProductObject = [];
 	
+	
+	// Prepare target product code.
+	preparedCode = valuePrep.sanitizeString(productCodeString);
+	
+	
+	// Loop products until end reached or target code found.
 	while (existingIndex >= 0 && existingIndex < productArr.length && existID === null)
 	{
+		// Read current product.
 		currentProductObject = productArr[existingIndex];
 		currentProductCode = currentProductObject[1];
 		
 		if (currentProductCode.toLowerCase() === preparedCode.toLowerCase())
 		{
+			// Match found.
 			existID = currentProductObject[0];
 		}
 		
@@ -28,10 +42,12 @@ function addProductItem(productCodeString, msrpNum, lineID, productArr)
 	
 	if (existID !== null)
 	{
+		// Use existing product.
 		addRes = Number(existID);
 	}
 	else
 	{
+		// Create new product.
 		addRes = productArr.length + 1;
 		newProductObject = [];
 		

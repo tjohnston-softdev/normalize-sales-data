@@ -1,11 +1,11 @@
 # Summary
 
-**Commit Number:** 38
+**Commit Number:** 39
 
-**Date:** 2021-03-21
+**Date:** 2021-03-22
 
-**Title:** Coordination script commenting
+**Title:** Processing script comments
 
 **Description:**
 
-Wrote comments for './src' script files.
+Wrote comments for './src/processing' script files.

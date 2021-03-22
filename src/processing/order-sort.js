@@ -1,3 +1,5 @@
+// Sorts CSV data by order.
+
 function sortPreparedDataRows(origData, sortAllowed)
 {
 	if (sortAllowed === true)

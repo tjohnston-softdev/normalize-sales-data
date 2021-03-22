@@ -1,7 +1,10 @@
+// Validate date string value.
+
 const valuePrep = require("../../common/value-prep");
 const inputErrors = require("../../common/input-errors");
 
 
+// Main function.
 function validateDateText(rowInd, rowObj, colName, fullResObj)
 {
 	var writtenString = rowObj[colName];
@@ -18,6 +21,7 @@ function validateDateText(rowInd, rowObj, colName, fullResObj)
 }
 
 
+// Check for string type.
 function prepareDateString(origStr)
 {
 	var stringType = valuePrep.checkString(origStr);
@@ -32,6 +36,7 @@ function prepareDateString(origStr)
 }
 
 
+// Check for non-empty length.
 function checkDateStringLength(dRowIndex, dColName, dLength, fullRes)
 {
 	var checkRes = false;
@@ -49,6 +54,7 @@ function checkDateStringLength(dRowIndex, dColName, dLength, fullRes)
 }
 
 
+// Check valid format.
 function checkDateFormat(dRowIndex, dColName, dString, validRes, fullRes)
 {
 	var castDateObject = new Date(dString);
@@ -57,11 +63,13 @@ function checkDateFormat(dRowIndex, dColName, dString, validRes, fullRes)
 	
 	if (castValid === true)
 	{
+		// Valid format.
 		validRes.dateObject = castDateObject;
 		validRes.valid = true;
 	}
 	else
 	{
+		// Invalid format.
 		inputErrors.setDateFormat(fullRes.error, dColName, dRowIndex);
 	}
 }

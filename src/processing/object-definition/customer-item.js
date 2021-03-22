@@ -1,9 +1,15 @@
+/*
+	Adds or retrieves customer items.
+	[id, name, phone, first, last, address1, address2, city, postal]
+*/
+
+
 const valuePrep = require("../../common/value-prep");
 
 
 function addCustomerItem(nameObject, detailsObject, cityLocationID, customerArr)
 {
-	var preparedName = valuePrep.sanitizeString(nameObject.preparedText);
+	var preparedName = "";
 	
 	var existingIndex = 0;
 	var currentCustomerObject = [];
@@ -13,13 +19,20 @@ function addCustomerItem(nameObject, detailsObject, cityLocationID, customerArr)
 	var addRes = -1;
 	var newCustomerObject = [];
 	
+	// Prepare target customer name.
+	preparedName = valuePrep.sanitizeString(nameObject.preparedText);
+	
+	
+	// Loop existing country objects until end reached or target name found.
 	while (existingIndex >= 0 && existingIndex < customerArr.length && existID === null)
 	{
+		// Read current customer.
 		currentCustomerObject = customerArr[existingIndex];
 		currentCustomerName = currentCustomerObject[1];
 		
 		if (currentCustomerName.toLowerCase() === preparedName.toLowerCase())
 		{
+			// Match found.
 			existID = currentCustomerObject[0];
 		}
 		
@@ -28,10 +41,12 @@ function addCustomerItem(nameObject, detailsObject, cityLocationID, customerArr)
 	
 	if (existID !== null)
 	{
+		// Use existing customer.
 		addRes = Number(existID);
 	}
 	else
 	{
+		// Add new customer.
 		addRes = customerArr.length + 1;
 		
 		newCustomerObject[0] = String(addRes);

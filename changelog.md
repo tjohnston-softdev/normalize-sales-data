@@ -1,15 +1,22 @@
 # Changelog
 
 **Commented Files**
-* ./src/file-arg.js
-* ./src/file-check.js
-* ./src/file-read.js
-* ./src/proc-data.js
-* ./src/output-folder.js
-* ./src/output-csv-files.js
-* ./src/output-sql-files.js
+* ./src/processing/general-pass.js
+* ./src/processing/order-sort.js
+* ./src/processing/order-pass.js
+* ./src/processing/field-validation/*.js
+* ./src/processing/object-definition/*.js
 
 ---
 
-**./src/file-arg.js readFileTypeArgument**
-* 'argArrayExists' declaration and assignment are on separate lines.
+**./src/processing/order-pass.js loopDataRows**
+* Removed blank line between 'currentRowComplete' and 'loopOrderNumber' declarations.
+
+---
+
+**./src/processing/object-definition/\*.js**
+* The following variable assignments and declarations are now on separate lines:
+	* arrObj (list-item.js, sub-location.js)
+	* preparedItem (list-item.js, country-item.js sub-location.js)
+	* preparedName (customer-item.js)
+	* preparedCode (product-item.js)
