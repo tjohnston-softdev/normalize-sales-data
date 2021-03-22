@@ -1,12 +1,12 @@
 # Summary
 
-**Commit Number:** 40
+**Commit Number:** 41
 
 **Date:** 2021-03-22
 
-**Title:** Main script comment
+**Title:** Calculate Quarter, Month, Year
 
 **Description:**
 
-* Wrote comments for 'convert.js'
-* Commenting is now complete.
+* Added quarter, month, and year to the sales data query.
+* Added aliases to some columns so that they better reflect the original data
