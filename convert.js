@@ -1,3 +1,5 @@
+// normalize-sales-data
+
 const clear = require("clear");
 const exitProgram = require("./src/common/exit-program");
 const fileArg = require("./src/file-arg");
@@ -11,10 +13,15 @@ const outputSqlFiles = require("./src/output-sql-files");
 runDataNormalization();
 
 
+// Main function.
 function runDataNormalization()
 {
-	var givenFileType = fileArg.readFileType();
-	var fileTypeFlag = fileArg.prepareFileType(givenFileType);
+	var givenFileType = "";
+	var fileTypeFlag = null;
+	
+	// Reads and validates file type argument.
+	givenFileType = fileArg.readFileType();
+	fileTypeFlag = fileArg.prepareFileType(givenFileType);
 	
 	if (fileTypeFlag >= 0)
 	{
@@ -24,6 +31,7 @@ function runDataNormalization()
 }
 
 
+// Check source CSV file.
 function callInputFileCheck(conversionTypeFlag)
 {
 	fileCheck.checkInput(function (inpChkErr)
@@ -40,6 +48,7 @@ function callInputFileCheck(conversionTypeFlag)
 }
 
 
+// Read source file.
 function callInputFileRead(convTypeFlag)
 {
 	fileRead.readInput(function (inpReadErr, inpReadData)
@@ -56,6 +65,7 @@ function callInputFileRead(convTypeFlag)
 }
 
 
+// Normalize CSV data.
 function callDataProcessing(retrievedCsvData, convType)
 {
 	procData.processData(retrievedCsvData, function (dataProcErr, normalizedDataObject)
@@ -71,7 +81,7 @@ function callDataProcessing(retrievedCsvData, convType)
 	});
 }
 
-
+// Create output folder.
 function callOutputFolder(normalizedDataObj, cTypeFlag)
 {
 	outputFolder.createFolder(function (outputFolderErr, outputFolderPath)
@@ -88,23 +98,28 @@ function callOutputFolder(normalizedDataObj, cTypeFlag)
 }
 
 
+// Coordinate output.
 function callOutputFileWrite(normalizedData, oFolderPth, cType)
 {
 	if (cType > 0)
 	{
+		// SQL definition files.
 		callSqlOutput(normalizedData, oFolderPth);
 	}
 	else if (cType === 0)
 	{
+		// CSV data files.
 		callCsvOutput(normalizedData, oFolderPth);
 	}
 	else
 	{
+		// Error
 		exitProgram.callError("Invalid File Type", true);
 	}
 }
 
 
+// Output normalized data as SQL files.
 function callSqlOutput(normData, oFolder)
 {
 	outputSqlFiles.writeDataFiles(normData, oFolder, function (sqlOutputErr, sqlOutputRes)
@@ -120,7 +135,7 @@ function callSqlOutput(normData, oFolder)
 	});
 }
 
-
+// Output normalized data as CSV files.
 function callCsvOutput(normData, oFolder)
 {
 	outputCsvFiles.writeDataFiles(normData, oFolder, function (csvOutputErr, csvOutputRes)
