@@ -1,12 +1,11 @@
 # Summary
 
-**Commit Number:** 41
+**Commit Number:** 42
 
-**Date:** 2021-03-22
+**Date:** 2021-03-23
 
-**Title:** Calculate Quarter, Month, Year
+**Title:** Documentation
 
 **Description:**
 
-* Added quarter, month, and year to the sales data query.
-* Added aliases to some columns so that they better reflect the original data
+Wrote documentation including readme, inspiration, and column mapping.
