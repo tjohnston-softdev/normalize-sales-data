@@ -1,11 +1,11 @@
 # Summary
 
-**Commit Number:** 42
+**Commit Number:** 43
 
 **Date:** 2021-03-23
 
-**Title:** Documentation
+**Title:** Licensing
 
 **Description:**
 
-Wrote documentation including readme, inspiration, and column mapping.
+Added project licensing information.

@@ -31,3 +31,8 @@ This project also contains a fully functional database based on the normalized d
 * [Data Query](./sales_data_query.sql)
 * [Inspiration](./info/inspiration.md)
 * [Column Mapping](./info/col-map.md)
+
+---
+
+### Disclaimer
+The original data set was licensed under [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/au/). Therefore, I have decided to use the same for this project.

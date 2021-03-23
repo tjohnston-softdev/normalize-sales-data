@@ -1,6 +1,4 @@
 # Changelog
 
-* Wrote the following documentation:
-	* Readme file.
-	* What inspired me to do this.
-	* Column mapping between input CSV and database schema.
+* Licensed project under CC BY-NC-SA 3.0
+* Corrected link to ER diagram in './info/inspiration.md'
