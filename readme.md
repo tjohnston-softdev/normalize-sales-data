@@ -1,21 +1,17 @@
 # Normalize Sales Data
-by Tyrone Johnston
 
----
-
-### Introduction
 This Node JS command line application takes a CSV set of [sales data](https://www.kaggle.com/kyanyoga/sample-sales-data) and restructures it to fit a normalized database that I designed based on the data. The normalized data is then saved either as a CSV or SQL file for each corresponding table.
 
 ---
 
 
-### Getting Started
+## Getting Started
 After downloading this project, open a terminal inside the root folder and run `npm install`. Execute `node convert <file-type>` to run the program. The allowed file types are CSV and SQL, indicating the output file type. The normalized data files are saved in the 'output-files' folder.
 
 
 ---
 
-### Running The Database
+## Running The Database
 This project also contains a fully functional database based on the normalized design. There is an option to output normalized data as SQL files that insert data for the corresponding table.
 
 1. Start a MySQL instance of your choice and run `schema.sql`.
@@ -24,7 +20,7 @@ This project also contains a fully functional database based on the normalized d
 
 ---
 
-### Documentation
+## Documentation
 * [Data Source](https://www.kaggle.com/kyanyoga/sample-sales-data)
 * [ER Diagram](./relational-diagram/sales.svg)
 * [Database Definition](./schema.sql)
@@ -34,5 +30,5 @@ This project also contains a fully functional database based on the normalized d
 
 ---
 
-### Disclaimer
+## Disclaimer
 The original data set was licensed under [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/au/). Therefore, I have decided to use the same for this project.
