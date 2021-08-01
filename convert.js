@@ -10,6 +10,7 @@ const procData = require("./src/proc-data");
 const outputFolder = require("./src/output-folder");
 const outputCsvFiles = require("./src/output-csv-files");
 const outputSqlFiles = require("./src/output-sql-files");
+const outputJsonFiles = require("./src/output-json-files");
 
 runDataNormalization();
 
@@ -17,17 +18,17 @@ runDataNormalization();
 // Main function.
 function runDataNormalization()
 {
-	var givenFileType = "";
-	var fileTypeFlag = null;
+	var givenOutputType = "";
+	var outputTypeFlag = null;
 	
 	// Reads and validates file type argument.
-	givenFileType = fileArg.readFileType();
-	fileTypeFlag = fileArg.prepareFileType(givenFileType);
+	givenOutputType = fileArg.readFileType();
+	outputTypeFlag = fileArg.prepareFileType(givenOutputType);
 	
-	if (fileTypeFlag > 0)
+	if (outputTypeFlag > 0)
 	{
 		clear();
-		callInputFileCheck(fileTypeFlag);
+		callInputFileCheck(outputTypeFlag);
 	}
 }
 
@@ -105,27 +106,27 @@ function callOutputFileWrite(normalizedData, oFolderPth, cType)
 	if (cType === outputTypes.modes.SQL)
 	{
 		// SQL definition files.
-		//callSqlOutput(normalizedData, oFolderPth);
+		callSqlOutput(normalizedData, oFolderPth);
 	}
 	else if (cType === outputTypes.modes.CSV)
 	{
 		// CSV data files.
-		//callCsvOutput(normalizedData, oFolderPth);
+		callCsvOutput(normalizedData, oFolderPth);
 	}
 	else if (cType === outputTypes.modes.ARRAY)
 	{
 		// Multi-dimensional JSON array files.
-		exitProgram.callError("ARRAY not supported");
+		callJsonOutput(normalizedData, oFolderPth, false);
 	}
 	else if (cType === outputTypes.modes.OBJECT)
 	{
 		// JSON object array files.
-		exitProgram.callError("OBJECT not supported");
+		callJsonOutput(normalizedData, oFolderPth, true);
 	}
 	else
 	{
 		// Error
-		exitProgram.callError("Invalid File Type", true);
+		exitProgram.callError("Invalid Output Type", true);
 	}
 }
 
@@ -154,6 +155,23 @@ function callCsvOutput(normData, oFolder)
 		if (csvOutputErr !== null)
 		{
 			exitProgram.callError(csvOutputErr.message, true);
+		}
+		else
+		{
+			exitProgram.callSuccessful();
+		}
+	});
+}
+
+
+// Output normalized data as JSON files.
+function callJsonOutput(normData, oFolder, objMode)
+{
+	outputJsonFiles.writeDataFiles(normData, oFolder, objMode, function (jsonOutputErr, jsonOutputRes)
+	{
+		if (jsonOutputErr !== null)
+		{
+			exitProgram.callError(jsonOutputErr.message, true);
 		}
 		else
 		{
