@@ -1,5 +1,6 @@
 // This file is used to read, parse, and validate the file type argument.
 
+const outputTypes = require("./common/output-types");
 const exitProgram = require("./common/exit-program");
 
 
@@ -42,19 +43,38 @@ function prepareFileTypeArgument(argString)
 	
 	if (argString === "sql")
 	{
-		prepRes = 1;
+		prepRes = outputTypes.modes.SQL;
 	}
 	else if (argString === "csv")
 	{
-		prepRes = 0;
+		prepRes = outputTypes.modes.CSV;
+	}
+	else if (argString === "array")
+	{
+		prepRes = outputTypes.modes.ARRAY;
+	}
+	else if (argString === "object")
+	{
+		prepRes = outputTypes.modes.OBJECT;
 	}
 	else
 	{
 		prepRes = -1;
-		exitProgram.callError("Invalid file type. Must enter 'sql' or 'csv'", false);
+		displayInvalidError();
 	}
 	
 	return prepRes;
+}
+
+
+function displayInvalidError()
+{
+	var errTxt = "";
+	
+	errTxt += "Invalid file type. Must be one of: ";
+	errTxt += outputTypes.getList();
+	
+	exitProgram.callError(errTxt, false);
 }
 
 

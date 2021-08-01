@@ -1,6 +1,7 @@
 // normalize-sales-data
 
 const clear = require("clear");
+const outputTypes = require("./src/common/output-types");
 const exitProgram = require("./src/common/exit-program");
 const fileArg = require("./src/file-arg");
 const fileCheck = require("./src/file-check");
@@ -23,7 +24,7 @@ function runDataNormalization()
 	givenFileType = fileArg.readFileType();
 	fileTypeFlag = fileArg.prepareFileType(givenFileType);
 	
-	if (fileTypeFlag >= 0)
+	if (fileTypeFlag > 0)
 	{
 		clear();
 		callInputFileCheck(fileTypeFlag);
@@ -101,15 +102,25 @@ function callOutputFolder(normalizedDataObj, cTypeFlag)
 // Coordinate output.
 function callOutputFileWrite(normalizedData, oFolderPth, cType)
 {
-	if (cType > 0)
+	if (cType === outputTypes.modes.SQL)
 	{
 		// SQL definition files.
-		callSqlOutput(normalizedData, oFolderPth);
+		//callSqlOutput(normalizedData, oFolderPth);
 	}
-	else if (cType === 0)
+	else if (cType === outputTypes.modes.CSV)
 	{
 		// CSV data files.
-		callCsvOutput(normalizedData, oFolderPth);
+		//callCsvOutput(normalizedData, oFolderPth);
+	}
+	else if (cType === outputTypes.modes.ARRAY)
+	{
+		// Multi-dimensional JSON array files.
+		exitProgram.callError("ARRAY not supported");
+	}
+	else if (cType === outputTypes.modes.OBJECT)
+	{
+		// JSON object array files.
+		exitProgram.callError("OBJECT not supported");
 	}
 	else
 	{
