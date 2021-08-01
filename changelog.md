@@ -1,3 +1,4 @@
 # Changelog
 
-This project is now complete.
+* Opened 'ver2' branch.
+* Deleted 'summary.md'
