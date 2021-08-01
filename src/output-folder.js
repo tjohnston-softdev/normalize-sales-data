@@ -41,7 +41,7 @@ function coordinateFolderCreation(folderCallback)
 		if (folderErr !== null)
 		{
 			// Error
-			folderErrorText = fsErrors.writeFolderCreateText(folderErr.code);
+			folderErrorText = fsErrors.writeFolderCreate(folderErr.code);
 			return folderCallback(new Error(folderErrorText), null);
 		}
 		else

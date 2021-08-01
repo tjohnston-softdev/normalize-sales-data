@@ -1,7 +1,18 @@
 # Changelog
 
-**./src/common/value-limits.js**
-* Changed values:
-	* 'orderNumber' from 32767 to 30000.
-	* 'orderItem' from 255 to 250.
-	* 'orderQuantity' from 255 to 250.
+**./src/common/fs-errors.js**
+* Renamed public exports:
+	* 'writeActionText' to 'writeAction'
+	* 'writeSourceVerification' to 'writeSourceVerify'
+	* 'writeFolderCreateText' to 'writeFolderCreate'
+
+---
+
+**Affected Files**
+* ./src/
+	* file-check.js
+	* file-read.js
+	* output-folder.js
+	* output
+		* save-csv.js
+		* save-sql.js

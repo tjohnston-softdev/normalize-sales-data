@@ -70,7 +70,7 @@ function parseErrorCode(eCode)
 
 module.exports =
 {
-	writeActionText: writeFileActionErrorText,
-	writeSourceVerification: writeSourceVerificationErrorText,
-	writeFolderCreateText: writeFolderCreateErrorText
+	writeAction: writeFileActionErrorText,
+	writeSourceVerify: writeSourceVerificationErrorText,
+	writeFolderCreate: writeFolderCreateErrorText
 };

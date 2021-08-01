@@ -38,7 +38,7 @@ function coordinateInputCheck(inpChkCallback)
 		if (statErr !== null)
 		{
 			// Error or missing.
-			statErrorText = fsErrors.writeActionText("checking", sourceFile.desc, sourceFile.name, statErr.code);
+			statErrorText = fsErrors.writeAction("checking", sourceFile.desc, sourceFile.name, statErr.code);
 			return inpChkCallback(new Error(statErrorText), null);
 		}
 		else
@@ -65,19 +65,19 @@ function verifyTargetEntry(entryObj, verifyCallback)
 	else if (validFile === true && entryObj.size > maxSizeBytes)
 	{
 		// Too large.
-		verifyErrorText = fsErrors.writeSourceVerification(sourceFile.desc, "cannot be larger than 5MB");
+		verifyErrorText = fsErrors.writeSourceVerify(sourceFile.desc, "cannot be larger than 5MB");
 		return verifyCallback(new Error(verifyErrorText), null);
 	}
 	else if (validFile === true)
 	{
 		// Empty.
-		verifyErrorText = fsErrors.writeSourceVerification(sourceFile.desc, "cannot be empty.");
+		verifyErrorText = fsErrors.writeSourceVerify(sourceFile.desc, "cannot be empty.");
 		return verifyCallback(new Error(verifyErrorText), null);
 	}
 	else
 	{
 		// Missing.
-		verifyErrorText = fsErrors.writeSourceVerification(sourceFile.desc, "does not exist.");
+		verifyErrorText = fsErrors.writeSourceVerify(sourceFile.desc, "does not exist.");
 		return verifyCallback(new Error(verifyErrorText), null);
 	}
 }

@@ -39,7 +39,7 @@ function coordinateInputRead(inpReadCallback)
 		if (readErr !== null)
 		{
 			// Error
-			readErrorText = fsErrors.writeActionText("reading", sourceFile.desc, sourceFile.name, readErr.code);
+			readErrorText = fsErrors.writeAction("reading", sourceFile.desc, sourceFile.name, readErr.code);
 			return inpReadCallback(new Error(readErrorText), null);
 		}
 		else
