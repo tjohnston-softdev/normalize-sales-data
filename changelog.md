@@ -1,4 +1,4 @@
 # Changelog
 
-* Opened 'ver2' branch.
-* Deleted 'summary.md'
+**./src/common/value-limits.js**
+* Restructured for easier readability.
