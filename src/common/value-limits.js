@@ -18,9 +18,9 @@ function defineValueLimits()
 	defineRes["contact"] = 32;								// Individual contact name.
 	defineRes["address"] = 128;								// Address line.
 	defineRes["postalCode"] = 16;							// Postal Code.
-	defineRes["orderNumber"] = 32767;						// Maximum order number.
-	defineRes["orderItem"] = 255;							// Maximum items per order.
-	defineRes["orderQuantity"] = 255;						// Maximum quantity.
+	defineRes["orderNumber"] = 30000;						// Maximum order number.
+	defineRes["orderItem"] = 250;							// Maximum items per order.
+	defineRes["orderQuantity"] = 250;						// Maximum quantity.
 	
 	return defineRes;
 }
