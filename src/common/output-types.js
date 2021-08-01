@@ -6,6 +6,8 @@ const typeModes =
 	"OBJECT": 4
 };
 
+var enteredType = -1;
+
 
 function getModesListText()
 {
@@ -28,8 +30,21 @@ function getModesListText()
 }
 
 
+function saveEntryFlag(flagVal)
+{
+	enteredType = flagVal;
+}
+
+function getEntryFlag()
+{
+	return enteredType;
+}
+
+
 module.exports =
 {
 	modes: typeModes,
-	getList: getModesListText
+	getList: getModesListText,
+	saveEntry: saveEntryFlag,
+	getEntry: getEntryFlag
 };

@@ -19,22 +19,23 @@ runDataNormalization();
 function runDataNormalization()
 {
 	var givenOutputType = "";
-	var outputTypeFlag = null;
+	var preparedFlag = null;
 	
 	// Reads and validates file type argument.
 	givenOutputType = fileArg.readFileType();
-	outputTypeFlag = fileArg.prepareFileType(givenOutputType);
+	preparedFlag = fileArg.prepareFileType(givenOutputType);
 	
-	if (outputTypeFlag > 0)
+	if (preparedFlag > 0)
 	{
 		clear();
-		callInputFileCheck(outputTypeFlag);
+		outputTypes.saveEntry(preparedFlag);
+		callInputFileCheck();
 	}
 }
 
 
 // Check source CSV file.
-function callInputFileCheck(conversionTypeFlag)
+function callInputFileCheck()
 {
 	fileCheck.checkInput(function (inpChkErr)
 	{
@@ -44,14 +45,14 @@ function callInputFileCheck(conversionTypeFlag)
 		}
 		else
 		{
-			callInputFileRead(conversionTypeFlag);
+			callInputFileRead();
 		}
 	});
 }
 
 
 // Read source file.
-function callInputFileRead(convTypeFlag)
+function callInputFileRead()
 {
 	fileRead.readInput(function (inpReadErr, inpReadData)
 	{
@@ -61,14 +62,14 @@ function callInputFileRead(convTypeFlag)
 		}
 		else
 		{
-			callDataProcessing(inpReadData, convTypeFlag);
+			callDataProcessing(inpReadData);
 		}
 	});
 }
 
 
 // Normalize CSV data.
-function callDataProcessing(retrievedCsvData, convType)
+function callDataProcessing(retrievedCsvData)
 {
 	procData.processData(retrievedCsvData, function (dataProcErr, normalizedDataObject)
 	{
@@ -78,13 +79,13 @@ function callDataProcessing(retrievedCsvData, convType)
 		}
 		else
 		{
-			callOutputFolder(normalizedDataObject, convType);
+			callOutputFolder(normalizedDataObject);
 		}
 	});
 }
 
 // Create output folder.
-function callOutputFolder(normalizedDataObj, cTypeFlag)
+function callOutputFolder(normalizedDataObj)
 {
 	outputFolder.createFolder(function (outputFolderErr, outputFolderPath)
 	{
@@ -94,31 +95,33 @@ function callOutputFolder(normalizedDataObj, cTypeFlag)
 		}
 		else
 		{
-			callOutputFileWrite(normalizedDataObj, outputFolderPath, cTypeFlag);
+			callOutputFileWrite(normalizedDataObj, outputFolderPath);
 		}
 	});
 }
 
 
 // Coordinate output.
-function callOutputFileWrite(normalizedData, oFolderPth, cType)
+function callOutputFileWrite(normalizedData, oFolderPth)
 {
-	if (cType === outputTypes.modes.SQL)
+	var oType = outputTypes.getEntry();
+	
+	if (oType === outputTypes.modes.SQL)
 	{
 		// SQL definition files.
 		callSqlOutput(normalizedData, oFolderPth);
 	}
-	else if (cType === outputTypes.modes.CSV)
+	else if (oType === outputTypes.modes.CSV)
 	{
 		// CSV data files.
 		callCsvOutput(normalizedData, oFolderPth);
 	}
-	else if (cType === outputTypes.modes.ARRAY)
+	else if (oType === outputTypes.modes.ARRAY)
 	{
 		// Multi-dimensional JSON array files.
 		callJsonOutput(normalizedData, oFolderPth, false);
 	}
-	else if (cType === outputTypes.modes.OBJECT)
+	else if (oType === outputTypes.modes.OBJECT)
 	{
 		// JSON object array files.
 		callJsonOutput(normalizedData, oFolderPth, true);
