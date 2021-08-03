@@ -17,7 +17,7 @@ function saveSqlFile(objectArray, fileSpecs, saveCallback)
 		if (writeErr !== null)
 		{
 			// Error
-			writeErrorText = fsErrors.writeAction("writing", fileSpecs.tableName, fileSpecs.filePath, writeErr.code);
+			writeErrorText = fsErrors.writeFileAction("writing", fileSpecs.tableName, fileSpecs.filePath, writeErr.code);
 			return saveCallback(new Error(writeErrorText), null);
 		}
 		else

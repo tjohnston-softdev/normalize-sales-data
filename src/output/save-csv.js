@@ -29,7 +29,7 @@ function handleFileWrite(wPath, wContents, wDesc, handleCallback)
 		if (writeErr !== null)
 		{
 			// Error
-			writeErrorText = fsErrors.writeAction("writing", wDesc, wPath, writeErr.code);
+			writeErrorText = fsErrors.writeFileAction("writing", wDesc, wPath, writeErr.code);
 			return handleCallback(new Error(writeErrorText), null);
 		}
 		else
