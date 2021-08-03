@@ -34,6 +34,7 @@ function readFileTypeArgument()
 	
 	if (readRes.length <= 0)
 	{
+		// Empty
 		displayInvalidError("Output type is missing.");
 	}
 	
@@ -66,13 +67,14 @@ function prepareFileTypeArgument(argString)
 	else
 	{
 		prepRes = -1;
-		displayInvalidError("Invalid file type.");
+		displayInvalidError("Invalid output type.");
 	}
 	
 	return prepRes;
 }
 
 
+// Error message.
 function displayInvalidError(vContext)
 {
 	var errTxt = "";
