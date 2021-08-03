@@ -1,6 +1,4 @@
 # Changelog
 
-**./src/file-arg.js**
-* Added "Empty" comment to 'displayInvalidError' call. (readFileTypeArgument)
-* Replaced "file" with "output" for 'displayInvalidError' call. (prepareFileTypeArgument)
-* Added header comment to 'displayInvalidError'
+**./src/output/save-sql.js**
+* Fixed "SQ**L**" header comment typo.

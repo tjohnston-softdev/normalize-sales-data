@@ -1,4 +1,4 @@
-// Used to save SQ files.
+// Used to save SQL files.
 
 const fs = require("fs");
 const sqlString = require("sqlstring");
