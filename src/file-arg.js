@@ -29,6 +29,12 @@ function readFileTypeArgument()
 	{
 		// Use string.
 		readRes = passedArg.toLowerCase();
+		readRes = readRes.trim();
+	}
+	
+	if (readRes.length <= 0)
+	{
+		displayInvalidError("Output type is missing.");
 	}
 	
 	return readRes;
@@ -60,18 +66,19 @@ function prepareFileTypeArgument(argString)
 	else
 	{
 		prepRes = -1;
-		displayInvalidError();
+		displayInvalidError("Invalid file type.");
 	}
 	
 	return prepRes;
 }
 
 
-function displayInvalidError()
+function displayInvalidError(vContext)
 {
 	var errTxt = "";
 	
-	errTxt += "Invalid file type. Must be one of: ";
+	errTxt += vContext
+	errTxt += " Must be one of: ";
 	errTxt += outputTypes.getList();
 	
 	exitProgram.callError(errTxt, false);

@@ -19,17 +19,21 @@ runDataNormalization();
 function runDataNormalization()
 {
 	var givenOutputType = "";
-	var preparedFlag = null;
+	var preparedFlag = -1;
 	
 	// Reads and validates file type argument.
 	givenOutputType = fileArg.readFileType();
-	preparedFlag = fileArg.prepareFileType(givenOutputType);
+	
+	if (givenOutputType.length > 0)
+	{
+		preparedFlag = fileArg.prepareFileType(givenOutputType);
+	}
 	
 	if (preparedFlag > 0)
 	{
 		clear();
 		outputTypes.saveEntry(preparedFlag);
-		callInputFileCheck();
+		//callInputFileCheck();
 	}
 }
 

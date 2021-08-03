@@ -1,24 +1,17 @@
 # Changelog
 
-**./src/common/output-types.js**
-* Declared 'enteredType' global. - Stores input file type flag.
-* Wrote functions to access 'enteredType
-	* saveEntryFlag
-	* getEntryFlag
+**./src/file-arg.js**
+* Repurposed 'displayInvalidError' to be able to write multiple error types.
+	* Added 'vContext' parameter.
+	* Replaced "Invalid file type." with 'vContext'. Refer to 'prepareFileTypeArgument'
+* readFileTypeArgument
+	* Trimmed leading whitespace from 'readRes'
+	* If 'readRes' is empty, an error message will be displayed.
 
 ---
 
-**./convert.js**
-* runDataNormalization
-	* On success, call 'outputTypes.saveEntry'
-	* Renamed 'outputTypeFlag' variable to 'preparedFlag'
-* Removed parameters:
-	* 'conversionTypeFlag' from 'callInputFileCheck'
-	* 'convTypeFlag' from 'callInputFileRead'
-	* 'convType' from 'callDataProcessing'
-	* 'cTypeFlag' from 'callOutputFolder'
-	* 'cType' from 'callOutputFileWrite'
-* Declared 'oType' variable in 'callOutputFileWrite'
-	* Retrieves saved entered output mode.
-	* Assigned with 'outputTypes.getEntry'
-	* Replaces 'cType' references.
+**./convert.js - runDataNormalization**
+* 'fileArg.prepareFileType' will only be called if 'givenOutputType' is not empty.
+	* This prevents both error messages from being displayed.
+* 'preparedFlag' is declared as `-1` instead of `null`
+* Commented out 'callInputFileCheck' call.
