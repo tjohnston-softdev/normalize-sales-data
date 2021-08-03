@@ -3,7 +3,10 @@
 const path = require("path");
 const fs = require("fs");
 const ora = require("ora");
+const each = require("async-each-series");
+const series = require("run-series");
 const fsErrors = require("./common/fs-errors");
+const delFile = require("./output/del-file");
 
 
 // Main function.
@@ -11,7 +14,7 @@ function createOutputDataFolder(outputFolderCallback)
 {
 	var folderSpinner = ora("Preparing Output Folder").start();
 	
-	coordinateFolderCreation(function (outputErr, outputRes)
+	initializeOutputFolder(function (outputErr, outputRes)
 	{
 		if (outputErr !== null)
 		{
@@ -29,25 +32,74 @@ function createOutputDataFolder(outputFolderCallback)
 }
 
 
-// Create directory.
-function coordinateFolderCreation(folderCallback)
+// Create directory if it does not exist.
+function initializeOutputFolder(intlFolderCallback)
 {
-	var targetPath = path.join(".", "output-files");
+	var targetPathString = path.join(".", "output-files");
 	var folderOpts = {recursive: true};
-	var folderErrorText = "";
+	var intlErrorText = "";
 	
-	fs.mkdir(targetPath, folderOpts, function (folderErr)
+	fs.mkdir(targetPathString, folderOpts, function (createErr)
 	{
-		if (folderErr !== null)
+		if (createErr !== null)
 		{
-			// Error
-			folderErrorText = fsErrors.writeFolderAction("creating", folderErr.code);
-			return folderCallback(new Error(folderErrorText), null);
+			// Error.
+			intlErrorText = fsErrors.writeFolderAction("creating", createErr.code);
+			return intlFolderCallback(new Error(intlErrorText), null);
 		}
 		else
 		{
-			// Successful - return folder path.
-			return folderCallback(null, targetPath);
+			// Successful - Read contents.
+			readExistingContents(targetPathString, intlFolderCallback);
+		}
+	});
+}
+
+
+// Reads list of existing items inside output folder.
+function readExistingContents(tgtPathStr, readCallback)
+{
+	var readOpts = {encoding: "utf8", withFileTypes: true};
+	var readErrorText = "";
+	
+	fs.readdir(tgtPathStr, readOpts, function (readErr, existingFiles)
+	{
+		if (readErr !== null)
+		{
+			// Error.
+			readErrorText = fsErrors.writeFolderAction("reading", readErr.code);
+			return readCallback(new Error(readErrorText), null);
+		}
+		else
+		{
+			// Successful - Delete files.
+			cleanFolderContents(tgtPathStr, existingFiles, readCallback);
+		}
+	});
+}
+
+
+function cleanFolderContents(tgtPath, filesArr, cleanCallback)
+{
+	// Loop output folder items.
+	each(filesArr,
+	function (currentFile, iterationCallback)
+	{
+		// Delete current file.
+		delFile(tgtPath, currentFile, iterationCallback);
+	},
+	function (cleanErr)
+	{
+		// Complete.
+		if (cleanErr !== undefined)
+		{
+			// Error.
+			return cleanCallback(cleanErr, null);
+		}
+		else
+		{
+			// All files deleted.
+			return cleanCallback(null, true);
 		}
 	});
 }

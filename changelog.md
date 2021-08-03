@@ -1,24 +1,32 @@
 # Changelog
 
-**./src/common/fs-errors.js**
-* Renamed 'writeFolderCreateErrorText' to 'writeFolderActionErrorText'
-	* Used for multiple folder errors, not just creating.
-	* Added 'vContext' parameter.
-	* Replaced "creating" with 'vContext'
-	* Called publicly as 'writeFolderAction'
-* Changed 'writeFileActionErrorText' public name.
-	* Before: 'writeAction'
-	* After: 'writeFileAction'
+**./src/output/del-file.js**
+* New file
+	* Deletes existing items inside output folder.
+	* Only deletes files. Subfolders are ignored.
 
 ---
 
-**./src/%mainScript%.js**
-* Replaced 'fsErrors.writeAction' with 'fsErrors.writeFileAction' in:
-	* file-check.js
-	* file-read.js
-	* save-csv.js
-	* save-json.js
-	* save-sql.js
-* output-folder.js - coordinateFolderCreation
-	* Replaced 'fsErrors.writeFolderCreate' with 'fsErrors.writeFolderAction'
-	* Added "creating" argument to 'fsErrors.writeFolderAction' call.
+**./src/output-folder.js**
+* Added requirements:
+	* run-series
+	* async-each-series
+	* ./output/del-file
+* Renamed 'coordinateFolderCreation' to 'initializeOutputFolder'
+	* Renamed 'folderCallback' parameter to 'intlFolderCallback'
+	* Renamed 'targetPath' variable to 'targetPathString'
+	* Renamed 'folderErrorText' variable to 'intlErrorText'
+	* Renamed 'folderErr' callback parameter to 'createErr'
+	* Added "if it does not exist" to header comment.
+* Wrote new function 'readExistingContents'
+	* Retrieves list of items in output folder so they can be deleted.
+	* Called after 'initializeOutputFolder'
+* Wrote new function 'cleanFolderContents'
+	* Deletes existing files from output folder.
+	* Ignores subfolders.
+	* Called after 'readExistingContents'
+
+---
+
+**./convert.js**
+* Commented out 'callOutputFileWrite'

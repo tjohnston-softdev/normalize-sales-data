@@ -99,7 +99,7 @@ function callOutputFolder(normalizedDataObj)
 		}
 		else
 		{
-			callOutputFileWrite(normalizedDataObj, outputFolderPath);
+			//callOutputFileWrite(normalizedDataObj, outputFolderPath);
 		}
 	});
 }
