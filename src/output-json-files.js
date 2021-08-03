@@ -1,9 +1,12 @@
+// Saves normalized data as JSON files.
+
 const series = require("run-series");
 const ora = require("ora");
 const exportSpec = require("./output/export-spec");
 const saveJson = require("./output/save-json");
 
 
+// Main function.
 function writeJsonDataFiles(outputDataObject, outputTargetFolder, includeAttributes, jsonDataCallback)
 {
 	var jsonSpinner = ora("Writing JSON Data Files").start();
@@ -24,10 +27,13 @@ function writeJsonDataFiles(outputDataObject, outputTargetFolder, includeAttribu
 }
 
 
+// Write output files.
 function coordinateJsonWrite(outputDataObj, outputTgtFolder, inclAttributes, jsonWriteCallback)
 {
+	// Create specification object.
 	var specObj = exportSpec.getFileSpecifications(outputTgtFolder, "json", inclAttributes);
 	
+	// Save files sequentially.
 	series(
 	[
 		saveJson.saveFile.bind(null, outputDataObj.territories, specObj.territories, inclAttributes),
@@ -44,6 +50,7 @@ function coordinateJsonWrite(outputDataObj, outputTgtFolder, inclAttributes, jso
 	],
 	function (writeBatchErr, writeBatchRes)
 	{
+		// Complete.
 		return jsonWriteCallback(writeBatchErr, writeBatchRes);
 	});
 	

@@ -1,4 +1,6 @@
 # Changelog
 
-**./src/common/output-types.js**
-* Wrote comments.
+**./src/**
+* Wrote comments to files:
+	* output-json-files.js
+	* output/save-json.js
