@@ -1,4 +1,4 @@
 # Changelog
 
-**./src/output/save-sql.js**
-* Fixed "SQ**L**" header comment typo.
+**./src/common/output-types.js**
+* Wrote comments.
