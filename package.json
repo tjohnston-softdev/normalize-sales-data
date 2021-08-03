@@ -9,6 +9,7 @@
   "author": "tjohnston-softdev",
   "license": "CC BY-NC-SA 3.0",
   "dependencies": {
+    "async-each-series": "^1.1.0",
     "clear": "^0.1.0",
     "ora": "^5.4.1",
     "papaparse": "^5.3.1",

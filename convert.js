@@ -33,7 +33,7 @@ function runDataNormalization()
 	{
 		clear();
 		outputTypes.saveEntry(preparedFlag);
-		//callInputFileCheck();
+		callInputFileCheck();
 	}
 }
 

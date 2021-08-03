@@ -1,6 +1,4 @@
 # Changelog
 
-**./src/**
-* Wrote comments to files:
-	* output-json-files.js
-	* output/save-json.js
+* Uncommented 'callInputFileCheck' (convert.js)
+* Installed 'async-each-series' library. (package.json)
