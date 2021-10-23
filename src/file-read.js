@@ -2,7 +2,7 @@
 
 const fs = require("fs");
 const papaparse = require("papaparse");
-const ora = require("ora");
+const ora = require("ora-classic");
 const fsErrors = require("./common/fs-errors");
 const sourceFile = require("./common/source-file");
 const valuePrep = require("./common/value-prep");

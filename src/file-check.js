@@ -1,7 +1,7 @@
 // Validates source CSV file.
 
 const fs = require("fs");
-const ora = require("ora");
+const ora = require("ora-classic");
 const fsErrors = require("./common/fs-errors");
 const sourceFile = require("./common/source-file");
 const maxSizeBytes = 5000000;							// 5MB size limit.

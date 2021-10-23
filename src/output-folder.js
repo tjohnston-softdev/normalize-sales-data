@@ -2,7 +2,7 @@
 
 const path = require("path");
 const fs = require("fs");
-const ora = require("ora");
+const ora = require("ora-classic");
 const each = require("async-each-series");
 const series = require("run-series");
 const fsErrors = require("./common/fs-errors");

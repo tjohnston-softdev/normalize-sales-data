@@ -1,6 +1,6 @@
 // Coordinates data normalization.
 
-const ora = require("ora");
+const ora = require("ora-classic");
 const normRes = require("./common/norm-res");
 const inputErrors = require("./common/input-errors");
 const generalPass = require("./processing/general-pass");

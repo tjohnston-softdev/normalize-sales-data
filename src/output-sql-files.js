@@ -1,7 +1,7 @@
 // Saves normalized data as SQL files.
 
 const series = require("run-series");
-const ora = require("ora");
+const ora = require("ora-classic");
 const exportSpec = require("./output/export-spec");
 const saveSql = require("./output/save-sql");
 

@@ -11,7 +11,7 @@
   "dependencies": {
     "async-each-series": "^1.1.0",
     "clear": "^0.1.0",
-    "ora": "^5.4.1",
+    "ora-classic": "^5.4.2",
     "papaparse": "^5.3.1",
     "run-series": "^1.1.9",
     "sqlstring": "^2.3.2",
