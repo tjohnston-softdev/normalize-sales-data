@@ -7,14 +7,9 @@ function writeFileActionErrorText(vContext, vFileDesc, vFilePath, fsErrCode)
 {
 	var writeRes = "";
 	
-	writeRes += "Error ";
-	writeRes += vContext;
-	writeRes += " ";
-	writeRes += vFileDesc;
-	writeRes += " file. - ";
+	writeRes += ["Error ", vContext, " ", vFileDesc, " file. - "].join("");
 	writeRes += parseErrorCode(fsErrCode);
-	writeRes += "\n";
-	writeRes += "Path: ";
+	writeRes += ["\n", "Path: "].join("");
 	writeRes += path.resolve(vFilePath);
 	
 	return writeRes;
@@ -32,13 +27,7 @@ function writeSourceVerificationErrorText(vFileDesc, vContext)
 // Create output folder.
 function writeFolderActionErrorText(vContext, fsErrCode)
 {
-	var writeRes = "";
-	
-	writeRes += "Error ";
-	writeRes += vContext;
-	writeRes += " output folder - ";
-	writeRes += fsErrCode;
-	
+	var writeRes = ["Error ", vContext, " output folder - ", fsErrCode].join("");
 	return writeRes;
 }
 

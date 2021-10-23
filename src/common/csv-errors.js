@@ -11,10 +11,8 @@ function writeSpecificParseError(errList)
 	var writeRes = "";
 	
 	writeRes += "Error parsing input CSV.\n";
-	writeRes += errorObject.message;
-	writeRes += "\n";
-	writeRes += "Row Number: ";
-	writeRes += rowNum;
+	writeRes += [errorObject.message, "\n"].join("");
+	writeRes += ["Row Number:", rowNum].join(" ");
 	
 	return writeRes;
 }

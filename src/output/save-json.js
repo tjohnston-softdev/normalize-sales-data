@@ -103,13 +103,7 @@ function convertToObjectMode(dataArray, attrList)
 // Convert JSON to string error.
 function writeStringifyErrorText(vFileDesc, vReason)
 {
-	var writeRes = "";
-	
-	writeRes += "Error converting ";
-	writeRes += vFileDesc;
-	writeRes += " data to readable text.\n";
-	writeRes += vReason;
-	
+	var writeRes = ["Error converting ", vFileDesc, " data to readable text.\n", vReason].join("");
 	return writeRes;
 }
 
