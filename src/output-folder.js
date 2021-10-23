@@ -99,7 +99,7 @@ function cleanFolderContents(tgtPath, filesArr, cleanCallback)
 		else
 		{
 			// All files deleted.
-			return cleanCallback(null, true);
+			return cleanCallback(null, tgtPath);
 		}
 	});
 }
