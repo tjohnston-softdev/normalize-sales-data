@@ -1,15 +1,19 @@
 # Changelog
 
 **./package.json**
-* Replaced 'ora' with 'ora-classic'
+* Replaced 'papaparse' with 'papaparse-min'
 
 ---
 
-**Affected Files**
-* ./src/file-check.js
-* ./src/file-read.js
-* ./src/output-csv-files.js
-* ./src/output-folder.js
-* ./src/output-json-files.js
-* ./src/output-sql-files.js
-* ./src/proc-data.js
+**./src/file-read.js**
+* Replaced 'papaparse' requirement with 'papaparse-min'
+
+---
+
+**./src/output/save-csv.js**
+* Replaced 'papaparse' requirement with 'papaparse-min'
+
+---
+
+**./src/common/csv-errors.js**
+* Updated comment section to refer to 'papaparse-min'

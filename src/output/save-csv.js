@@ -1,7 +1,7 @@
 // Used to save CSV files.
 
 const fs = require("fs");
-const papaparse = require("papaparse");
+const papaparse = require("papaparse-min");
 const valuePrep = require("../common/value-prep");
 const fsErrors = require("../common/fs-errors");
 

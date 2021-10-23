@@ -1,7 +1,7 @@
 // Reads source CSV file.
 
 const fs = require("fs");
-const papaparse = require("papaparse");
+const papaparse = require("papaparse-min");
 const ora = require("ora-classic");
 const fsErrors = require("./common/fs-errors");
 const sourceFile = require("./common/source-file");

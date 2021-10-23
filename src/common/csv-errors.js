@@ -1,6 +1,6 @@
 /*
 	Writes CSV parsing error.
-	Used by the 'papaparse' library.
+	Used by the 'papaparse-min' library.
 	Highest priority error will be used.
 */
 
