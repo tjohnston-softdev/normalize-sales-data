@@ -4,11 +4,7 @@
 // Error
 function callErrorExit(eMsg, inclBreak)
 {
-	if (inclBreak === true)
-	{
-		console.log("");
-	}
-	
+	if (inclBreak === true) console.log("");
 	console.log(eMsg);
 	process.exitCode = 1;
 }
