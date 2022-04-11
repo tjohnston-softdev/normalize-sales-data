@@ -8,17 +8,16 @@ const fsErrors = require("../common/fs-errors");
 function saveSqlFile(objectArray, fileSpecs, saveCallback)
 {
 	var sqlTextString = convertJsonToSql(objectArray, fileSpecs.tableName);
-	var writeErrorText = "";
 	
 	
 	// Writes output file.
-	fs.writeFile(fileSpecs.filePath, sqlTextString, function (writeErr)
+	fs.writeFile(fileSpecs.filePath, sqlTextString, function (writeError)
 	{
-		if (writeErr !== null)
+		if (writeError !== null)
 		{
 			// Error
-			writeErrorText = fsErrors.writeFileAction("writing", fileSpecs.tableName, fileSpecs.filePath, writeErr.code);
-			return saveCallback(new Error(writeErrorText), null);
+			var flaggedMessage = fsErrors.writeFileAction("writing", fileSpecs.tableName, fileSpecs.filePath, writeError.code);
+			return saveCallback(new Error(flaggedMessage), null);
 		}
 		else
 		{
@@ -33,13 +32,12 @@ function saveSqlFile(objectArray, fileSpecs, saveCallback)
 // Converts JSON array to SQL definition.
 function convertJsonToSql(objArr, tblName)
 {
-	var sqlParams = [];
 	var convRes = "";
 	
 	if (objArr.length > 0)
 	{
 		// Formatted statement.
-		sqlParams = [tblName, objArr];
+		var sqlParams = [tblName, objArr];
 		convRes = sqlString.format("INSERT INTO ?? VALUES ?;", sqlParams);
 	}
 	else

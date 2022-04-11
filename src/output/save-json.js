@@ -8,22 +8,17 @@ const fsErrors = require("../common/fs-errors");
 // Main function.
 function saveJsonFile(objectArray, fileSpecs, inclAttrs, saveCallback)
 {
-	var stringifyErrorText = "";
-	
-	if (inclAttrs === true)
-	{
-		// Convert to array of objects.
-		convertToObjectMode(objectArray, fileSpecs.tableAttributes);
-	}
+	// Convert to array of objects.
+	if (inclAttrs) convertToObjectMode(objectArray, fileSpecs.tableAttributes);
 	
 	// Convert JSON data to formatted string.
-	yieldableJson.stringifyAsync(objectArray, null, 4, 1, function (jsonErr, jsonTextString)
+	yieldableJson.stringifyAsync(objectArray, null, 4, 1, function (jsonError, jsonTextString)
 	{
-		if (jsonErr !== null)
+		if (jsonError !== null)
 		{
 			// Conversion error.
-			stringifyErrorText = writeStringifyErrorText(fileSpecs.tableName, jsonErr.message);
-			return saveCallback(new Error(stringifyErrorText), null);
+			var flaggedMessage = writeStringifyErrorText(fileSpecs.tableName, jsonError.message);
+			return saveCallback(new Error(flaggedMessage), null);
 		}
 		else
 		{
@@ -35,17 +30,15 @@ function saveJsonFile(objectArray, fileSpecs, inclAttrs, saveCallback)
 
 
 // Save JSON file.
-function handleFileWrite(wPath, wContents, wDesc, handleCallback)
+function handleFileWrite(jsonPath, jsonContents, jsonDesc, handleCallback)
 {
-	var writeErrorText = "";
-	
-	fs.writeFile(wPath, wContents, function(writeErr)
+	fs.writeFile(jsonPath, jsonContents, function(writeError)
 	{
-		if (writeErr !== null)
+		if (writeError !== null)
 		{
 			// Error.
-			writeErrorText = fsErrors.writeFileAction("writing", wDesc, wPath, writeErr.code);
-			return handleCallback(new Error(writeErrorText), null);
+			var flaggedMessage = fsErrors.writeFileAction("writing", jsonDesc, jsonPath, writeError.code);
+			return handleCallback(new Error(flaggedMessage), null);
 		}
 		else
 		{
@@ -59,39 +52,30 @@ function handleFileWrite(wPath, wContents, wDesc, handleCallback)
 
 // Convert MD array to list of objects.
 function convertToObjectMode(dataArray, attrList)
-{
-	var dataIndex = 0;
-	var currentArray = [];
-	var currentObject = {};
-	
-	var propIndex = 0;
-	var propCutoff = -1;
-	var currentProp = "";
-	var currentValue = null;
-	
+{	
 	// Loop all rows for corresponding table.
-	for (dataIndex = 0; dataIndex < dataArray.length; dataIndex = dataIndex + 1)
+	for (var dataIndex = 0; dataIndex < dataArray.length; dataIndex++)
 	{
 		// Read current row.
-		currentArray = dataArray[dataIndex];
-		currentObject = {};
+		var currentArray = dataArray[dataIndex];
+		var currentObject = {};
 		
-		propIndex = 0;
-		propCutoff = Math.min(currentArray.length, attrList.length);
-		currentProp = "";
-		currentValue = null;
+		var propIndex = 0;
+		var propCutoff = Math.min(currentArray.length, attrList.length);
+		var currentProp = "";
+		var currentValue = null;
 		
 		// Loop table columns.
 		while (propIndex >= 0 && propIndex < propCutoff)
 		{
 			// Read current column.
-			currentProp = attrList[propIndex];
-			currentValue = currentArray[propIndex];
+			var currentProp = attrList[propIndex];
+			var currentValue = currentArray[propIndex];
 			
 			// Add to object.
 			currentObject[currentProp] = currentValue;
 			
-			propIndex = propIndex + 1;
+			propIndex += 1;
 		}
 		
 		// Replace with prepared object.
@@ -103,8 +87,7 @@ function convertToObjectMode(dataArray, attrList)
 // Convert JSON to string error.
 function writeStringifyErrorText(vFileDesc, vReason)
 {
-	var writeRes = ["Error converting ", vFileDesc, " data to readable text.\n", vReason].join("");
-	return writeRes;
+	return ["Error converting ", vFileDesc, " data to readable text.\n", vReason].join("");
 }
 
 

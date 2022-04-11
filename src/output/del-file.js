@@ -6,11 +6,10 @@ const fsErrors = require("../common/fs-errors");
 function deleteOutputFile(baseFolder, entryObject, deleteCallback)
 {
 	var correctType = entryObject.isFile();
-	var fullFilePath = "";
 	
-	if (correctType === true)
+	if (correctType)
 	{
-		fullFilePath = path.join(baseFolder, entryObject.name);
+		var fullFilePath = path.join(baseFolder, entryObject.name);
 		callUnlink(fullFilePath, deleteCallback);
 	}
 	else
@@ -22,14 +21,12 @@ function deleteOutputFile(baseFolder, entryObject, deleteCallback)
 
 
 function callUnlink(fullPath, unlinkCallback)
-{
-	var flaggedMessage = "";
-	
-	fs.unlink(fullPath, function (delErr)
+{	
+	fs.unlink(fullPath, function (deleteErr)
 	{
-		if (delErr !== null)
+		if (deleteErr !== null)
 		{
-			flaggedMessage = fsErrors.writeFileAction("deleting", "existing output", fullPath, delErr.code);
+			var flaggedMessage = fsErrors.writeFileAction("deleting", "existing output", fullPath, deleteErr.code);
 			return unlinkCallback(new Error(flaggedMessage), null);
 		}
 		else

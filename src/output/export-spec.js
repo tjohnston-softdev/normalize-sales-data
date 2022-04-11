@@ -23,7 +23,7 @@ function getFileExportSpecification(targetFolder, chosenExt, inclAttrs)
 	
 	
 	// Includes table attributes for CSV files.
-	if (inclAttrs === true)
+	if (inclAttrs)
 	{
 		specRes.territories.tableAttributes = ["territoryID", "territoryName"];
 		specRes.countries.tableAttributes = ["countryID", "countryName", "territoryID"];
