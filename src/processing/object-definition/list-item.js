@@ -9,36 +9,30 @@ const valuePrep = require("../../common/value-prep");
 
 function addListItem(itemString, arrName, fullRes)
 {
-	var arrObj = [];
-	var preparedItem = "";
+	// Reads list item array and prepares target name.
+	var arrObj = fullRes.data[arrName];
+	var preparedItem = valuePrep.sanitizeString(itemString);
 	
+	// Loop variables.
 	var existingIndex = 0;
-	var currentExistingItem = [];
-	var currentName = "";
 	var existID = null;
 	
+	// Result variables.
 	var addRes = -1;
 	var newItemObject = [];
-	
-	// Reads list item array and prepares target name.
-	arrObj = fullRes.data[arrName];
-	preparedItem = valuePrep.sanitizeString(itemString);
 	
 	
 	// Loop existing list entries until end reached or target name found.
 	while (existingIndex >= 0 && existingIndex < arrObj.length && existID === null)
 	{
 		// Read current list item.
-		currentExistingItem = arrObj[existingIndex];
-		currentName = currentExistingItem[1];
-				
-		if (currentName.toLowerCase() === preparedItem.toLowerCase())
-		{
-			// Match found.
-			existID = currentExistingItem[0];
-		}
+		var currentExistingItem = arrObj[existingIndex];
+		var currentName = currentExistingItem[1].toLowerCase();
 		
-		existingIndex = existingIndex + 1;
+		// Check for match.
+		if (preparedItem.toLowerCase() === currentName) existID = currentExistingItem[0];
+		
+		existingIndex += 1;
 	}
 	
 	

@@ -10,42 +10,35 @@ const valuePrep = require("../../common/value-prep");
 
 function addLocationItem(locationString, arrName, targetParentID, fullRes)
 {
-	var arrObj = [];
-	var preparedItem = "";
+	// Reads location array and prepares target name.
+	var arrObj = fullRes.data[arrName];
+	var preparedItem = valuePrep.sanitizeString(locationString);
 	
+	// Loop variables.
 	var existingIndex = 0;
-	var currentLocationObject = [];
-	var currentLocationName = "";
-	var currentParentString = "";
-	var currentParentID = -1;
 	var existID = null;
 	
+	// Result variables.
 	var addRes = -1;
 	var newLocationObject = [];
-	
-	
-	// Reads location array and prepares target name.
-	arrObj = fullRes.data[arrName];
-	preparedItem = valuePrep.sanitizeString(locationString);
-	
 	
 	// Loop existing location objects until end reached or target name found.
 	while (existingIndex >= 0 && existingIndex < arrObj.length && existID === null)
 	{
 		// Read current location.
-		currentLocationObject = arrObj[existingIndex];
-		currentLocationName = currentLocationObject[2];
-		currentParentString = currentLocationObject[1];
-		currentParentID = Number(currentParentString);
+		var currentLocationObject = arrObj[existingIndex];
+		var currentLocationName = currentLocationObject[2].toLowerCase();
+		var currentParentString = currentLocationObject[1];
+		var currentParentID = Number(currentParentString);
 		
 		
-		if (currentLocationName.toLowerCase() === preparedItem.toLowerCase() && currentParentID === targetParentID)
+		if (currentLocationName === preparedItem.toLowerCase() && currentParentID === targetParentID)
 		{
 			// Names and parent IDs match.
 			existID = currentLocationObject[0]
 		}
 		
-		existingIndex = existingIndex + 1;
+		existingIndex += 1;
 	}
 	
 	if (existID !== null)

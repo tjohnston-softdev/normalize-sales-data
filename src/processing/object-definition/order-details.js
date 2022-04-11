@@ -10,12 +10,11 @@ const dateString = require("../../common/date-string");
 // Order Entry.
 function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 {
+	// Loop variables.
 	var existingIndex = 0;
-	var currentExistingObject = [];
-	var currentIdentificationString = "";
-	var currentIdentificationNumber = -1;
 	var existFlag = -1;
 	
+	// Result variables.
 	var addRes = -1;
 	var newOrderObject = [];
 	
@@ -23,17 +22,14 @@ function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 	while (existingIndex >= 0 && existingIndex < orderArray.length && existFlag === -1)
 	{
 		// Read current order entry.
-		currentExistingObject = orderArray[existingIndex];
-		currentIdentificationString = currentExistingObject[0];
-		currentIdentificationNumber = Number(currentIdentificationString);
+		var currentExistingObject = orderArray[existingIndex];
+		var currentIdentificationString = currentExistingObject[0];
+		var currentIdentificationNumber = Number(currentIdentificationString);
 		
-		if (currentIdentificationNumber === idNumber)
-		{
-			// Match found.
-			existFlag = existingIndex;
-		}
+		// Check for match.
+		if (currentIdentificationNumber === idNumber) existFlag = existingIndex;
 		
-		existingIndex = existingIndex + 1;
+		existingIndex += 1;
 	}
 	
 	if (existFlag >= 0 && existFlag < orderArray.length)
@@ -62,14 +58,11 @@ function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 // Order Item.
 function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPrice, itemDeal, itemDisplay, orderItemArray)
 {
+	// Loop variables.
 	var existingIndex = 0;
-	var currentExistingObject = [];
-	var currentParentString = "";
-	var currentChildString = "";
-	var currentParentNumber = -1;
-	var currentChildNumber = -1;
 	var existFlag = -1;
 	
+	// Result variables.
 	var addRes = -1;
 	var newOrderItemObject = [];
 	
@@ -77,11 +70,11 @@ function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPric
 	// Loop order items until end reached or target object found.
 	while (existingIndex >= 0 && existingIndex < orderItemArray.length && existFlag === -1)
 	{
-		currentExistingObject = orderItemArray[existingIndex];
-		currentParentString = currentExistingObject[0];
-		currentChildString = currentExistingObject[1];
-		currentParentNumber = Number(currentParentString);
-		currentChildNumber = Number(currentChildString);
+		var currentExistingObject = orderItemArray[existingIndex];
+		var currentParentString = currentExistingObject[0];
+		var currentChildString = currentExistingObject[1];
+		var currentParentNumber = Number(currentParentString);
+		var currentChildNumber = Number(currentChildString);
 		
 		if (currentParentNumber === parentID && currentChildNumber === childNumber)
 		{
@@ -89,7 +82,7 @@ function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPric
 			existFlag = existingIndex;
 		}
 		
-		existingIndex = existingIndex + 1;
+		existingIndex += 1;
 	}
 	
 	if (existFlag >= 0 && existFlag < orderItemArray.length)

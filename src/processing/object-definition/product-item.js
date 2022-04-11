@@ -9,35 +9,29 @@ const valuePrep = require("../../common/value-prep");
 
 function addProductItem(productCodeString, msrpNum, lineID, productArr)
 {
-	var preparedCode = "";
+	// Prepare target product code.
+	var preparedCode = valuePrep.sanitizeString(productCodeString);
 	
+	// Loop variables.
 	var existingIndex = 0;
-	var currentProductObject = [];
-	var currentProductCode = "";
 	var existID = null;
 	
+	// Result variables.
 	var addRes = -1;
 	var newProductObject = [];
-	
-	
-	// Prepare target product code.
-	preparedCode = valuePrep.sanitizeString(productCodeString);
 	
 	
 	// Loop products until end reached or target code found.
 	while (existingIndex >= 0 && existingIndex < productArr.length && existID === null)
 	{
 		// Read current product.
-		currentProductObject = productArr[existingIndex];
-		currentProductCode = currentProductObject[1];
+		var currentProductObject = productArr[existingIndex];
+		var currentProductCode = currentProductObject[1].toLowerCase();
 		
-		if (currentProductCode.toLowerCase() === preparedCode.toLowerCase())
-		{
-			// Match found.
-			existID = currentProductObject[0];
-		}
+		// Check if match found.
+		if (preparedCode.toLowerCase() === currentProductCode) existID = currentProductObject[0];
 		
-		existingIndex = existingIndex + 1;
+		existingIndex += 1;
 	}
 	
 	if (existID !== null)

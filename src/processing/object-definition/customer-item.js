@@ -9,34 +9,29 @@ const valuePrep = require("../../common/value-prep");
 
 function addCustomerItem(nameObject, detailsObject, cityLocationID, customerArr)
 {
-	var preparedName = "";
+	// Prepares target name.
+	var preparedName = valuePrep.sanitizeString(nameObject.preparedText);
 	
+	// Loop variables.
 	var existingIndex = 0;
-	var currentCustomerObject = [];
-	var currentCustomerName = "";
 	var existID = null;
 	
+	// Result variables.
 	var addRes = -1;
 	var newCustomerObject = [];
-	
-	// Prepare target customer name.
-	preparedName = valuePrep.sanitizeString(nameObject.preparedText);
 	
 	
 	// Loop existing country objects until end reached or target name found.
 	while (existingIndex >= 0 && existingIndex < customerArr.length && existID === null)
 	{
 		// Read current customer.
-		currentCustomerObject = customerArr[existingIndex];
-		currentCustomerName = currentCustomerObject[1];
+		var currentCustomerObject = customerArr[existingIndex];
+		var currentCustomerName = currentCustomerObject[1].toLowerCase();
 		
-		if (currentCustomerName.toLowerCase() === preparedName.toLowerCase())
-		{
-			// Match found.
-			existID = currentCustomerObject[0];
-		}
+		// Check for match.
+		if (preparedName.toLowerCase() === currentCustomerName) existID = currentCustomerObject[0];
 		
-		existingIndex = existingIndex + 1;
+		existingIndex += 1;
 	}
 	
 	if (existID !== null)

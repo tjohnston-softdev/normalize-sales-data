@@ -8,34 +8,28 @@ const valuePrep = require("../../common/value-prep");
 
 function addCountryItem(countryString, countryArr, terrID)
 {
-	var preparedItem = "";
+	// Prepares target name.
+	var preparedItem = valuePrep.sanitizeString(countryString);
 	
+	// Loop variables.
 	var existingIndex = 0;
-	var currentCountryObject = [];
-	var currentCountryString = "";
 	var existID = null;
 	
+	// Result variables.
 	var addRes = -1;
 	var newCountryObject = [];
-	
-	// Prepares target name.
-	preparedItem = valuePrep.sanitizeString(countryString);
 	
 	
 	// Loop existing country objects until end reached or target name found.
 	while (existingIndex >= 0 && existingIndex < countryArr.length && existID === null)
 	{
 		// Read current country.
-		currentCountryObject = countryArr[existingIndex];
-		currentCountryString = currentCountryObject[1];
+		var currentCountryObject = countryArr[existingIndex];
+		var currentCountryString = currentCountryObject[1].toLowerCase();
 		
-		if (currentCountryString.toLowerCase() === preparedItem.toLowerCase())
-		{
-			// Match found.
-			existID = currentCountryObject[0];
-		}
-		
-		existingIndex = existingIndex + 1;
+		// Check for match.
+		if (preparedItem.toLowerCase() === currentCountryString) existID = currentCountryObject[0];
+		existingIndex += 1;
 	}
 	
 	
