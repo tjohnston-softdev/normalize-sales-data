@@ -15,24 +15,17 @@ var enteredType = -1;
 // Retrieve mode array as a string. Used for error messages.
 function getModesListText()
 {
-	var currentProp = "";
-	var currentLower = "";
 	var propArr = [];
-	var textRes = "";
 	
 	// Loop properties.
-	for (currentProp in typeModes)
+	for (var currentProp in typeModes)
 	{
-		currentLower = currentProp.toLowerCase();
+		var currentLower = currentProp.toLowerCase();
 		propArr.push(currentLower);
 	}
 	
 	// Write final string.
-	textRes += "[";
-	textRes += propArr.join(", ");
-	textRes += "]";
-	
-	return textRes;
+	return "[" + propArr.join(", ") + "]";
 }
 
 

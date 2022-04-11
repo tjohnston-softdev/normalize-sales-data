@@ -80,8 +80,7 @@ function writeFullMessageText(errorObj)
 // Adds field to error text, line-separated.
 function addErrorField(fieldName, fieldVal)
 {
-	var addedText = fieldName + ": " + fieldVal + "\n";
-	return addedText;
+	return (fieldName + ": " + fieldVal + "\n");
 }
 
 

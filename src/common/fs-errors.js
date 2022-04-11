@@ -19,16 +19,14 @@ function writeFileActionErrorText(vContext, vFileDesc, vFilePath, fsErrCode)
 // Invalid source CSV file.
 function writeSourceVerificationErrorText(vFileDesc, vContext)
 {
-	var writeRes = vFileDesc + " file " + vContext;
-	return writeRes;
+	return vFileDesc + " file " + vContext;
 }
 
 
 // Create output folder.
 function writeFolderActionErrorText(vContext, fsErrCode)
 {
-	var writeRes = ["Error ", vContext, " output folder - ", fsErrCode].join("");
-	return writeRes;
+	return ["Error ", vContext, " output folder - ", fsErrCode].join("");
 }
 
 
