@@ -3,6 +3,7 @@
 const valuePrep = require("../../common/value-prep");
 const inputErrors = require("../../common/input-errors");
 
+
 // Main - Decimal.
 function validateDecimalNumber(rowInd, rowObj, colName, maxDecimal, defaultDecimal, zeroNumAllowed, fullResObj)
 {
@@ -34,18 +35,8 @@ function castNumberString(origStr)
 	var preparedString = "";
 	var castRes = NaN;
 	
-	if (stringType === true)
-	{
-		// Correct type - Sanitize input.
-		preparedString = valuePrep.sanitizeString(origStr);
-	}
-	
-	if (preparedString.length > 0)
-	{
-		// Cast to number.
-		castRes = Number(preparedString);
-	}
-	
+	if (stringType) preparedString = valuePrep.sanitizeString(origStr);		// Correct type - Sanitize input.
+	if (preparedString.length > 0) castRes = Number(preparedString);		// Cast to number.
 	return castRes;
 }
 
@@ -56,32 +47,32 @@ function checkNumber(nValue, nRowIndex, nColName, nMaximum, nDefault, typeState,
 	var defaultGiven = Number.isFinite(nDefault);
 	var checkRes = NaN;
 	
-	if (typeState === true && nValue > 0 && nValue <= nMaximum)
+	if (typeState && nValue > 0 && nValue <= nMaximum)
 	{
 		// Valid.
 		checkRes = nValue;
 	}
-	else if (typeState === true && nValue > nMaximum)
+	else if (typeState && nValue > nMaximum)
 	{
 		// Too large.
 		inputErrors.setNumberTooLarge(fullRes.error, nColName, nRowIndex, nMaximum);
 	}
-	else if (typeState === true && nValue === 0 && allowZero === true)
+	else if (typeState && nValue === 0 && allowZero)
 	{
 		// Zero allowed.
 		checkRes = 0;
 	}
-	else if (typeState === true && nValue === 0)
+	else if (typeState && nValue === 0)
 	{
 		// Zero not allowed.
 		inputErrors.setNumberZero(fullRes.error, nColName, nRowIndex);
 	}
-	else if (typeState === true)
+	else if (typeState)
 	{
 		// Negative not allowed.
 		inputErrors.setNumberNegative(fullRes.error, nColName, nRowIndex);
 	}
-	else if (defaultGiven === true)
+	else if (defaultGiven)
 	{
 		// Use default.
 		checkRes = nDefault;

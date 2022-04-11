@@ -12,11 +12,7 @@ function validateDateText(rowInd, rowObj, colName, fullResObj)
 	var lengthValid = checkDateStringLength(rowInd, colName, preparedValue.length, fullResObj);
 	var validationResult = {"dateObject": null, "valid": false};
 	
-	if (lengthValid === true)
-	{
-		checkDateFormat(rowInd, colName, preparedValue, validationResult, fullResObj);
-	}
-	
+	if (lengthValid) checkDateFormat(rowInd, colName, preparedValue, validationResult, fullResObj);
 	return validationResult;
 }
 
@@ -27,41 +23,28 @@ function prepareDateString(origStr)
 	var stringType = valuePrep.checkString(origStr);
 	var prepRes = "";
 	
-	if (stringType === true)
-	{
-		prepRes = valuePrep.sanitizeString(origStr);
-	}
-	
+	if (stringType) prepRes = valuePrep.sanitizeString(origStr);
 	return prepRes;
 }
 
 
 // Check for non-empty length.
-function checkDateStringLength(dRowIndex, dColName, dLength, fullRes)
+function checkDateStringLength(dateRowInd, dateColName, dateColLength, fullRes)
 {
-	var checkRes = false;
-	
-	if (dLength > 0)
-	{
-		checkRes = true;
-	}
-	else
-	{
-		inputErrors.setStringEmpty(fullRes.error, dColName, dRowIndex);
-	}
-	
+	var checkRes = (dateColLength > 0);
+	if (!checkRes) inputErrors.setStringEmpty(fullRes.error, dateColName, dateRowInd);
 	return checkRes;
 }
 
 
 // Check valid format.
-function checkDateFormat(dRowIndex, dColName, dString, validRes, fullRes)
+function checkDateFormat(dateRowInd, dateColName, dateString, validRes, fullRes)
 {
-	var castDateObject = new Date(dString);
+	var castDateObject = new Date(dateString);
 	var numericValue = castDateObject.valueOf();
 	var castValid = Number.isInteger(numericValue);
 	
-	if (castValid === true)
+	if (castValid)
 	{
 		// Valid format.
 		validRes.dateObject = castDateObject;
@@ -70,7 +53,7 @@ function checkDateFormat(dRowIndex, dColName, dString, validRes, fullRes)
 	else
 	{
 		// Invalid format.
-		inputErrors.setDateFormat(fullRes.error, dColName, dRowIndex);
+		inputErrors.setDateFormat(fullRes.error, dateColName, dateRowInd);
 	}
 }
 

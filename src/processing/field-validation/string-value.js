@@ -11,7 +11,7 @@ function validateStringText(rowInd, rowObj, colName, maxLengthNum, entryRequired
 	var validationResult = defineStringValidationResult();
 	var correctType = checkType(givenValue, rowInd, colName, fullResObj);
 	
-	if (correctType === true)
+	if (correctType)
 	{
 		validationResult.preparedText = valuePrep.sanitizeString(givenValue);
 		validationResult.valid = checkLength(validationResult.preparedText.length, rowInd, colName, maxLengthNum, fullResObj);
@@ -22,39 +22,33 @@ function validateStringText(rowInd, rowObj, colName, maxLengthNum, entryRequired
 
 
 // Check for string type.
-function checkType(sValue, sRowIndex, sColName, fullRes)
+function checkType(strValue, strRowInd, strColName, fullRes)
 {
-	var checkRes = valuePrep.checkString(sValue);
-	
-	if (checkRes !== true)
-	{
-		// Invalid.
-		inputErrors.setInvalidType(fullRes.error, sColName, sRowIndex, "string");
-	}
-	
+	var checkRes = valuePrep.checkString(strValue);
+	if (!checkRes !== true) inputErrors.setInvalidType(fullRes.error, strColName, strRowInd, "string");
 	return checkRes;
 }
 
 
 // Check for safe length.
-function checkLength(sLength, sRowIndex, sColName, maxLength, entryReq, fullRes)
+function checkLength(strLength, strRowIndex, strColName, maxLength, entryReq, fullRes)
 {
 	var checkRes = false;
 	
-	if (sLength > 0 && sLength <= maxLength)
+	if (strLength > 0 && strLength <= maxLength)
 	{
 		// Valid.
 		checkRes = true;
 	}
-	else if (sLength > maxLength)
+	else if (strLength > maxLength)
 	{
 		// Too long.
-		inputErrors.setStringTooLong(fullRes.error, sColName, sRowIndex, maxLengthNum);
+		inputErrors.setStringTooLong(fullRes.error, strColName, strRowIndex, maxLengthNum);
 	}
 	else if (entryReq === true)
 	{
 		// Empty.
-		inputErrors.setStringEmpty(fullRes.error, sColName, sRowIndex);
+		inputErrors.setStringEmpty(fullRes.error, strColName, strRowIndex);
 	}
 	else
 	{
@@ -69,12 +63,7 @@ function checkLength(sLength, sRowIndex, sColName, maxLength, entryReq, fullRes)
 // String validation result object.
 function defineStringValidationResult()
 {
-	var defineRes = {};
-	
-	defineRes["preparedText"] = "";
-	defineRes["valid"] = false;
-	
-	return defineRes;
+	return {preparedText: "", valid: false};
 }
 
 
