@@ -23,11 +23,7 @@ function runDataNormalization()
 	
 	// Reads and validates file type argument.
 	givenOutputType = fileArg.readFileType();
-	
-	if (givenOutputType.length > 0)
-	{
-		preparedFlag = fileArg.prepareFileType(givenOutputType);
-	}
+	if (givenOutputType.length > 0) preparedFlag = fileArg.prepareFileType(givenOutputType);
 	
 	if (preparedFlag > 0)
 	{

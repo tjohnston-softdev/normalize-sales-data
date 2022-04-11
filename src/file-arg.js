@@ -9,34 +9,18 @@ function readFileTypeArgument()
 {
 	var argArrayExists = false;
 	var passedArg = null;
-	var argType = "";
-	
 	var readRes = "";
 	
-	
-	// Checks whether argument array exists.
+	// Read file type argument if it exists.
 	argArrayExists = Array.isArray(process.argv);
+	if (argArrayExists && process.argv.length > 2) passedArg = process.argv[2];
 	
-	if (argArrayExists === true && process.argv.length >= 3)
-	{
-		// Read file type argument.
-		passedArg = process.argv[2];
-		argType = typeof passedArg;
-	}
+	// Use argument string if found.
+	if (typeof passedArg === "string") readRes = passedArg.toLowerCase().trim();
 	
 	
-	if (argType === "string")
-	{
-		// Use string.
-		readRes = passedArg.toLowerCase();
-		readRes = readRes.trim();
-	}
-	
-	if (readRes.length <= 0)
-	{
-		// Empty
-		displayInvalidError("Output type is missing.");
-	}
+	// Display error if argument is empty.
+	if (!readRes.length > 0) displayInvalidError("Output type is missing.");
 	
 	return readRes;
 }
@@ -77,12 +61,7 @@ function prepareFileTypeArgument(argString)
 // Error message.
 function displayInvalidError(vContext)
 {
-	var errTxt = "";
-	
-	errTxt += vContext
-	errTxt += " Must be one of: ";
-	errTxt += outputTypes.getList();
-	
+	var errTxt = vContext + " Must be one of: " + outputTypes.getList();
 	exitProgram.callError(errTxt, false);
 }
 
