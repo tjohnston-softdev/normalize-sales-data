@@ -16,6 +16,7 @@ const orderDetails = require("./object-definition/order-details");
 function loopDataRows(prepData, fullResultObj)
 {
 	var rowLoopIndex = 0;
+	var loopOrderNumber = 0;
 	
 	// Loop each row until end reached or error flagged.
 	while (rowLoopIndex >= 0 && rowLoopIndex < prepData.length && fullResultObj.canContinue)
