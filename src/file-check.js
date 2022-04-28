@@ -37,13 +37,11 @@ function coordinateInputCheck(inpChkCallback)
 	{
 		if (statErr !== null)
 		{
-			// Error or missing.
 			statErrorText = fsErrors.writeFileAction("checking", sourceFile.desc, sourceFile.name, statErr.code);
 			return inpChkCallback(new Error(statErrorText), null);
 		}
 		else
 		{
-			// File exists - Validate size.
 			verifyTargetEntry(statRes, inpChkCallback);
 		}
 	});
@@ -57,26 +55,22 @@ function verifyTargetEntry(entryObj, verifyCallback)
 	var validFile = entryObj.isFile();
 	var verifyErrorText = "";
 	
-	if (validFile === true && entryObj.size > 0 && entryObj.size <= maxSizeBytes)
+	if (validFile && entryObj.size > 0 && entryObj.size <= maxSizeBytes)
 	{
-		// Valid
 		return verifyCallback(null, true);
 	}
-	else if (validFile === true && entryObj.size > maxSizeBytes)
+	else if (validFile && entryObj.size > maxSizeBytes)
 	{
-		// Too large.
 		verifyErrorText = fsErrors.writeSourceVerify(sourceFile.desc, "cannot be larger than 5MB");
 		return verifyCallback(new Error(verifyErrorText), null);
 	}
-	else if (validFile === true)
+	else if (validFile)
 	{
-		// Empty.
 		verifyErrorText = fsErrors.writeSourceVerify(sourceFile.desc, "cannot be empty.");
 		return verifyCallback(new Error(verifyErrorText), null);
 	}
 	else
 	{
-		// Missing.
 		verifyErrorText = fsErrors.writeSourceVerify(sourceFile.desc, "does not exist.");
 		return verifyCallback(new Error(verifyErrorText), null);
 	}

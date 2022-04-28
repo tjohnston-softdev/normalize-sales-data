@@ -9,14 +9,11 @@ const valuePrep = require("../../common/value-prep");
 
 function addProductItem(productCodeString, msrpNum, lineID, productArr)
 {
-	// Prepare target product code.
 	var preparedCode = valuePrep.sanitizeString(productCodeString);
 	
-	// Loop variables.
 	var existingIndex = 0;
 	var existID = null;
 	
-	// Result variables.
 	var addRes = -1;
 	var newProductObject = [];
 	

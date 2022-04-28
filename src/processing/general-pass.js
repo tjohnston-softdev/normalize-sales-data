@@ -18,68 +18,34 @@ const remainCols = require("./object-definition/remain-cols");
 // Main function.
 function loopDataRows(origData, fullResultObj)
 {
-	var rowLoopIndex = 0;					// Row index.
-	var currentRow = {};					// Row object.
-	var currentTerritory = -1;				// Territory ID.
-	var currentCountry = -1;				// Country ID.
-	var currentState = -1;					// State-Region ID.
-	var currentCity = -1;					// City ID
-	var currentDeal = -1;					// Deal Size ID.
-	var currentProductLine = -1;			// Product Line ID.
-	var currentStatus = -1;					// Order Status ID.
-	var currentProduct = -1;				// Product ID.
-	var currentCustomerName = {};			// Customer name.
-	var currentCustomerDetails = {};		// Customer details.
-	var currentCustomerNumber = -1;			// Customer ID.
-	var currentOrder = -1;					// Order number.
-	var currentLine = -1;					// Order item number.
-	var currentRowComplete = false;			// Row valid.
-	var currentData = {};					// Remaining data object.
-	
+	var rowLoopIndex = 0;
 	
 	// Loop each row until end reached or error flagged.
-	while (rowLoopIndex >= 0 && rowLoopIndex < origData.length && fullResultObj.canContinue === true)
+	while (rowLoopIndex >= 0 && rowLoopIndex < origData.length && fullResultObj.canContinue)
 	{
-		// Reads current row and resets locals.
-		currentRow = origData[rowLoopIndex];
-		currentTerritory = -1;
-		currentCountry = -1;
-		currentState = -1;
-		currentCity = -1;
-		currentDeal = -1;
-		currentProductLine = -1;
-		currentStatus = -1;
-		currentProduct = -1;
-		currentCustomerName = {};
-		currentCustomerDetails = {};
-		currentCustomerNumber = -1;
-		currentOrder = -1;
-		currentLine = -1;
-		currentRowComplete = false;
-		currentData = {};
+		rowObject = origData[rowLoopIndex];
 		
 		// Read, validate and normalize data sequentially.
-		currentTerritory = handleTerritoryNormalization(rowLoopIndex, currentRow, fullResultObj);
-		currentCountry = handleCountryNormalization(rowLoopIndex, currentRow, currentTerritory, fullResultObj);
-		currentState = handleStateNormalization(rowLoopIndex, currentRow, currentCountry, fullResultObj);
-		currentCity = handleCityNormalization(rowLoopIndex, currentRow, currentState, fullResultObj);
-		currentDeal = handleDealSizeNormalization(rowLoopIndex, currentRow, currentCity, fullResultObj);
-		currentProductLine = handleProductLineNormalization(rowLoopIndex, currentRow, currentDeal, fullResultObj);
-		currentStatus = handleOrderStatusNormalization(rowLoopIndex, currentRow, currentProductLine, fullResultObj);
-		currentProduct = handleProductItemNormalization(rowLoopIndex, currentRow, currentStatus, currentProductLine, fullResultObj);
-		currentCustomerName = handleCustomerNameValidation(rowLoopIndex, currentRow, currentProduct, fullResultObj);
-		currentCustomerDetails = handleCustomerDetailsValidation(rowLoopIndex, currentRow, currentCustomerName.valid, fullResultObj);
-		currentCustomerNumber = handleCustomerNormalization(currentCustomerName, currentCustomerDetails, currentCity, fullResultObj);
-		currentOrder = handleOrderNumberValidation(rowLoopIndex, currentRow, currentCustomerNumber, fullResultObj);
-		currentLine = handleLineNumberValidation(rowLoopIndex, currentRow, currentOrder, fullResultObj);
-		currentRowComplete = checkRowComplete(currentLine);
-		currentData = {};
+		var territory = handleTerritoryNormalization(rowLoopIndex, rowObject, fullResultObj);
+		var country = handleCountryNormalization(rowLoopIndex, rowObject, territory, fullResultObj);
+		var state = handleStateNormalization(rowLoopIndex, rowObject, country, fullResultObj);
+		var city = handleCityNormalization(rowLoopIndex, rowObject, state, fullResultObj);
+		var dealSize = handleDealSizeNormalization(rowLoopIndex, rowObject, city, fullResultObj);
+		var productLine = handleProductLineNormalization(rowLoopIndex, rowObject, dealSize, fullResultObj);
+		var itemStatus = handleOrderStatusNormalization(rowLoopIndex, rowObject, productLine, fullResultObj);
+		var product = handleProductItemNormalization(rowLoopIndex, rowObject, itemStatus, productLine, fullResultObj);
+		var custName = handleCustomerNameValidation(rowLoopIndex, rowObject, product, fullResultObj);
+		var custDetails = handleCustomerDetailsValidation(rowLoopIndex, rowObject, custName.valid, fullResultObj);
+		var custNumber = handleCustomerNormalization(custName, custDetails, city, fullResultObj);
+		var orderNumber = handleOrderNumberValidation(rowLoopIndex, rowObject, custNumber, fullResultObj);
+		var lineNumber = handleLineNumberValidation(rowLoopIndex, rowObject, orderNumber, fullResultObj);
+		var rowComplete = checkRowComplete(lineNumber);
 		
 		
-		if (currentRowComplete === true)
+		if (rowComplete)
 		{
 			// Save normalized data.
-			currentData = remainCols.compileData(rowLoopIndex, currentRow, currentOrder, currentLine, currentStatus, currentProduct, currentCustomerNumber, currentDeal);
+			var currentData = remainCols.compileData(rowLoopIndex, rowObject, orderNumber, lineNumber, itemStatus, product, custNumber, dealSize);
 			origData[rowLoopIndex] = currentData;
 		}
 		else
@@ -88,7 +54,7 @@ function loopDataRows(origData, fullResultObj)
 			fullResultObj.canContinue = false;
 		}
 		
-		rowLoopIndex = rowLoopIndex + 1;
+		rowLoopIndex += 1;
 	}
 }
 
@@ -99,7 +65,7 @@ function handleTerritoryNormalization(rowIndex, rowObject, fullResult)
 	var stringObject = stringValue.validateString(rowIndex, rowObject, "TERRITORY", valueLimits.territory, true, fullResult);
 	var handleRes = -1;
 	
-	if (stringObject.valid === true)
+	if (stringObject.valid)
 	{
 		// Add territory.
 		handleRes = listItem.addItem(stringObject.preparedText, "territories", fullResult);
@@ -121,7 +87,7 @@ function handleCountryNormalization(rowIndex, rowObject, territoryValue, fullRes
 		stringObject = stringValue.validateString(rowIndex, rowObject, "COUNTRY", valueLimits.country, true, fullResult);
 	}
 	
-	if (stringObject.valid === true)
+	if (stringObject.valid)
 	{
 		// Add country.
 		handleRes = countryItem.addCountry(stringObject.preparedText, fullResult.data.countries, territoryValue);
@@ -142,7 +108,7 @@ function handleStateNormalization(rowIndex, rowObject, countryValue, fullResult)
 		stringObject = stringValue.validateString(rowIndex, rowObject, "STATE", valueLimits.state, false, fullResult);
 	}
 	
-	if (stringObject.valid === true)
+	if (stringObject.valid)
 	{
 		// Add region.
 		handleRes = subLocation.addLocation(stringObject.preparedText, "statesRegions", countryValue, fullResult);
@@ -164,7 +130,7 @@ function handleCityNormalization(rowIndex, rowObject, stateRegionValue, fullResu
 		stringObject = stringValue.validateString(rowIndex, rowObject, "CITY", valueLimits.city, true, fullResult);
 	}
 	
-	if (stringObject.valid === true)
+	if (stringObject.valid)
 	{
 		// Add city.
 		handleRes = subLocation.addLocation(stringObject.preparedText, "cities", stateRegionValue, fullResult);
@@ -186,7 +152,7 @@ function handleDealSizeNormalization(rowIndex, rowObject, cityValue, fullResult)
 		stringObject = stringValue.validateString(rowIndex, rowObject, "DEALSIZE", valueLimits.dealSize, true, fullResult);
 	}
 	
-	if (stringObject.valid === true)
+	if (stringObject.valid)
 	{
 		// Add deal size.
 		handleRes = listItem.addItem(stringObject.preparedText, "dealSizes", fullResult);
@@ -208,7 +174,7 @@ function handleProductLineNormalization(rowIndex, rowObject, dealSizeValue, full
 		stringObject = stringValue.validateString(rowIndex, rowObject, "PRODUCTLINE", valueLimits.productLine, true, fullResult);
 	}
 	
-	if (stringObject.valid === true)
+	if (stringObject.valid)
 	{
 		// Add product line.
 		handleRes = listItem.addItem(stringObject.preparedText, "productLines", fullResult);
@@ -230,7 +196,7 @@ function handleOrderStatusNormalization(rowIndex, rowObject, productLineValue, f
 		stringObject = stringValue.validateString(rowIndex, rowObject, "STATUS", valueLimits.orderStatus, true, fullResult);
 	}
 	
-	if (stringObject.valid === true)
+	if (stringObject.valid)
 	{
 		// Add order status.
 		handleRes = listItem.addItem(stringObject.preparedText, "orderStatusModes", fullResult);
@@ -255,14 +221,14 @@ function handleProductItemNormalization(rowIndex, rowObject, orderStatusValue, p
 		productCodeObject = stringValue.validateString(rowIndex, rowObject, "PRODUCTCODE", valueLimits.productCode, true, fullResult);
 	}
 	
-	if (productCodeObject.valid === true)
+	if (productCodeObject.valid)
 	{
 		// Validate MSRP.
 		msrpNumber = numberValue.validateDecimal(rowIndex, rowObject, "MSRP", valueLimits.currency, valueDefaults.msrp, true, fullResult);
 		msrpValid = Number.isFinite(msrpNumber);
 	}
 	
-	if (msrpValid === true)
+	if (msrpValid)
 	{
 		// Add product.
 		handleRes = productItem.addItem(productCodeObject.preparedText, msrpNumber, productLineValue, fullResult.data.products);
@@ -299,44 +265,44 @@ function handleCustomerDetailsValidation(rowIndex, rowObject, custNameValid, ful
 	
 	var handleRes = {};
 	
-	if (custNameValid === true)
+	if (custNameValid)
 	{
 		// Validate phone number.
 		phoneNumberObject = stringValue.validateString(rowIndex, rowObject, "PHONE", valueLimits.phoneNumber, true, fullResult);
 	}
 	
-	if (phoneNumberObject.valid === true)
+	if (phoneNumberObject.valid)
 	{
 		// Validate first name.
 		firstNameObject = stringValue.validateString(rowIndex, rowObject, "CONTACTFIRSTNAME", valueLimits.contact, true, fullResult);
 	}
 	
-	if (firstNameObject.valid === true)
+	if (firstNameObject.valid)
 	{
 		// Validate last name.
 		lastNameObject = stringValue.validateString(rowIndex, rowObject, "CONTACTLASTNAME", valueLimits.contact, false, fullResult);
 	}
 	
-	if (lastNameObject.valid === true)
+	if (lastNameObject.valid)
 	{
 		// Validate address line 1
 		addressObject1 = stringValue.validateString(rowIndex, rowObject, "ADDRESSLINE1", valueLimits.address, true, fullResult);
 	}
 	
-	if (addressObject1.valid === true)
+	if (addressObject1.valid)
 	{
 		// Validate address line 2
 		addressObject2 = stringValue.validateString(rowIndex, rowObject, "ADDRESSLINE2", valueLimits.address, false, fullResult);
 	}
 	
-	if (addressObject2.valid === true)
+	if (addressObject2.valid)
 	{
 		// Validate postal code.
 		postalCodeObject = stringValue.validateString(rowIndex, rowObject, "POSTALCODE", valueLimits.postalCode, false, fullResult);
 	}
 	
 	
-	if (postalCodeObject.valid === true)
+	if (postalCodeObject.valid)
 	{
 		// All details valid - Create result object.
 		handleRes["prepPhone"] = phoneNumberObject.preparedText;
@@ -357,7 +323,7 @@ function handleCustomerNormalization(custNameObj, custDetailsObj, cityValue, ful
 {
 	var handleRes = -1;
 	
-	if (custDetailsObj.successful === true)
+	if (custDetailsObj.successful)
 	{
 		handleRes = customerItem.addCustomer(custNameObj, custDetailsObj, cityValue, fullResult.data.customers);
 	}
@@ -387,7 +353,7 @@ function handleLineNumberValidation(rowIndex, rowObject, orderValue, fullResult)
 	var orderNumberValid = Number.isInteger(orderValue);
 	var handleRes = NaN;
 	
-	if (orderNumberValid === true && orderValue > 0 && orderValue <= valueLimits.orderNumber)
+	if (orderNumberValid && orderValue > 0 && orderValue <= valueLimits.orderNumber)
 	{
 		// Order exists - Validate number.
 		handleRes = numberValue.validateWhole(rowIndex, rowObject, "ORDERLINENUMBER", valueLimits.orderItem, NaN, false, fullResult);
@@ -401,15 +367,7 @@ function handleLineNumberValidation(rowIndex, rowObject, orderValue, fullResult)
 function checkRowComplete(lineValue)
 {
 	var lineNumberValid = Number.isInteger(lineValue);
-	var checkRes = false;
-	
-	if (lineNumberValid === true && lineValue > 0 && lineValue <= valueLimits.orderItem)
-	{
-		// Order line number valid.
-		checkRes = true;
-	}
-	
-	return checkRes;
+	return (lineNumberValid && lineValue > 0 && lineValue <= valueLimits.orderItem);
 }
 
 

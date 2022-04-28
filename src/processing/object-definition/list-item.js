@@ -13,11 +13,9 @@ function addListItem(itemString, arrName, fullRes)
 	var arrObj = fullRes.data[arrName];
 	var preparedItem = valuePrep.sanitizeString(itemString);
 	
-	// Loop variables.
 	var existingIndex = 0;
 	var existID = null;
 	
-	// Result variables.
 	var addRes = -1;
 	var newItemObject = [];
 	

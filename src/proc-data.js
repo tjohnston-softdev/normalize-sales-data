@@ -40,14 +40,12 @@ function coordinateDataProcessing(origDataSet, dataCallback)
 	orderPass.loopRows(origDataSet, fullResultObject);					// Order data
 	
 	
-	if (fullResultObject.canContinue === true)
+	if (fullResultObject.canContinue)
 	{
-		// Successful.
 		return dataCallback(null, fullResultObject.data);
 	}
 	else
 	{
-		// Error.
 		dataErrorText = inputErrors.writeFullMessage(fullResultObject.error);
 		return dataCallback(new Error(dataErrorText), null);
 	}

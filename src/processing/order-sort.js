@@ -2,10 +2,7 @@
 
 function sortPreparedDataRows(origData, sortAllowed)
 {
-	if (sortAllowed === true)
-	{
-		performSorting(origData);
-	}
+	if (sortAllowed) performSorting(origData);
 }
 
 

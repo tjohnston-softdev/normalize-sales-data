@@ -46,13 +46,11 @@ function checkDateFormat(dateRowInd, dateColName, dateString, validRes, fullRes)
 	
 	if (castValid)
 	{
-		// Valid format.
 		validRes.dateObject = castDateObject;
 		validRes.valid = true;
 	}
 	else
 	{
-		// Invalid format.
 		inputErrors.setDateFormat(fullRes.error, dateColName, dateRowInd);
 	}
 }

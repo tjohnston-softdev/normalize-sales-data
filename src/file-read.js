@@ -38,13 +38,11 @@ function coordinateInputRead(inpReadCallback)
 	{
 		if (readErr !== null)
 		{
-			// Error
 			readErrorText = fsErrors.writeFileAction("reading", sourceFile.desc, sourceFile.name, readErr.code);
 			return inpReadCallback(new Error(readErrorText), null);
 		}
 		else
 		{
-			// Successful - parse as CSV.
 			parseFileText(retrievedText, inpReadCallback);
 		}
 	});
@@ -59,7 +57,7 @@ function parseFileText(inpTxt, parseCallback)
 	var parseResultExists = valuePrep.checkObject(parseResultObject);
 	var genericText = "";
 	
-	if (parseResultExists === true)
+	if (parseResultExists)
 	{
 		// Conversion made - Check if successful.
 		verifyParseResult(parseResultObject, parseCallback);
@@ -80,13 +78,13 @@ function verifyParseResult(parseResObj, verifyCallback)
 	var errorArrayExists = Array.isArray(parseResObj.errors);
 	var verifyErrorText = "";
 	
-	if (errorArrayExists === true && parseResObj.errors.length > 0)
+	if (errorArrayExists && parseResObj.errors.length > 0)
 	{
 		// Error found.
 		verifyErrorText = csvErrors.writeSpecificParse(parseResObj.errors);
 		return verifyCallback(new Error(verifyErrorText), null);
 	}
-	else if (dataArrayExists === true && parseResObj.data.length > 0)
+	else if (dataArrayExists && parseResObj.data.length > 0)
 	{
 		// Successful.
 		return verifyCallback(null, parseResObj.data);

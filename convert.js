@@ -104,24 +104,24 @@ function callOutputFolder(normalizedDataObj)
 // Coordinate output.
 function callOutputFileWrite(normalizedData, oFolderPth)
 {
-	var oType = outputTypes.getEntry();
+	var enteredMode = outputTypes.getEntry();
 	
-	if (oType === outputTypes.modes.SQL)
+	if (enteredMode === outputTypes.modes.SQL)
 	{
 		// SQL definition files.
 		callSqlOutput(normalizedData, oFolderPth);
 	}
-	else if (oType === outputTypes.modes.CSV)
+	else if (enteredMode === outputTypes.modes.CSV)
 	{
 		// CSV data files.
 		callCsvOutput(normalizedData, oFolderPth);
 	}
-	else if (oType === outputTypes.modes.ARRAY)
+	else if (enteredMode === outputTypes.modes.ARRAY)
 	{
 		// Multi-dimensional JSON array files.
 		callJsonOutput(normalizedData, oFolderPth, false);
 	}
-	else if (oType === outputTypes.modes.OBJECT)
+	else if (enteredMode === outputTypes.modes.OBJECT)
 	{
 		// JSON object array files.
 		callJsonOutput(normalizedData, oFolderPth, true);

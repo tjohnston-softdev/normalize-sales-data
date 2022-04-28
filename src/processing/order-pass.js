@@ -15,36 +15,21 @@ const orderDetails = require("./object-definition/order-details");
 // Main function.
 function loopDataRows(prepData, fullResultObj)
 {
-	var rowLoopIndex = 0;					// Sorted row index.
-	var currentRow = {};					// Row object.
-	var currentIndex = -1;					// Original row index.
-	var currentQuantity = -1;				// Quantity ordered.
-	var currentPrice = -1;					// Price each.
-	var currentDate = {};					// Order date.
-	var currentOrderAdd = -1;				// Order entry added flag.
-	var currentLineAllowed = false;			// Order entry added boolean.
-	var currentLineAdd = -1;				// Order item added flag.
-	var currentRowComplete = false;			// Row valid.
-	var loopOrderNumber = 0;				// Current order entry number.
-	
+	var rowLoopIndex = 0;
 	
 	// Loop each row until end reached or error flagged.
-	while (rowLoopIndex >= 0 && rowLoopIndex < prepData.length && fullResultObj.canContinue === true)
+	while (rowLoopIndex >= 0 && rowLoopIndex < prepData.length && fullResultObj.canContinue)
 	{
-		// Reads current row and resets locals.
-		currentRow = prepData[rowLoopIndex];
-		currentIndex = currentRow.originalIndex;
-		currentQuantity = -1;
-		currentPrice = -1;
-		currentDate = {};
-		currentOrderAdd = -1;
-		currentLineAllowed = false;
-		currentLineAdd = -1;
-		currentRowComplete = false;
+		var currentRow = prepData[rowLoopIndex];
+		var currentIndex = currentRow.originalIndex;
 		
 		// Validates the quantity and price, as they are common to both scenarios.
-		currentQuantity = handleQuantityValidation(currentIndex, currentRow, fullResultObj);
-		currentPrice = handlePriceValidation(currentIndex, currentRow, currentQuantity, fullResultObj);
+		var currentQuantity = handleQuantityValidation(currentIndex, currentRow, fullResultObj);
+		var currentPrice = handlePriceValidation(currentIndex, currentRow, currentQuantity, fullResultObj);
+		
+		var currentLineAllowed = false;
+		var currentLineAdd = -1;
+		var currentRowComplete = false;
 		
 		
 		if (currentRow.orderNumber === loopOrderNumber)
@@ -59,8 +44,8 @@ function loopDataRows(prepData, fullResultObj)
 			// New order found. Add entry and first item.
 			loopOrderNumber = currentRow.orderNumber;
 			
-			currentDate = dateValue.validateDate(currentIndex, currentRow, "ORDERDATE", fullResultObj);
-			currentOrderAdd = handleOrderAdd(currentIndex, currentRow, currentDate, fullResultObj);
+			var currentDate = dateValue.validateDate(currentIndex, currentRow, "ORDERDATE", fullResultObj);
+			var currentOrderAdd = handleOrderAdd(currentIndex, currentRow, currentDate, fullResultObj);
 			currentLineAllowed = checkAdd(currentOrderAdd, fullResultObj.data.orderEntries.length);
 			currentLineAdd = handleItemAdd(currentIndex, currentRow, currentQuantity, currentPrice, fullResultObj, currentLineAllowed);
 			currentRowComplete = checkAdd(currentLineAdd, fullResultObj.data.orderItems.length);
@@ -72,13 +57,13 @@ function loopDataRows(prepData, fullResultObj)
 		}
 		
 		
-		if (currentRowComplete !== true)
+		if (!currentRowComplete)
 		{
 			// Stop reading.
 			fullResultObj.canContinue = false;
 		}
 		
-		rowLoopIndex = rowLoopIndex + 1;
+		rowLoopIndex += 1;
 	}
 }
 
@@ -86,9 +71,7 @@ function loopDataRows(prepData, fullResultObj)
 // Quantity Ordered.
 function handleQuantityValidation(rowIndex, rowObject, fullResult)
 {
-	var handleRes = -1;
-	handleRes = numberValue.validateWhole(rowIndex, rowObject, "QUANTITYORDERED", valueLimits.orderQuantity, valueDefaults.quantityOrdered, false, fullResult);
-	return handleRes;
+	return numberValue.validateWhole(rowIndex, rowObject, "QUANTITYORDERED", valueLimits.orderQuantity, valueDefaults.quantityOrdered, false, fullResult);
 }
 
 
@@ -98,7 +81,7 @@ function handlePriceValidation(rowIndex, rowObject, quantityValue, fullResult)
 	var quantityValid = Number.isInteger(quantityValue);
 	var handleRes = -1;
 	
-	if (quantityValid === true)
+	if (quantityValid)
 	{
 		// Validate price.
 		handleRes = numberValue.validateDecimal(rowIndex, rowObject, "PRICEEACH", valueLimits.currency, valueDefaults.priceEach, true, fullResult);
@@ -111,18 +94,15 @@ function handlePriceValidation(rowIndex, rowObject, quantityValue, fullResult)
 // Add new order entry.
 function handleOrderAdd(rowIndex, rowObject, orderDateValidation, fullResult)
 {
-	var pCustomer = -1;
-	var pDate = null;
-	var pStatus = -1;
 	var handleRes = -1;
 	
-	if (orderDateValidation.valid === true)
+	if (orderDateValidation.valid)
 	{
-		pCustomer = rowObject.customerNumber;
-		pDate = orderDateValidation.dateObject;
-		pStatus = rowObject.statusNumber;
+		var custValue = rowObject.customerNumber;
+		var dateValue = orderDateValidation.dateObject;
+		var statusValue = rowObject.statusNumber;
 		
-		handleRes = orderDetails.addEntry(rowObject.orderNumber, pCustomer, pDate, pStatus, fullResult.data.orderEntries);
+		handleRes = orderDetails.addEntry(rowObject.orderNumber, custValue, dateValue, statusValue, fullResult.data.orderEntries);
 	}
 	
 	return handleRes;
@@ -132,22 +112,17 @@ function handleOrderAdd(rowIndex, rowObject, orderDateValidation, fullResult)
 // Add new order item.
 function handleItemAdd(rowIndex, rowObject, quantityValue, priceValue, fullResult, allowAdd)
 {
-	var pOrder = -1;
-	var pLine = -1;
-	var pProduct = -1;
-	var pDeal = -1;
-	
 	var handleRes = -1;
 	
-	if (allowAdd === true)
+	if (allowAdd)
 	{
 		// Parent entry exists.
-		pOrder = rowObject.orderNumber;
-		pLine = rowObject.lineNumber;
-		pProduct = rowObject.productNumber;
-		pDeal = rowObject.dealSizeNumber;
+		var orderValue = rowObject.orderNumber;
+		var lineValue = rowObject.lineNumber;
+		var productValue = rowObject.productNumber;
+		var dealValue = rowObject.dealSizeNumber;
 		
-		handleRes = orderDetails.addItem(pOrder, pLine, pProduct, quantityValue, priceValue, pDeal, rowIndex, fullResult.data.orderItems);
+		handleRes = orderDetails.addItem(orderValue, lineValue, productValue, quantityValue, priceValue, dealValue, rowIndex, fullResult.data.orderItems);
 	}
 	
 	return handleRes;
@@ -157,14 +132,7 @@ function handleItemAdd(rowIndex, rowObject, quantityValue, priceValue, fullResul
 // Checks if a data object was added successfully.
 function checkAdd(addNum, arrLength)
 {
-	var checkRes = false;
-	
-	if (addNum > 0 && addNum <= arrLength)
-	{
-		checkRes = true;
-	}
-	
-	return checkRes;
+	return (addNum > 0 && addNum <= arrLength);
 }
 
 

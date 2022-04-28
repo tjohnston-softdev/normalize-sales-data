@@ -15,13 +15,11 @@ function saveSqlFile(objectArray, fileSpecs, saveCallback)
 	{
 		if (writeError !== null)
 		{
-			// Error
 			var flaggedMessage = fsErrors.writeFileAction("writing", fileSpecs.tableName, fileSpecs.filePath, writeError.code);
 			return saveCallback(new Error(flaggedMessage), null);
 		}
 		else
 		{
-			// Successful
 			return saveCallback(null, true);
 		}
 	});

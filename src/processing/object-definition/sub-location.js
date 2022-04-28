@@ -10,22 +10,18 @@ const valuePrep = require("../../common/value-prep");
 
 function addLocationItem(locationString, arrName, targetParentID, fullRes)
 {
-	// Reads location array and prepares target name.
 	var arrObj = fullRes.data[arrName];
 	var preparedItem = valuePrep.sanitizeString(locationString);
 	
-	// Loop variables.
 	var existingIndex = 0;
 	var existID = null;
 	
-	// Result variables.
 	var addRes = -1;
 	var newLocationObject = [];
 	
 	// Loop existing location objects until end reached or target name found.
 	while (existingIndex >= 0 && existingIndex < arrObj.length && existID === null)
 	{
-		// Read current location.
 		var currentLocationObject = arrObj[existingIndex];
 		var currentLocationName = currentLocationObject[2].toLowerCase();
 		var currentParentString = currentLocationObject[1];

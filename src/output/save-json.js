@@ -16,13 +16,11 @@ function saveJsonFile(objectArray, fileSpecs, inclAttrs, saveCallback)
 	{
 		if (jsonError !== null)
 		{
-			// Conversion error.
 			var flaggedMessage = writeStringifyErrorText(fileSpecs.tableName, jsonError.message);
 			return saveCallback(new Error(flaggedMessage), null);
 		}
 		else
 		{
-			// String prepared.
 			handleFileWrite(fileSpecs.filePath, jsonTextString, fileSpecs.tableName, saveCallback);
 		}
 	});
@@ -36,13 +34,11 @@ function handleFileWrite(jsonPath, jsonContents, jsonDesc, handleCallback)
 	{
 		if (writeError !== null)
 		{
-			// Error.
 			var flaggedMessage = fsErrors.writeFileAction("writing", jsonDesc, jsonPath, writeError.code);
 			return handleCallback(new Error(flaggedMessage), null);
 		}
 		else
 		{
-			// Successful.
 			return handleCallback(null, true);
 		}
 	});
@@ -50,7 +46,7 @@ function handleFileWrite(jsonPath, jsonContents, jsonDesc, handleCallback)
 }
 
 
-// Convert MD array to list of objects.
+// Convert multi-dimensional array to list of objects.
 function convertToObjectMode(dataArray, attrList)
 {	
 	// Loop all rows for corresponding table.

@@ -26,13 +26,11 @@ function handleFileWrite(csvPath, csvContents, csvDesc, handleCallback)
 	{
 		if (writeErr !== null)
 		{
-			// Error
 			var flaggedMessage = fsErrors.writeFileAction("writing", csvDesc, csvPath, writeErr.code);
 			return handleCallback(new Error(flaggedMessage), null);
 		}
 		else
 		{
-			// Successful
 			return handleCallback(null, true);
 		}
 	});
@@ -44,9 +42,7 @@ function convertJsonToCsv(objArr, attrList)
 {
 	var csvOptions = {"header": true};
 	var dataOptions = {"fields": attrList, "data": objArr};
-	var convRes = papaparse.unparse(dataOptions);
-	
-	return convRes;
+	return papaparse.unparse(dataOptions);
 }
 
 

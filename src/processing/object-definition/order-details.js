@@ -10,11 +10,9 @@ const dateString = require("../../common/date-string");
 // Order Entry.
 function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 {
-	// Loop variables.
 	var existingIndex = 0;
 	var existFlag = -1;
 	
-	// Result variables.
 	var addRes = -1;
 	var newOrderObject = [];
 	
@@ -44,7 +42,7 @@ function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 		
 		newOrderObject[0] = String(idNumber);
 		newOrderObject[1] = String(ordCust);
-		newOrderObject[2] = dateString.writeString(ordDate);
+		newOrderObject[2] = dateString.write(ordDate);
 		newOrderObject[3] = String(ordStatus);
 		
 		orderArray.push(newOrderObject);
@@ -58,11 +56,9 @@ function addOrderEntryRow(idNumber, ordCust, ordDate, ordStatus, orderArray)
 // Order Item.
 function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPrice, itemDeal, itemDisplay, orderItemArray)
 {
-	// Loop variables.
 	var existingIndex = 0;
 	var existFlag = -1;
 	
-	// Result variables.
 	var addRes = -1;
 	var newOrderItemObject = [];
 	
@@ -78,7 +74,6 @@ function addOrderItemRow(parentID, childNumber, itemProd, itemQuantity, itemPric
 		
 		if (currentParentNumber === parentID && currentChildNumber === childNumber)
 		{
-			// Item found.
 			existFlag = existingIndex;
 		}
 		
