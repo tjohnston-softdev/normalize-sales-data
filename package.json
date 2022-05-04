@@ -12,7 +12,7 @@
     "async-each-series": "^1.1.0",
     "clear": "^0.1.0",
     "ora-classic": "^5.4.2",
-    "papaparse-min": "^5.3.1",
+    "papaparse-min": "^5.3.2",
     "run-series": "^1.1.9",
     "sqlstring": "^2.3.2",
     "yieldable-json": "^2.0.1"
